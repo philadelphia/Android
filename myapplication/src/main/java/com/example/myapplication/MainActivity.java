@@ -15,12 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.design.widget.TabLayout;
 import com.example.myapplication.ui.AndroidBaseFragment;
+import com.example.myapplication.ui.OtherFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FragmentManager fragmentManager ;
-    private Toolbar toolbar ;
+    public Toolbar toolbar ;
     private FloatingActionButton fab;
     public TabLayout mTabLayout;
     private DrawerLayout drawer;
@@ -95,31 +96,40 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
+
         return super.onOptionsItemSelected(item);
     }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        item.setCheckable(true);
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        switch (id){
+            case R.id.nav_camera:
             AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
             fragmentManager.beginTransaction().replace(R.id.container, androidBaseFragment).commit();
 
-        } else if (id == R.id.nav_gallery) {
+            break;
+            case  R.id.nav_gallery:
+            break;
 
-        } else if (id == R.id.nav_slideshow) {
+            case R.id.nav_other:
+            OtherFragment otherFragment = new OtherFragment();
+            fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
+            break;
 
-        } else if (id == R.id.nav_manage) {
+           case  R.id.nav_share:
+            break;
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            case R.id.nav_send:
+            break;
         }
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
