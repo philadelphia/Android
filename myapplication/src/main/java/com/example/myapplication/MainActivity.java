@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FragmentManager fragmentManager ;
-    private Toolbar toolbar ;
+    public Toolbar toolbar ;
     private FloatingActionButton fab;
     public TabLayout mTabLayout;
     private DrawerLayout drawer;
@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        item.setCheckable(true);
         int id = item.getItemId();
         switch (id){
             case R.id.nav_camera:

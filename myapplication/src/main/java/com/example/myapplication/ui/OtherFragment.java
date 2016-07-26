@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.myapplication.adapter.MyViewPagerAdapter;
 import com.example.myapplication.ui.fragment.ActivityFragment;
 import com.example.myapplication.ui.fragment.BroadCastReceiverFragment;
 import com.example.myapplication.ui.fragment.ContentProviderFragment;
+import com.example.myapplication.ui.fragment.NotificationFragment;
 import com.example.myapplication.ui.fragment.ServiceFragment;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class OtherFragment extends Fragment {
     private List<Fragment> mTabFragments ;
     private MyViewPagerAdapter mPagerAdapter;
     private TabLayout mTablayout;
+    private Toolbar toolbar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,13 +52,15 @@ public class OtherFragment extends Fragment {
     public void initView(View view) {
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         mTablayout =((MainActivity) getActivity ()).mTabLayout;
+        toolbar =((MainActivity) getActivity ()).toolbar;
         mTablayout.setVisibility(View.VISIBLE);
         mTablayout.setTabMode (TabLayout.MODE_FIXED);
     }
 
     private void setUpViewPagerAndTabs (){
+        toolbar.setTitle("其他");
         mTabFragments = new ArrayList<>();
-        mTabFragments.add(new ActivityFragment());
+        mTabFragments.add(new NotificationFragment());
 //        mTabFragments.add(new FragmentFragment());
         mTabFragments.add(new ServiceFragment());
         mTabFragments.add(new BroadCastReceiverFragment());
