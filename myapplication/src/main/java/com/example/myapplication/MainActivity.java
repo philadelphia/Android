@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,21 +16,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.design.widget.TabLayout;
 import com.example.myapplication.ui.AndroidBaseFragment;
+import com.example.myapplication.ui.ManagerFragment;
+import com.example.myapplication.ui.MaterialDesginFragment;
 import com.example.myapplication.ui.OtherFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FragmentManager fragmentManager ;
-    public Toolbar toolbar ;
-    private FloatingActionButton fab;
-    public TabLayout mTabLayout;
-    private DrawerLayout drawer;
-    private ActionBarDrawerToggle toggle;
-    private NavigationView navigationView;
+    private static Toolbar toolbar ;
+    private static FloatingActionButton fab;
+    private static TabLayout mTabLayout;
+    private static DrawerLayout drawer;
+    private static ActionBarDrawerToggle toggle;
+    private static NavigationView navigationView;
+    private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate: ");
         setContentView(R.layout.activity_main);
 
         initView();
@@ -121,10 +126,16 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
             break;
 
-           case  R.id.nav_share:
+           case  R.id.nav_Manager:
+               ManagerFragment managerFragment = new ManagerFragment();
+               fragmentManager.beginTransaction().replace(R.id.container, managerFragment).commit();
             break;
 
             case R.id.nav_send:
+
+            case R.id.nav_materialDesign:
+                MaterialDesginFragment materialDesgin = new MaterialDesginFragment();
+                fragmentManager.beginTransaction().replace(R.id.container, materialDesgin).commit();
             break;
         }
 
@@ -135,4 +146,50 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public static TabLayout getmTabLayout() {
+        return mTabLayout;
+    }
+
+    public static Toolbar getToolbar() {
+        return toolbar;
+    }
+
+    @Override
+    protected void onStart() {
+        Log.e(TAG, "onStart: ");
+        super.onStart();
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.e(TAG, "onRestart: " );
+        super.onRestart();
+    }
+
+
+    @Override
+    protected void onResume() {
+        Log.e(TAG, "onResume: ");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.e(TAG, "onPause: ");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.e(TAG, "onStop: ");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.e(TAG, "onDestroy: ");
+        super.onDestroy();
+    }
+
 }

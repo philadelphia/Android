@@ -50,7 +50,7 @@ public class AndroidBaseFragment extends android.support.v4.app.Fragment {
 
     public void initView(View view) {
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        mTablayout =((MainActivity) getActivity ()).mTabLayout;
+        mTablayout = MainActivity.getmTabLayout();
         mTablayout.setVisibility(View.VISIBLE);
         mTablayout.setTabMode (TabLayout.MODE_FIXED);
     }
@@ -58,7 +58,6 @@ public class AndroidBaseFragment extends android.support.v4.app.Fragment {
     private void setUpViewPagerAndTabs (){
         mTabFragments = new ArrayList<>();
         mTabFragments.add(new ActivityFragment());
-//        mTabFragments.add(new FragmentFragment());
         mTabFragments.add(new ServiceFragment());
         mTabFragments.add(new BroadCastReceiverFragment());
         mTabFragments.add(new ContentProviderFragment());
