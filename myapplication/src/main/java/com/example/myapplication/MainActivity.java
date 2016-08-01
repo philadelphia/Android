@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.design.widget.TabLayout;
 import com.example.myapplication.ui.AndroidBaseFragment;
+import com.example.myapplication.ui.AndroidBaseViewFragment;
 import com.example.myapplication.ui.ManagerFragment;
 import com.example.myapplication.ui.MaterialDesginFragment;
 import com.example.myapplication.ui.OtherFragment;
@@ -40,8 +41,8 @@ public class MainActivity extends AppCompatActivity
         initView();
 
         //default show android Base Fragment
-        AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, androidBaseFragment).commit();
+        AndroidBaseViewFragment androidBaseViewFragment = new AndroidBaseViewFragment();
+        fragmentManager.beginTransaction().replace(R.id.container, androidBaseViewFragment).commit();
 
 
     }
@@ -118,7 +119,9 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.container, androidBaseFragment).commit();
 
             break;
-            case  R.id.nav_gallery:
+            case R.id.nav_BaseView:
+                AndroidBaseViewFragment androidBaseViewFragment = new AndroidBaseViewFragment();
+                fragmentManager.beginTransaction().replace(R.id.container, androidBaseViewFragment).commit();
             break;
 
             case R.id.nav_other:

@@ -102,6 +102,8 @@ public class AndroidBaseFragment extends android.support.v4.app.Fragment {
 
     @Override
     public void onDestroy() {
+        Log.i(TAG, "onDestroy: ");
+        mTablayout.setVisibility(View.GONE);
         super.onDestroy();
     }
 }

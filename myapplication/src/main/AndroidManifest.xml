@@ -19,10 +19,10 @@
             </intent-filter>
         </activity>
 
-        <!--SecondActivity-->
-        <activity android:name=".ui.activity.SecondActivity"></activity>
+        <!-- SecondActivity -->
+        <activity android:name=".ui.activity.SecondActivity" />
 
-
+        <service android:name=".service.MyService"></service>
     </application>
 
 </manifest>

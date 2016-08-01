@@ -9,7 +9,7 @@
                     android:icon="@drawable/ic_menu_camera"
                     android:title="Android 四大組件" />
                 <item
-                    android:id="@+id/nav_gallery"
+                    android:id="@+id/nav_BaseView"
                     android:icon="@drawable/ic_menu_gallery"
                     android:title="Android 控件" />
                 <item
@@ -36,15 +36,6 @@
                 android:id="@+id/nav_Manager"
                 android:icon="@drawable/ic_menu_gallery"
                 android:title="Android 管理器" />
-            <item
-                android:id="@+id/nav_slideshow1"
-                android:icon="@drawable/ic_menu_slideshow"
-                android:title="數據庫" />
-            <item
-                android:id="@+id/nav_manage1"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="其它" />
-
         </menu>
     </item>
 
