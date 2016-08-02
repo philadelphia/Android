@@ -10,13 +10,18 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.ui.activity.SecondActivity;
@@ -29,14 +34,19 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
     private Button btn_send;
     private Button btn_sendCollapse;
     private Button btn_sendHang;
-
     private Button btn_cancel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.i(TAG,"onCreateView");
         context = getContext();
-
         notificationManager =(NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         builder = new Notification.Builder(getActivity());
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
@@ -147,6 +157,34 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
 
     private void cancelNotification() {
         notificationManager.cancelAll();
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.mymenu, menu);
+        menu.removeItem(menu.size() - 1);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item1:
+                Toast.makeText(getContext(), "imte1", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.item2:
+                Toast.makeText(getContext(), "imte2", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.item3:
+                Toast.makeText(getContext(), "imte3", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.item4:
+                Toast.makeText(getContext(), "imte4", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

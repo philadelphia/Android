@@ -1,12 +1,16 @@
 package com.example.myapplication.ui;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,6 +31,12 @@ public class AndroidBaseViewFragment extends Fragment {
     TextView tv1;
     @BindView(R.id.tv2)
     TextView tv2;
+    @BindView(R.id.edt1)
+    EditText edt1;
+    @BindView(R.id.edt2)
+    EditText edt2;
+
+    private long mExitTime = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +55,9 @@ public class AndroidBaseViewFragment extends Fragment {
                 break;
             case R.id.tv2:
                 break;
+
         }
     }
+
+
 }
