@@ -1,12 +1,15 @@
 package com.example.myapplication.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.widget.Button;
 
@@ -21,7 +24,7 @@ public class SecondActivity extends AppCompatActivity {
     @BindView(R.id.btn_click)
     Button btnClick;
     private String flag;
-
+    private long mExitTime = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,8 +109,41 @@ public class SecondActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-
-
-
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            mExitTime = System.currentTimeMillis();
+            if ((System.currentTimeMillis() - mExitTime) > 1000) {
+                showDialog();
+
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(R.drawable.ic_launcher);
+        builder.setTitle("确定应用");
+        builder.setMessage("你是否确定要退出应用");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        builder.create().show();
+    }
+
+
 }
