@@ -1,0 +1,79 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.myapplication.ui.activityFragment">
+
+ <Button
+    android:id="@+id/btn_jump"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="跳转"
+    />
+
+ <Button
+     android:id="@+id/btn_standard"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:gravity="center"
+     android:text="standard" />
+
+
+ <Button
+     android:id="@+id/btn_singleTop"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:gravity="center"
+     android:text="singleTop" />
+
+
+ <Button
+     android:id="@+id/btn_singleTask"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:gravity="center"
+     android:text="singleTask" />
+
+
+ <Button
+     android:id="@+id/btn_singleInstance"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:gravity="center"
+     android:text="singleInstance" />
+
+
+ <Button
+     android:id="@+id/btn_explode"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:gravity="center"
+     android:text="分解"
+     android:onClick=""
+     />
+
+ <Button
+     android:id="@+id/btn_slide"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:gravity="center"
+     android:text="滑动"
+     />
+
+
+ <Button
+     android:id="@+id/btn_fade"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:gravity="center"
+     android:text="淡出"
+     />
+
+
+
+
+
+
+</LinearLayout>
