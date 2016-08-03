@@ -20,6 +20,8 @@ import com.example.myapplication.ui.AndroidBaseViewFragment;
 import com.example.myapplication.ui.ManagerFragment;
 import com.example.myapplication.ui.MaterialDesginFragment;
 import com.example.myapplication.ui.OtherFragment;
+import com.example.myapplication.ui.SendFragment;
+import com.example.myapplication.ui.ShareFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -131,12 +133,21 @@ public class MainActivity extends AppCompatActivity
                fragmentManager.beginTransaction().replace(R.id.container, managerFragment).commit();
             break;
 
-            case R.id.nav_send:
+
 
             case R.id.nav_materialDesign:
                 MaterialDesginFragment materialDesgin = new MaterialDesginFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, materialDesgin).commit();
             break;
+
+            case R.id.nav_share:
+                ShareFragment shareFragment = new ShareFragment();
+                fragmentManager.beginTransaction().replace(R.id.container, shareFragment).commit();
+                break;
+            case R.id.nav_send:
+                SendFragment sendFragment = new SendFragment();
+                fragmentManager.beginTransaction().replace(R.id.container, sendFragment).commit();
+                break;
         }
 
 

@@ -1,23 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.AndroidBaseViewFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/tv1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
-        android:cursorVisible="true" />
-
-    <TextView
-        android:id="@+id/tv2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment" />
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/edt1"
@@ -27,7 +11,6 @@
         android:cursorVisible="true"
         android:digits="1234567890.+-*/%\n()"
         android:drawableBottom="#00ff00" />
-
 
     <EditText
         android:id="@+id/edt2"
@@ -43,6 +26,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
+        android:gravity="center"
         android:text="show Dialog" />
+
+
+    <Button
+        android:id="@+id/btn_popupWindow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:text="popupWindow Test" />
 
 </LinearLayout>

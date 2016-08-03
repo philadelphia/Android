@@ -43,6 +43,8 @@ public class AndroidBaseFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_androidbase, null);
+        Log.i(TAG, "onCreateView: view" + view.getClass().getSimpleName());
+        Log.i(TAG, "onCreateView: container" + container.getClass().getSimpleName());
         initView(view);
         setUpViewPagerAndTabs();
         return view;
