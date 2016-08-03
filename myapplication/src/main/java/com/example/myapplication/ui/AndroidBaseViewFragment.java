@@ -1,18 +1,18 @@
 package com.example.myapplication.ui;
 
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.KeyEvent;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
@@ -25,37 +25,108 @@ import butterknife.OnClick;
  * @author Tao.ZT.Zhang
  */
 
-public class AndroidBaseViewFragment extends Fragment {
+public class AndroidBaseViewFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "AndroidBaseViewFragment";
-    @BindView(R.id.tv1)
+    private PopupWindow popupWindow;
+    private TextView tvExit, tvSet, tvCancel;
+    private View rootView;
     TextView tv1;
-    @BindView(R.id.tv2)
     TextView tv2;
-    @BindView(R.id.edt1)
     EditText edt1;
-    @BindView(R.id.edt2)
     EditText edt2;
+    Button btnShowDialog;
+    Button btnPopupWindow;
 
     private long mExitTime = 0;
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: ");
         MainActivity.getToolbar().setTitle("Android 基本组件");
-        View view = inflater.inflate(R.layout.fragment_android_base_view, null);
-        ButterKnife.bind(this, view);
+        MainActivity.getmTabLayout().setVisibility(View.GONE);
+        view = inflater.inflate(R.layout.fragment_android_base_view, container, false);
+//        view = inflater.inflate(R.layout.fragment_android_base_view, null);
+        initView(view);
         return view;
     }
 
-    @OnClick({R.id.tv1, R.id.tv2})
+
+    @Override
+    public void onResume() {
+        Log.i(TAG, "onResume: ");
+        Log.i(TAG, "onResume: view parent " + view.getParent().getClass().getSimpleName());
+        Log.i(TAG, "onResume: view's width " + view.getWidth());
+        Log.i(TAG, "onResume: view's Height " + view.getHeight());
+        super.onResume();
+    }
+
+    private void initView(View view) {
+        btnPopupWindow = (Button) view.findViewById(R.id.btn_popupWindow);
+        btnPopupWindow.setOnClickListener(this);
+
+    }
+
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv1:
-                break;
-            case R.id.tv2:
+
+            case R.id.btn_showDialog:
                 break;
 
+            case R.id.btn_popupWindow:
+                showPopUpWindow();
+                break;
+
+            case R.id.tv_cancel:
+                popupWindow.dismiss();//关闭PopupWindow
+                break;
+
+            case R.id.tv_set:
+                Toast.makeText(getContext(), "设置", Toast.LENGTH_SHORT).show();
+                popupWindow.dismiss();
+                break;
+
+            case R.id.tv_exit:
+                getActivity().finish();
+                break;
+        }
+    }
+
+    private void showPopUpWindow() {
+
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.popupwindow_layout, null);//PopupWindow对象
+
+// 初始化popupWindow的一种方法
+//        popupWindow=new PopupWindow(getContext());//初始化PopupWindow对象
+//        popupWindow.setContentView(view);//设置PopupWindow布局文件
+//        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);//设置PopupWindow宽
+//        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);//设置PopupWindow高
+
+// 初始化popupWindow的一种方法
+        popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_android_base_view, null);//父布局
+        popupWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
+        popupWindow.setOutsideTouchable(true);
+        tvSet = (TextView) view.findViewById(R.id.tv_set);
+        tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
+        tvExit = (TextView) view.findViewById(R.id.tv_exit);//在view对象中通过findViewById找到TextView控件
+        tvSet.setOnClickListener(this);//注册点击监听
+        tvCancel.setOnClickListener(this);//注册点击监听
+        tvExit.setOnClickListener(this);//注册点击监听
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                Toast.makeText(getContext(), "PupWindow消失了！", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void test(View view) {
+        if (popupWindow == null) {
+            showPopUpWindow();
+        } else {
+            popupWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);//设置PopupWindow的弹出位置。
         }
     }
 
