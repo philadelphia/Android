@@ -24,9 +24,7 @@ public class ShareFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_share, null);
-//        View view = inflater.inflate(R.layout.fragment_share, container, false);
+        View view = inflater.inflate(R.layout.fragment_share, container, false);
         MainActivity.getToolbar().setTitle("Share Fragment");
         return view;
     }
