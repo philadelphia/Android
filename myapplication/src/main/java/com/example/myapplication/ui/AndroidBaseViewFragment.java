@@ -48,6 +48,7 @@ public class AndroidBaseViewFragment extends Fragment implements View.OnClickLis
         MainActivity.getmTabLayout().setVisibility(View.GONE);
         view = inflater.inflate(R.layout.fragment_android_base_view, container, false);
 //        view = inflater.inflate(R.layout.fragment_android_base_view, null);
+        Log.i(TAG, "onCreateView: view " + view.getClass().getSimpleName());
         initView(view);
         return view;
     }
@@ -56,9 +57,6 @@ public class AndroidBaseViewFragment extends Fragment implements View.OnClickLis
     @Override
     public void onResume() {
         Log.i(TAG, "onResume: ");
-        Log.i(TAG, "onResume: view parent " + view.getParent().getClass().getSimpleName());
-        Log.i(TAG, "onResume: view's width " + view.getWidth());
-        Log.i(TAG, "onResume: view's Height " + view.getHeight());
         super.onResume();
     }
 

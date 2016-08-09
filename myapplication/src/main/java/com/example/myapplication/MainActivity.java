@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity
         initView();
 
         //default show android Base Fragment
-        AndroidBaseViewFragment androidBaseViewFragment = new AndroidBaseViewFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, androidBaseViewFragment).commit();
+        OtherFragment otherFragment = new OtherFragment();
+        fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
 
 
     }
