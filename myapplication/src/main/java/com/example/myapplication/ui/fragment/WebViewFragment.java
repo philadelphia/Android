@@ -46,7 +46,6 @@ public class WebViewFragment extends Fragment {
     }
 
     private void initView(View view) {
-
         webView = (WebView) view.findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
