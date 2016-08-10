@@ -2,12 +2,4 @@
   <option name="LINE_SPACING" value="1.0" />
   <option name="EDITOR_FONT_SIZE" value="22" />
   <option name="EDITOR_FONT_NAME" value="Monospaced" />
-  <attributes>
-    <option name="BOOKMARKS_ATTRIBUTES">
-      <value />
-    </option>
-    <option name="LOG_EXPIRED_ENTRY">
-      <value />
-    </option>
-  </attributes>
 </scheme>
