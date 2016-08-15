@@ -11,3 +11,4 @@
 /templates
 gradle/wrapper
 gradle.run.settings.xml
+gradle/wrapper/
