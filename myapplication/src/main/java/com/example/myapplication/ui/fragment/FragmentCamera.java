@@ -181,7 +181,7 @@ public class FragmentCamera extends Fragment {
             if (cursor.moveToFirst()) {
                 path = cursor.getString(cursor.getColumnIndex("_data"));
             }
-            cursor.close(); 
+            cursor.close();
         }
         return path;
     }
