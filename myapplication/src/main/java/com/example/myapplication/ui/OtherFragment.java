@@ -18,6 +18,8 @@ import com.example.myapplication.ui.fragment.ActivityFragment;
 import com.example.myapplication.ui.fragment.AnimationFragment;
 import com.example.myapplication.ui.fragment.BroadCastReceiverFragment;
 import com.example.myapplication.ui.fragment.ContentProviderFragment;
+import com.example.myapplication.ui.fragment.FragmentCamera;
+import com.example.myapplication.ui.fragment.MultiMediaFragment;
 import com.example.myapplication.ui.fragment.NotificationFragment;
 import com.example.myapplication.ui.fragment.ServiceFragment;
 import com.example.myapplication.ui.fragment.WebViewFragment;
@@ -29,7 +31,7 @@ import java.util.List;
 public class OtherFragment extends Fragment {
     private final String TAG = OtherFragment.class.getSimpleName();
     private ViewPager mViewPager;
-    private final String[] mTabTitles = {"Notification", "Animation", "WebView" , "MapService", "Dialog"};
+    private final String[] mTabTitles = {"Notification", "Animation", "WebView" ,"Camera", "MultiMedia",  "MapService", "Dialog"};
     private List<Fragment> mTabFragments ;
     private MyViewPagerAdapter mPagerAdapter;
     private TabLayout mTablayout;
@@ -64,6 +66,8 @@ public class OtherFragment extends Fragment {
         mTabFragments.add(new NotificationFragment());
         mTabFragments.add(new AnimationFragment());
         mTabFragments.add(new WebViewFragment());
+        mTabFragments.add(new FragmentCamera());
+        mTabFragments.add(new MultiMediaFragment());
         mPagerAdapter = new MyViewPagerAdapter (this.getChildFragmentManager(), mTabFragments, mTabTitles);
         mViewPager.setAdapter (mPagerAdapter);
         mTablayout.setupWithViewPager (mViewPager);

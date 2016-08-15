@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.myapplication.ui.fragment.FragmentCamera">
+
+    <Button
+    android:id="@+id/btn_takePhoto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="takePhoto"/>
+
+    <Button
+        android:id="@+id/btn_chosePhotoFromablum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="chosePhotoFromablum"/>
+
+    <ImageView
+        android:id="@+id/imgView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_launcher"/>
+
+</LinearLayout>
