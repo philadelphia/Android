@@ -10,4 +10,5 @@
 /_windows/
 /templates
 /gradle/wrapper
-gradle.run.settings.xml
+/gradle/wrapper/
+/gradle.run.settings.xml
