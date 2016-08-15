@@ -9,3 +9,5 @@
 /captures
 /_windows/
 /templates
+gradle/wrapper
+gradle.run.settings.xml
