@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.example.retrofitdemo.bean.LoginResult;
 import com.example.retrofitdemo.serviceInterface.LoginService;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,6 +29,12 @@ public class TestFragment extends Fragment implements View.OnClickListener {
     Button btnLogin;
     TextView tvLoginresult;
     View view;
+    /**
+     * Result : Successful
+     */
+
+    private String Result;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,7 +54,11 @@ public class TestFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()){
             case R.id.btn_login:
                 Log.i(TAG, "onClick: btn");
-                login();
+                try {
+                    login();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
 
             default:
@@ -57,7 +69,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
 
 
 
-    private void login() {
+    private void login() throws IOException {
         //1.创建Retrofit对象
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())//解析方法
@@ -68,6 +80,15 @@ public class TestFragment extends Fragment implements View.OnClickListener {
         LoginService service = retrofit.create(LoginService.class);
         Call<LoginResult> call = service.login("drc", "drc@123");
 
+        //同步请求
+//        try {
+//            Response<LoginResult> execute = call.execute();
+//            Log.i(TAG, "login: " + execute.body().toString());
+//
+//        }catch (Exception e){
+//
+//        }
+
         //3.发送请求
         call.enqueue(new Callback<LoginResult>() {
             @Override
@@ -75,8 +96,6 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                 //4.处理结果
                 if (response.isSuccessful()){
                     LoginResult result = response.body();
-                    Log.i(TAG, "header: " + response.headers().toString());
-
                     if (result != null){
                         Log.i(TAG, "onResponse: " + result.toString());
                         tvLoginresult.setText(result.getResult());
@@ -86,8 +105,11 @@ public class TestFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<LoginResult> call, Throwable t) {
-
+                Log.i(TAG, "onFailure: call" + call.toString());
+                Log.i(TAG, "onFailure: call" + t.getCause());
             }
         });
     }
+
+
 }
