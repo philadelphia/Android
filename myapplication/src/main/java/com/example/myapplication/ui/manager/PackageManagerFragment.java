@@ -155,6 +155,7 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     private void addOneItems(int position, PackageInfo packageInfo) {
         installedPackages.add(position, packageInfo);
         myAdapter.notifyItemInserted(position);
+        
     }
 
     private void deleteItem(int position) {
