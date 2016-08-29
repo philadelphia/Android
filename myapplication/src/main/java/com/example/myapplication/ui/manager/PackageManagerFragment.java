@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -136,10 +137,12 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         }
         switch (item.getItemId()) {
             case 0:
-                signAsImportant();
-
+                addOneItems(position, new PackageInfo());
                 break;
             case 1:
+                signAsImportant();
+                break;
+            case 2:
                 deleteItem(position);
                 Log.i(TAG, "deleting......: ");
                 break;
@@ -149,10 +152,16 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         return super.onContextItemSelected(item);
     }
 
+    private void addOneItems(int position, PackageInfo packageInfo) {
+        installedPackages.add(position, packageInfo);
+        myAdapter.notifyItemInserted(position);
+    }
+
     private void deleteItem(int position) {
         Log.i(TAG, "deleteItem: " + position);
         installedPackages.remove(position);
-        myAdapter.notifyDataSetChanged();
+        myAdapter.notifyItemRemoved(position);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
 

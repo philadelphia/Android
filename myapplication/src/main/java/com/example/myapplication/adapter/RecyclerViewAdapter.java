@@ -104,9 +104,9 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
             contextMenu.setHeaderTitle("操作");
-            contextMenu.add(0, 0, 1, "标记为重要");
-            contextMenu.add(0, 2, 0, "dd要");
-            contextMenu.add(0, 1, 2, "删除");
+            contextMenu.add(0, 0, 0, "添加");
+            contextMenu.add(0, 1, 1, "标记为重要");
+            contextMenu.add(0, 2, 2, "删除");
         }
     }
 }
