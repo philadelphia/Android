@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,18 +23,27 @@ import com.example.myapplication.ui.MaterialDesginFragment;
 import com.example.myapplication.ui.OtherFragment;
 import com.example.myapplication.ui.SendFragment;
 import com.example.myapplication.ui.ShareFragment;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FragmentManager fragmentManager ;
-    private static Toolbar toolbar ;
+    private FragmentManager fragmentManager;
+    private static Toolbar toolbar;
     private static FloatingActionButton fab;
     private static TabLayout mTabLayout;
     private static DrawerLayout drawer;
     private static ActionBarDrawerToggle toggle;
     private static NavigationView navigationView;
     private static final String TAG = "MainActivity";
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +53,16 @@ public class MainActivity extends AppCompatActivity
         initView();
 
         //default show android Base Fragment
-        OtherFragment otherFragment = new OtherFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
+        ManagerFragment managerFragment = new ManagerFragment();
+        fragmentManager.beginTransaction().replace(R.id.container, managerFragment).commit();
 
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    public  void initView(){
+    public void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         fragmentManager = getSupportFragmentManager();
@@ -112,33 +125,32 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         item.setCheckable(true);
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.nav_camera:
-            AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
-            fragmentManager.beginTransaction().replace(R.id.container, androidBaseFragment).commit();
+                AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
+                fragmentManager.beginTransaction().replace(R.id.container, androidBaseFragment).commit();
 
-            break;
+                break;
             case R.id.nav_BaseView:
                 AndroidBaseViewFragment androidBaseViewFragment = new AndroidBaseViewFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, androidBaseViewFragment).commit();
-            break;
+                break;
 
             case R.id.nav_other:
-            OtherFragment otherFragment = new OtherFragment();
-            fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
-            break;
+                OtherFragment otherFragment = new OtherFragment();
+                fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
+                break;
 
-           case  R.id.nav_Manager:
-               ManagerFragment managerFragment = new ManagerFragment();
-               fragmentManager.beginTransaction().replace(R.id.container, managerFragment).commit();
-            break;
-
+            case R.id.nav_Manager:
+                ManagerFragment managerFragment = new ManagerFragment();
+                fragmentManager.beginTransaction().replace(R.id.container, managerFragment).commit();
+                break;
 
 
             case R.id.nav_materialDesign:
                 MaterialDesginFragment materialDesgin = new MaterialDesginFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, materialDesgin).commit();
-            break;
+                break;
 
             case R.id.nav_share:
                 ShareFragment shareFragment = new ShareFragment();
@@ -149,8 +161,6 @@ public class MainActivity extends AppCompatActivity
                 fragmentManager.beginTransaction().replace(R.id.container, sendFragment).commit();
                 break;
         }
-
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -170,11 +180,27 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         Log.e(TAG, "onStart: ");
         super.onStart();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.example.myapplication/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
     }
 
     @Override
     protected void onRestart() {
-        Log.e(TAG, "onRestart: " );
+        Log.e(TAG, "onRestart: ");
         super.onRestart();
     }
 
@@ -195,6 +221,22 @@ public class MainActivity extends AppCompatActivity
     protected void onStop() {
         Log.e(TAG, "onStop: ");
         super.onStop();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.example.myapplication/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.disconnect();
     }
 
     @Override

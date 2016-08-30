@@ -8,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.R;
+import com.example.myapplication.utils.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WindowManagerFragment extends Fragment {
+public class WindowManagerFragment extends BaseFragment {
 
 
     public WindowManagerFragment() {
@@ -21,10 +22,7 @@ public class WindowManagerFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_window_manager, container, false);
+    public int getNormalLayout() {
+        return R.layout.fragment_window_manager;
     }
-
 }

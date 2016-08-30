@@ -1,8 +1,0 @@
-<templateSet group="Comment">
-  <template name="&lt;abbreviation&gt;" value="/**&#10;    $desc$&#10;    *@author tao.zt.zhang&#10;    *created at $date$  $time$  &#10;&#10;*/" description="authorDeclare" toReformat="false" toShortenFQNames="true">
-    <variable name="desc" expression="" defaultValue="" alwaysStopAt="true" />
-    <variable name="date" expression="" defaultValue="" alwaysStopAt="true" />
-    <variable name="time" expression="" defaultValue="" alwaysStopAt="true" />
-    <context />
-  </template>
-</templateSet>

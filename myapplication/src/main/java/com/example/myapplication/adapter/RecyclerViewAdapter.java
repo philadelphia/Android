@@ -2,6 +2,7 @@ package com.example.myapplication.adapter;
 
 import android.content.pm.PackageInfo;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
     private  List<PackageInfo> dataList;
     private CustomItemClickListener customItemClickListener;
 
+    private int position;
     public RecyclerViewAdapter(List<PackageInfo> dataList) {
 
         this.dataList = dataList;
@@ -27,6 +29,14 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
 
     public void setOnCustomeItemClickListener(CustomItemClickListener customItemClickListener){
         this.customItemClickListener = customItemClickListener;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     @Override
@@ -39,14 +49,37 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
                 customItemClickListener.onItemClick(view,viewHolder.getAdapterPosition() );
             }
         });
+
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                customItemClickListener.onItemLongClick(view,viewHolder.getAdapterPosition() );
+                return true;
+            }
+        });
         return viewHolder ;
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.tv_pkgName.setText(dataList.get(position).packageName);
         holder.tv_pkgVersionCode.setText(String.valueOf(dataList.get(position).versionCode));
         holder.tv_pkgVersionName.setText(dataList.get(position).versionName);
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                setPosition(holder.getPosition());
+                return false;
+            }
+        });
+    }
+
+
+    @Override
+    public void onViewRecycled(MyViewHolder holder) {
+        holder.itemView.setOnLongClickListener(null);
+        super.onViewRecycled(holder);
     }
 
     @Override
@@ -55,8 +88,7 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
     }
 
 
-
-    public class MyViewHolder extends  RecyclerView.ViewHolder{
+    public class MyViewHolder extends  RecyclerView.ViewHolder  implements View.OnCreateContextMenuListener{
         public TextView tv_pkgName;
         public TextView tv_pkgVersionCode;
         public TextView tv_pkgVersionName;
@@ -66,6 +98,15 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
             tv_pkgName = (TextView) itemView.findViewById(R.id.tv_pkgName);
             tv_pkgVersionCode = (TextView) itemView.findViewById(R.id.tv_VersionCode);
             tv_pkgVersionName = (TextView) itemView.findViewById(R.id.tv_VersionName);
+            itemView.setOnCreateContextMenuListener(this);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            contextMenu.setHeaderTitle("操作");
+            contextMenu.add(0, 0, 0, "添加");
+            contextMenu.add(0, 1, 1, "标记为重要");
+            contextMenu.add(0, 2, 2, "删除");
         }
     }
 }
