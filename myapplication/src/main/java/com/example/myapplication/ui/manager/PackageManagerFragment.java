@@ -24,6 +24,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
 import com.example.myapplication.utils.CustomItemClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,7 +36,7 @@ import butterknife.OnClick;
  */
 public class PackageManagerFragment extends Fragment implements CustomItemClickListener {
     private PackageManager packageManager;
-    private List<PackageInfo> installedPackages;
+    private List<PackageInfo> installedPackages = new ArrayList<>();
     private List<String> pkgNameList;
     private RecyclerViewAdapter myAdapter;
     @BindView(R.id.recyclerView)
@@ -54,7 +55,7 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         packageManager = getContext().getPackageManager();
         ButterKnife.bind(this, view);
 //        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        initData();
+
         myAdapter = new RecyclerViewAdapter(installedPackages);
         myAdapter.setOnCustomeItemClickListener(this);
 
@@ -64,22 +65,18 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 
         registerForContextMenu(recyclerView);
         recyclerView.setAdapter(myAdapter);
+        initData();
         return view;
 
     }
 
     public void initData() {
         Log.i(TAG, "initData: ");
-        installedPackages = packageManager.getInstalledPackages(0);
+        installedPackages.clear();
+        installedPackages.addAll(packageManager.getInstalledPackages(0));
+        myAdapter.notifyDataSetChanged();
         Log.i(TAG, "installedPackages: " + installedPackages.size());
-//        pkgNameList = new ArrayList<>();
-//        for (PackageInfo pkginfo :installedPackages
-//             ) {
-//            String packageName = pkginfo.packageName;
-//            pkgNameList.add(packageName);
-//        }
-//
-//        Log.i(TAG, "pkgNameList: " + pkgNameList.size());
+
     }
 
     @OnClick(R.id.recyclerView)
@@ -167,5 +164,18 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 
 
     private void signAsImportant() {
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unregisterForContextMenu(recyclerView);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
     }
 }

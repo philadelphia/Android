@@ -32,13 +32,14 @@ public class TestFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       
+
+        Log.i(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_test, container, false);
         packageManager = getContext().getPackageManager();
-        initDatas();
         initView(view);
-        myAdapter = new MyBaseAdapter(installedPackages, LayoutInflater.from(getContext()));
+        myAdapter = new MyBaseAdapter(installedPackages, getContext());
         listView.setAdapter(myAdapter);
+        initDatas();
         return view;
     }
 
@@ -48,15 +49,22 @@ public class TestFragment extends Fragment implements AdapterView.OnItemClickLis
 
     }
 
-    public List<PackageInfo> initDatas(){
+    public void initDatas(){
+        Log.i(TAG, "initDatas: ");
         installedPackages.clear();
-        installedPackages = packageManager.getInstalledPackages(0);
-        Log.i(TAG, "initDatas:  size == " + initDatas().size());
+        installedPackages.addAll(packageManager.getInstalledPackages(0));
+        Log.i(TAG, "initDatas:  size == " + installedPackages.size());
+        myAdapter.notifyDataSetChanged();
 
-        return  installedPackages;
     }
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Toast.makeText(getContext(), "第" + position + "item was clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 }

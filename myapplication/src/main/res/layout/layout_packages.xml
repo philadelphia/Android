@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:elevation="4dp"
+    card_view:cardElevation="4dp"
     card_view:cardCornerRadius="2dp"
     card_view:cardBackgroundColor="@color/cardview_light_background"
     android:layout_marginTop="10dp"
     >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
