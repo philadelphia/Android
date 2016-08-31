@@ -10,6 +10,16 @@
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:divider="#fdf0c0"
+        android:dividerHeight="3dp"
+        android:scrollbars="none"
          />
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_launcher"/>
 
 </LinearLayout>

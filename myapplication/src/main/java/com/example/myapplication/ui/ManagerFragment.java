@@ -31,8 +31,7 @@ import java.util.List;
 public class ManagerFragment extends Fragment {
     private final String TAG = OtherFragment.class.getSimpleName();
     private ViewPager mViewPager;
-//    private final String[] mTabTitles = {"Package", "Test", "Activity", "Window"};
-    private final String[] mTabTitles = { "Package","Activity"};
+    private final String[] mTabTitles = {"Package", "Test", "Activity", "Window"};
     private List<Fragment> mTabFragments ;
     private MyViewPagerAdapter mPagerAdapter;
     private TabLayout mTablayout;
@@ -65,8 +64,8 @@ public class ManagerFragment extends Fragment {
         mTabFragments = new ArrayList<>();
         mTabFragments.add(new PackageManagerFragment());
         mTabFragments.add(new TestFragment());
-//        mTabFragments.add(new ActivityManagerFragment());
-//        mTabFragments.add(new WindowManagerFragment());
+        mTabFragments.add(new ActivityManagerFragment());
+        mTabFragments.add(new WindowManagerFragment());
         mPagerAdapter = new MyViewPagerAdapter (this.getChildFragmentManager(), mTabFragments, mTabTitles);
         mViewPager.setAdapter (mPagerAdapter);
         mTablayout.setupWithViewPager (mViewPager);
