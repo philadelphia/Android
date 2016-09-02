@@ -156,23 +156,23 @@ public class TestFragment extends Fragment implements View.OnTouchListener,AbsLi
 
     @Override
     public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount ) {
-        Log.i(TAG, "onScroll: firstVisibleItem " + firstVisibleItem);
+        Log.i(TAG, "onScroll: firstVisibleItem " + firstVisibleItem );
         Log.i(TAG, "onScroll: visibleItemCount " + visibleItemCount);
         Log.i(TAG, "onScroll: totalItemCount " + totalItemCount);
 
-        if (firstVisibleItem + visibleItemCount  == totalItemCount && totalItemCount > 0){
-            Log.i(TAG, "onScroll: 滑动到了最下面");
-        }else
-            Log.i(TAG, "onScroll: 还没滑动到底");
-       
-        if (firstVisibleItem > lastVisibleItem){
-            Log.e(TAG, "onScroll: 向上滑动");
-        }else if (firstVisibleItem < lastVisibleItem){
-            Log.e(TAG, "onScroll: 向下滑动");
-        }
-       lastVisibleItem = firstVisibleItem;
-        Log.i(TAG, "onScroll: lastVisibleItem == " + lastVisibleItem);
-        
+//        if (firstVisibleItem + visibleItemCount  == totalItemCount && totalItemCount > 0){
+//            Log.e(TAG, "onScroll: 滑动到了最下面");
+//        }else
+//            Log.i(TAG, "onScroll: 还没滑动到底");
+//
+//        if (firstVisibleItem > lastVisibleItem){
+//            Log.e(TAG, "onScroll: 向上滑动");
+//        }else if (firstVisibleItem < lastVisibleItem){
+//            Log.e(TAG, "onScroll: 向下滑动");
+//        }
+//       lastVisibleItem = firstVisibleItem;
+//        Log.i(TAG, "onScroll: lastVisibleItem == " + lastVisibleItem);
+//
     }
 
 

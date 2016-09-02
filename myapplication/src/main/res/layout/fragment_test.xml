@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:divider="#fdf0c0"
         android:dividerHeight="3dp"
-        android:scrollbars="none"
+
          />
 
     <ImageView
