@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.manager;
 
 
+import android.content.ClipData;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -24,6 +26,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
 import com.example.myapplication.utils.CustomItemClickListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,7 +39,7 @@ import butterknife.OnClick;
  */
 public class PackageManagerFragment extends Fragment implements CustomItemClickListener {
     private PackageManager packageManager;
-    private List<PackageInfo> installedPackages;
+    private List<PackageInfo> installedPackages = new ArrayList<>();
     private List<String> pkgNameList;
     private RecyclerViewAdapter myAdapter;
     @BindView(R.id.recyclerView)
@@ -50,11 +54,11 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.i(TAG, "onCreateView: ");
-        View view = inflater.inflate(R.layout.fragment_package_manager, null);
+        final View view = inflater.inflate(R.layout.fragment_package_manager, null);
         packageManager = getContext().getPackageManager();
         ButterKnife.bind(this, view);
 //        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        initData();
+
         myAdapter = new RecyclerViewAdapter(installedPackages);
         myAdapter.setOnCustomeItemClickListener(this);
 
@@ -64,22 +68,63 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 
         registerForContextMenu(recyclerView);
         recyclerView.setAdapter(myAdapter);
+        new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            private RecyclerViewAdapter.MyViewHolder viewHolder;
+            @Override
+            public boolean isItemViewSwipeEnabled() {
+                return  true;
+            }
+
+            @Override
+            public boolean isLongPressDragEnabled() {
+                return  true;
+            }
+
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+                int swipFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+
+                return makeMovementFlags(dragFlags, swipFlags);
+            }
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                Collections.swap(installedPackages, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return true;
+            }
+
+            @Override
+            public void onMoved(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int fromPos, RecyclerView.ViewHolder target, int toPos, int x, int y) {
+                super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
+                myAdapter.notifyItemMoved(viewHolder.getAdapterPosition(),target.getAdapterPosition());
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                installedPackages.remove(viewHolder.getAdapterPosition());
+                myAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
+            }
+
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                super.onSelectedChanged(viewHolder, actionState);
+            }
+        }).attachToRecyclerView(recyclerView);
+
+        initData();
         return view;
 
     }
 
     public void initData() {
         Log.i(TAG, "initData: ");
-        installedPackages = packageManager.getInstalledPackages(0);
+        installedPackages.clear();
+        installedPackages.addAll(packageManager.getInstalledPackages(0));
+        myAdapter.notifyDataSetChanged();
         Log.i(TAG, "installedPackages: " + installedPackages.size());
-//        pkgNameList = new ArrayList<>();
-//        for (PackageInfo pkginfo :installedPackages
-//             ) {
-//            String packageName = pkginfo.packageName;
-//            pkgNameList.add(packageName);
-//        }
-//
-//        Log.i(TAG, "pkgNameList: " + pkgNameList.size());
+
     }
 
     @OnClick(R.id.recyclerView)
@@ -167,5 +212,18 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 
 
     private void signAsImportant() {
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unregisterForContextMenu(recyclerView);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
     }
 }

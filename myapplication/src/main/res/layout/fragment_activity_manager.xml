@@ -5,17 +5,20 @@
     android:orientation="vertical"
     tools:context=".ui.manager.ActivityManagerFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:gravity="center"
+        android:textSize="20sp"
         android:text="Network Now Available " />
 
-    <ImageView
-        android:layout_width="match_parent"
+
+    <Button
+        android:id="@+id/btn_test"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_load_success"/>
+        android:text="Test"
+        android:textSize="20sp"
+        android:gravity="center"/>
 
 </LinearLayout>

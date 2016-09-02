@@ -1,5 +1,6 @@
 package com.example.myapplication.adapter;
 
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
@@ -20,9 +21,9 @@ import java.util.zip.Inflater;
 public class MyBaseAdapter extends BaseAdapter {
     private List<PackageInfo> datas;
     private LayoutInflater layoutInflater;
-    public MyBaseAdapter(List<PackageInfo> installedPackages, LayoutInflater inflater){
+    public MyBaseAdapter(List<PackageInfo> installedPackages, Context context){
         this.datas = installedPackages;
-        this.layoutInflater = inflater;
+        this.layoutInflater = LayoutInflater.from(context);
     }
     @Override
     public int getCount() {
@@ -49,7 +50,7 @@ public class MyBaseAdapter extends BaseAdapter {
 //    @Override
 //    public View getView(int position, View view, ViewGroup viewGroup) {
 //        view = layoutInflater.inflate(R.layout.layout_packages,null);
-//       TextView tv_pkgName;
+//        TextView tv_pkgName;
 //        TextView tv_pkgVersionCode;
 //        TextView tv_pkgVersionName;
 //
@@ -77,7 +78,7 @@ public class MyBaseAdapter extends BaseAdapter {
         if (convertView == null){
             viewHolder = new ViewHolder();
 
-            convertView = layoutInflater.inflate(R.layout.layout_packages,null);
+            convertView = layoutInflater.inflate(R.layout.layout_packages,viewGroup,false);
             viewHolder.tv_pkgName = (TextView) convertView.findViewById(R.id.tv_pkgName);
             viewHolder.tv_pkgVersionCode = (TextView) convertView.findViewById(R.id.tv_VersionCode);
             viewHolder.tv_pkgVersionName = (TextView) convertView.findViewById(R.id.tv_VersionName);
@@ -96,6 +97,7 @@ public class MyBaseAdapter extends BaseAdapter {
 
 
     public class ViewHolder {
+
         public TextView tv_pkgName;
         public TextView tv_pkgVersionCode;
         public TextView tv_pkgVersionName;
