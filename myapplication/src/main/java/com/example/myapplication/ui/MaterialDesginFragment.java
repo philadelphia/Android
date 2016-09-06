@@ -14,12 +14,8 @@ import android.view.ViewGroup;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MyViewPagerAdapter;
-import com.example.myapplication.ui.fragment.BroadCastReceiverFragment;
-import com.example.myapplication.ui.fragment.CircularRevealFragment;
-import com.example.myapplication.ui.fragment.ContentProviderFragment;
-import com.example.myapplication.ui.fragment.NotificationFragment;
-import com.example.myapplication.ui.fragment.RippleFragment;
-import com.example.myapplication.ui.fragment.ServiceFragment;
+import com.example.myapplication.ui.fragment.materialdesign.CircularRevealFragment;
+import com.example.myapplication.ui.fragment.materialdesign.RippleFragment;
 
 import java.util.ArrayList;
 import java.util.List;

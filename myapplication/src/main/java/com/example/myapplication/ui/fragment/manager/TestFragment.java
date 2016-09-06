@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.fragment;
+package com.example.myapplication.ui.fragment.manager;
 
 
 import android.content.pm.PackageInfo;
@@ -50,7 +50,7 @@ public class TestFragment extends Fragment implements View.OnTouchListener,AbsLi
         myAdapter = new MyBaseAdapter(installedPackages, getContext());
         listView.setAdapter(myAdapter);
         listView.setEmptyView(imageview);
-//        registerForContextMenu(listView);
+        registerForContextMenu(listView);
         initDatas();
         return view;
     }
@@ -129,6 +129,18 @@ public class TestFragment extends Fragment implements View.OnTouchListener,AbsLi
             case MotionEvent.ACTION_UP:
                 Log.i(TAG, "onTouch: keyup");
                 break;
+            case MotionEvent.ACTION_MOVE:
+//                Log.i(TAG, "onTouch: ACTION_MOVE ");
+                break;
+            case MotionEvent.ACTION_OUTSIDE:
+                Log.i(TAG, "onTouch: outside");
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                Log.i(TAG, "onTouch: ACTION_POINTER_DOWN");
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                Log.i(TAG, "onTouch:ACTION_POINTER_UP ");
+                break;
             case  MotionEvent.ACTION_CANCEL:
                 Log.i(TAG, "onTouch: cancel");
                 break;
@@ -156,9 +168,9 @@ public class TestFragment extends Fragment implements View.OnTouchListener,AbsLi
 
     @Override
     public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount ) {
-        Log.i(TAG, "onScroll: firstVisibleItem " + firstVisibleItem );
-        Log.i(TAG, "onScroll: visibleItemCount " + visibleItemCount);
-        Log.i(TAG, "onScroll: totalItemCount " + totalItemCount);
+        Log.d(TAG, "onScroll: firstVisibleItem " + firstVisibleItem );
+        Log.d(TAG, "onScroll: visibleItemCount " + visibleItemCount);
+        Log.d(TAG, "onScroll: totalItemCount " + totalItemCount);
 
 //        if (firstVisibleItem + visibleItemCount  == totalItemCount && totalItemCount > 0){
 //            Log.e(TAG, "onScroll: 滑动到了最下面");

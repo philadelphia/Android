@@ -13,14 +13,10 @@ import android.view.ViewGroup;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MyViewPagerAdapter;
-import com.example.myapplication.ui.fragment.BroadCastReceiverFragment;
-import com.example.myapplication.ui.fragment.ContentProviderFragment;
-import com.example.myapplication.ui.fragment.NotificationFragment;
-import com.example.myapplication.ui.fragment.ServiceFragment;
-import com.example.myapplication.ui.fragment.TestFragment;
-import com.example.myapplication.ui.manager.ActivityManagerFragment;
-import com.example.myapplication.ui.manager.PackageManagerFragment;
-import com.example.myapplication.ui.manager.WindowManagerFragment;
+import com.example.myapplication.ui.fragment.manager.TestFragment;
+import com.example.myapplication.ui.fragment.manager.ActivityManagerFragment;
+import com.example.myapplication.ui.fragment.manager.PackageManagerFragment;
+import com.example.myapplication.ui.fragment.manager.WindowManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;

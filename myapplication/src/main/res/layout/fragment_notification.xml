@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.example.myapplication.ui.fragment.NotificationFragment">
+    tools:context=".ui.fragment.other.NotificationFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <Button

@@ -1,7 +1,5 @@
 package com.example.myapplication.ui;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,15 +12,11 @@ import android.view.ViewGroup;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MyViewPagerAdapter;
-import com.example.myapplication.ui.fragment.ActivityFragment;
-import com.example.myapplication.ui.fragment.AnimationFragment;
-import com.example.myapplication.ui.fragment.BroadCastReceiverFragment;
-import com.example.myapplication.ui.fragment.ContentProviderFragment;
-import com.example.myapplication.ui.fragment.FragmentCamera;
-import com.example.myapplication.ui.fragment.MultiMediaFragment;
-import com.example.myapplication.ui.fragment.NotificationFragment;
-import com.example.myapplication.ui.fragment.ServiceFragment;
-import com.example.myapplication.ui.fragment.WebViewFragment;
+import com.example.myapplication.ui.fragment.other.AnimationFragment;
+import com.example.myapplication.ui.fragment.other.CameraFragment;
+import com.example.myapplication.ui.fragment.other.MultiMediaFragment;
+import com.example.myapplication.ui.fragment.other.NotificationFragment;
+import com.example.myapplication.ui.fragment.other.WebViewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +60,7 @@ public class OtherFragment extends Fragment {
         mTabFragments.add(new NotificationFragment());
         mTabFragments.add(new AnimationFragment());
         mTabFragments.add(new WebViewFragment());
-        mTabFragments.add(new FragmentCamera());
+        mTabFragments.add(new CameraFragment());
         mTabFragments.add(new MultiMediaFragment());
         mPagerAdapter = new MyViewPagerAdapter (this.getChildFragmentManager(), mTabFragments, mTabTitles);
         mViewPager.setAdapter (mPagerAdapter);

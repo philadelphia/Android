@@ -17,7 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.design.widget.TabLayout;
 import com.example.myapplication.ui.AndroidBaseFragment;
-import com.example.myapplication.ui.AndroidBaseViewFragment;
+import com.example.myapplication.ui.DatabaseFragment;
+import com.example.myapplication.ui.fragment.widget.AndroidBaseViewFragment;
 import com.example.myapplication.ui.ManagerFragment;
 import com.example.myapplication.ui.MaterialDesginFragment;
 import com.example.myapplication.ui.OtherFragment;
@@ -53,9 +54,9 @@ public class MainActivity extends AppCompatActivity
         initView();
 
         //default show android Base Fragment
-//        ManagerFragment managerFragment = new ManagerFragment();
-       OtherFragment otherFragment = new OtherFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
+        ManagerFragment managerFragment = new ManagerFragment();
+//       OtherFragment otherFragment = new OtherFragment();
+        fragmentManager.beginTransaction().replace(R.id.container, managerFragment).commit();
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -137,6 +138,11 @@ public class MainActivity extends AppCompatActivity
                 fragmentManager.beginTransaction().replace(R.id.container, androidBaseViewFragment).commit();
                 break;
 
+            case R.id.nav_database:
+                DatabaseFragment databaseFragment = new DatabaseFragment();
+                fragmentManager.beginTransaction().replace(R.id.container,databaseFragment).commit();
+                break;
+
             case R.id.nav_other:
                 OtherFragment otherFragment = new OtherFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
@@ -160,6 +166,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_send:
                 SendFragment sendFragment = new SendFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, sendFragment).commit();
+                break;
+
+            default:
                 break;
         }
 
