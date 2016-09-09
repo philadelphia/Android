@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.ui.customView;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.example.myapplication.R;
 
 /**
  * TODO: document your custom view class.

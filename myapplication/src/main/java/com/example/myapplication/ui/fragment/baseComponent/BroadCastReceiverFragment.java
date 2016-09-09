@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.fragment;
+package com.example.myapplication.ui.fragment.baseComponent;
 
 import android.content.Context;
 import android.content.IntentFilter;

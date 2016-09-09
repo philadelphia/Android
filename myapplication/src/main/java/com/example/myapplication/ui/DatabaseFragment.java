@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.fragment;
+package com.example.myapplication.ui;
 
 
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import com.example.myapplication.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WindowFragment extends Fragment {
+public class DatabaseFragment extends Fragment {
 
 
-    public WindowFragment() {
+    public DatabaseFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class WindowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_window, container, false);
+        return inflater.inflate(R.layout.fragment_database, container, false);
     }
 
 }

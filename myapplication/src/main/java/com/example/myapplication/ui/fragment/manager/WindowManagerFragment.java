@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.manager;
+package com.example.myapplication.ui.fragment.manager;
 
 
 import android.os.Bundle;

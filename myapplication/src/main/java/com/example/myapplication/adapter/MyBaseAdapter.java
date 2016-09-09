@@ -86,6 +86,7 @@ public class MyBaseAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         }else {
              viewHolder = (ViewHolder) convertView.getTag();
+
         }
         viewHolder.tv_pkgName.setText(datas.get(position).packageName);
         viewHolder.tv_pkgVersionCode.setText(String.valueOf(datas.get(position).versionCode));
@@ -102,4 +103,6 @@ public class MyBaseAdapter extends BaseAdapter {
         public TextView tv_pkgVersionCode;
         public TextView tv_pkgVersionName;
     }
+
+
 }

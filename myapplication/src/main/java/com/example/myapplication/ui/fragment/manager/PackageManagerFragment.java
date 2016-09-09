@@ -1,7 +1,6 @@
-package com.example.myapplication.ui.manager;
+package com.example.myapplication.ui.fragment.manager;
 
 
-import android.content.ClipData;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -12,15 +11,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
@@ -125,6 +121,7 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         myAdapter.notifyDataSetChanged();
         Log.i(TAG, "installedPackages: " + installedPackages.size());
 
+
     }
 
     @OnClick(R.id.recyclerView)
@@ -200,7 +197,7 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     private void addOneItems(int position, PackageInfo packageInfo) {
         installedPackages.add(position, packageInfo);
         myAdapter.notifyItemInserted(position);
-        
+
     }
 
     private void deleteItem(int position) {
@@ -224,6 +221,6 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     @Override
     public void onDestroy() {
         super.onDestroy();
-
     }
+
 }

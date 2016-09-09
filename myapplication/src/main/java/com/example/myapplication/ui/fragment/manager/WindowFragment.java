@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.fragment;
+package com.example.myapplication.ui.fragment.manager;
 
 
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import com.example.myapplication.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapFragment extends Fragment {
+public class WindowFragment extends Fragment {
 
 
-    public MapFragment() {
+    public WindowFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class MapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false);
+        return inflater.inflate(R.layout.fragment_window, container, false);
     }
 
 }

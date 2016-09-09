@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.manager.ActivityManagerFragment">
+    tools:context=".ui.fragment.manager.ActivityManagerFragment">
 
     <TextView
         android:layout_width="match_parent"
@@ -14,10 +14,18 @@
 
 
     <Button
-        android:id="@+id/btn_test"
+        android:id="@+id/btn_testBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Test"
+        android:text="Test Scroll By"
+        android:textSize="20sp"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/btn_testTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test Scroll TO"
         android:textSize="20sp"
         android:gravity="center"/>
 

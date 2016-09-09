@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.fragment;
+package com.example.myapplication.ui.fragment.other;
 
 
 import android.annotation.TargetApi;
@@ -36,7 +36,7 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentCamera extends Fragment {
+public class CameraFragment extends Fragment {
 
 
     @BindView(R.id.btn_takePhoto)
@@ -52,7 +52,7 @@ public class FragmentCamera extends Fragment {
     private final static int CROP_PHOTO = 3;
 
 
-    public FragmentCamera() {
+    public CameraFragment() {
         // Required empty public constructor
     }
 
