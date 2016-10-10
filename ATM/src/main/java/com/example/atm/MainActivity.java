@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.atm.ui.sitelist.SiteListFragment;
+import com.example.atm.ui.troubleticket.TroubleTicketListFragment;
 import com.example.atm.ui.userinfo.UserInfoFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_bookmark:
                 break;
             case R.id.nav_troubleTicket:
+                fragmentManager.beginTransaction().replace(R.id.container, new TroubleTicketListFragment()).commit();
                 break;
             default:
                 break;

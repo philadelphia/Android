@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <group android:checkableBehavior="single">
+    <group
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_userInfo"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@mipmap/ic_user_info"
             android:title="User info" />
         <item
             android:id="@+id/nav_siteList"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@mipmap/ic_site_list"
             android:title="Site list" />
         <item
             android:id="@+id/nav_siteMap"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@mipmap/ic_site_map"
             android:title="Site map" />
         <item
             android:id="@+id/nav_bookmark"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@mipmap/ic_bookmark"
             android:title="Bookmark" />
 
         <item
             android:id="@+id/nav_troubleTicket"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@mipmap/ic_trouble_tickets"
             android:title="Trouble ticket" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
+
+    <group
+        android:id="@+id/group2">
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
@@ -35,7 +36,7 @@
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Send" />
-        </menu>
-    </item>
+        </group>
+
 
 </menu>

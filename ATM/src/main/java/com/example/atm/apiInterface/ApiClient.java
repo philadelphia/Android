@@ -2,6 +2,7 @@ package com.example.atm.apiInterface;
 
 import com.example.atm.bean.SiteData;
 import com.example.atm.bean.SiteInfoData;
+import com.example.atm.bean.TroubleTicket;
 import com.example.atm.entities.PCFilter;
 import com.example.atm.entities.SiteAlarmData;
 
@@ -30,5 +31,8 @@ public interface ApiClient {
 
     @POST("/WebAPI/API/{AlarmPage}")
    Call<SiteAlarmData> getAlarmInfo(@Header("LoginID") String id, @Header("SiteID") String siteID, @Header("SiteInfoID") String siteInfoID, @Path("AlarmPage")String path);
+
+    @POST("/WebAPI/API/TroubleTicket")
+    Call<TroubleTicket> getTroubleTicketList(@Header("LoginID") String id);
 
 }

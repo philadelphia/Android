@@ -110,10 +110,10 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
         return super.onOptionsItemSelected(item);
     }
 
-    public void fetchSiteList(String userId) {
+    public void fetchSiteList(String loginID) {
         Log.i(TAG, "fetchSiteList: ");
         ApiClient siteList = MyRetrofit.initRetrofit().create(ApiClient.class);
-        Call<SiteData> allSites = siteList.getAllSites(userId);
+        Call<SiteData> allSites = siteList.getAllSites(loginID);
         allSites.enqueue(new Callback<SiteData>() {
             @Override
             public void onResponse(Call<SiteData> call, Response<SiteData> response) {
