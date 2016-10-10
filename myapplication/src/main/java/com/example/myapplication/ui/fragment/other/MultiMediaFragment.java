@@ -42,7 +42,7 @@ public class MultiMediaFragment extends Fragment implements View.OnClickListener
         try {
             File file = new File(Environment.getExternalStorageDirectory(),"hangouts_incoming_call.ogg");
             mediaPlayer.setDataSource(file.getPath());
-            mediaPlayer.prepare();
+//            mediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();
         }

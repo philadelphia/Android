@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- for theme -->
+    <color name="theme_primary">#00aeef</color>
+    <color name="theme_primary_dark">#00aeef</color>
+    <color name="theme_accent">#fff68603</color>
+    <color name="star_color">#ffe8bd0f</color>
+    <color name="blue_delta">#00aeef</color>
+    <color name="drawer_background_color">#ffffffff</color>
+    <color name="fragment_background_color">#ffffffff</color>
+
+    <!-- according to material design guideline, the menu item's font color is 87% #000000 -->
+    <color name="drawer_item_text_color">#000000</color>
+    <color name="site_info_text">#3e3e3e</color>
+    <color name="spinner">#3e3e3e</color>
+    <color name="shape_line">#00ac82</color>
+    <color name="shape_energy">#e5f7f2</color>
+    <color name="label_text">#A9A9A9</color>
+    <color name="black">#000000</color>
+    <color name="black2">#000000</color>
+    <color name="lightblack">#333333</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#f2f2f2</color>
+    <color name="red">#ff0000</color>
+    <color name="green">#00ff36</color>
+    <color name="btn_pressed">#E67100</color>
+    <color name="btn_unpressed">#666666</color>
+    <color name="gray_second">#666666</color>
+
+
+    <color name="item_pressed_background_color">#fff0f0f0</color>
+    <color name="save_unpressed">#01aff2</color>
+    <color name="save_pressed">#018bc0</color>
+
+    <color name="transparent_background">#00000000</color>
+</resources>

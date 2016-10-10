@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" 
+    >
+
+    <item
+        android:id="@+id/camera"
+        android:icon="@mipmap/camera_image"
+        android:title=""
+        app:showAsAction="ifRoom|collapseActionView"
+       />
+    <item
+        android:id="@+id/send"
+        android:icon="@mipmap/send_image"
+        android:title=""
+        app:showAsAction="ifRoom|collapseActionView"/>
+
+</menu>

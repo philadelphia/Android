@@ -56,8 +56,9 @@ public class MainActivity extends AppCompatActivity
         //default show android Base Fragment
 //        ManagerFragment managerFragment = new ManagerFragment();
 //       OtherFragment otherFragment = new OtherFragment();
-        OtherFragment otherFragment = new OtherFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
+//        OtherFragment otherFragment = new OtherFragment();
+        DatabaseFragment databaseFragment = new DatabaseFragment();
+        fragmentManager.beginTransaction().replace(R.id.container, databaseFragment).commit();
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -140,6 +141,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_database:
+                Log.e(TAG, "onNavigationItemSelected: database");
                 DatabaseFragment databaseFragment = new DatabaseFragment();
                 fragmentManager.beginTransaction().replace(R.id.container,databaseFragment).commit();
                 break;

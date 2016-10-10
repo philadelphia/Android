@@ -1,0 +1,229 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/ll02"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin" >
+
+            <ImageButton
+                android:id="@+id/ibt_previous"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:src="@mipmap/ic_previous"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/text_current_time"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6.29"
+                android:background="@color/gray"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:text="2016-01-12 12:34:56"
+                android:textColor="#7e7e7e"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/ibt_next"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:src="@mipmap/ic_next"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e1e1e1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="Security &amp; Detection Zone"
+                android:textColor="#00aeef"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e1e1e1" />
+            <!-- Security Zone -->
+
+            <TextView
+                android:id="@+id/atm1"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="40dp"
+                android:gravity="center_vertical"
+                android:text="ATM 1:"
+                android:textColor="#111111"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ffffff" />
+
+            <ListView
+                android:id="@+id/listatm1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="#ffffff" />
+
+            <TextView
+                android:id="@+id/atmlistempty1"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="56dp"
+                android:gravity="center_vertical|top"
+                android:paddingLeft="0dp"
+                android:text="NO ACTIVE ALARMS"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e1e1e1" />
+
+
+
+
+
+
+
+            <TextView
+                android:id="@+id/atmlistempty2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="56dp"
+                android:gravity="center_vertical|top"
+                android:paddingLeft="0dp"
+                android:text="NO ACTIVE ALARMS"
+                android:visibility="gone" />
+
+            <ViewStub
+                android:id="@+id/empty2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="56dp"
+                android:layout="@layout/emty_view_alarm" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="14.34dp"
+                android:background="#f2f2f3"
+                android:paddingTop="30dp" />
+
+            <!-- Removal Zone -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:singleLine="true"
+                android:text="Removal &amp; Tamper Zone"
+                android:textColor="#00aeef"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e1e1e1" />
+
+            <ListView
+                android:id="@+id/listRemovalZone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="#ffffff" />
+
+            <TextView
+                android:id="@+id/removal_zone_noAlarms"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="56dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="0dp"
+                android:text="NO ACTIVE ALARMS"
+                android:visibility="gone" />
+
+            <ViewStub
+                android:id="@+id/empty3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout="@layout/emty_view_alarm" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="14.34dp"
+                android:background="#f2f2f3"
+                android:paddingTop="20dp" />
+
+            <!-- Silent Zone -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:singleLine="true"
+                android:text="Silent Zone"
+                android:textColor="#00aeef"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e1e1e1" />
+
+            <ListView
+                android:id="@+id/listSilentZone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="#ffffff"
+                android:footerDividersEnabled="false" />
+
+            <TextView
+                android:id="@+id/silent_zone_noAlarms"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="56dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="0dp"
+                android:text="NO ACTIVE ALARMS"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
