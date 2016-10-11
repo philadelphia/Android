@@ -2,12 +2,17 @@ package com.example.atm.ui.troubleticket;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.internal.ForegroundLinearLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,6 +37,7 @@ import com.example.atm.utils.CustomItemClickListener;
 import com.example.atm.utils.MyRetrofit;
 
 
+import okhttp3.Headers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -92,6 +98,19 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 		troubleTicketList.enqueue(new Callback<TroubleTicket>() {
 			@Override
 			public void onResponse(Call<TroubleTicket> call, Response<TroubleTicket> response) {
+				Log.i(TAG, "onResponse:code ===  " + response.code());
+				Log.i(TAG, "onResponse: message == " + response.message());
+				Headers headers =  response.headers();
+
+				Map<String, List<String>> stringListMap = headers.toMultimap();
+				for (Map.Entry<String,List<String>> entry : stringListMap.entrySet()
+					 ) {
+					Log.i(TAG, "key== " + entry.getKey());
+					Log.i(TAG, "value'size ==: " + entry.getValue().size());
+					Log.i(TAG, "value== " + entry.getValue().toString());
+				}
+				
+
 				if (response.body() != null){
 					mTroubletList.clear();
 					Log.i(TAG, "onResponse: " + response.body().getTTData().size());

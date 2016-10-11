@@ -32,8 +32,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
 //        UserInfoFragment userInfoFragment = new UserInfoFragment();
-        SiteListFragment siteListFragment = new SiteListFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, siteListFragment).commit();
+//        SiteListFragment siteListFragment = new SiteListFragment();
+        TroubleTicketListFragment troubleTicketListFragment = new TroubleTicketListFragment();
+        fragmentManager.beginTransaction().replace(R.id.container, troubleTicketListFragment).commit();
         initView();
     }
 
