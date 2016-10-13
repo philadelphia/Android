@@ -1,4 +1,4 @@
-package com.example.atm.ui.fragment;
+package com.example.atm.ui.search;
 
 import java.util.ArrayList;
 import java.util.List;

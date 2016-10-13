@@ -1,4 +1,4 @@
-package com.example.atm.entities;
+package com.example.atm.bean;
 
 import java.io.Serializable;
 
