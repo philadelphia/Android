@@ -20,9 +20,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.atm.ui.fragment.SearchFragment;
+import com.example.atm.ui.search.SearchFragment;
 import com.example.atm.ui.sitePager.Fragment_SiteItem_ViewPager;
 import com.example.atm.utils.Constatnts;
+import com.example.atm.utils.HttpCallUtil;
 import com.example.atm.utils.MyRetrofit;
 import com.example.atm.MainActivity;
 import com.example.atm.R;
@@ -61,6 +62,7 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
     private Context context;
     private RecyclerViewAdapter myAdapter;
     private List<SiteItem> mSiteList = new ArrayList<>();
+    private Call<SiteData> allSites;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,7 +115,7 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
     public void fetchSiteList(String loginID) {
         Log.i(TAG, "fetchSiteList: ");
         ApiClient siteList = MyRetrofit.initRetrofit().create(ApiClient.class);
-        Call<SiteData> allSites = siteList.getAllSites(loginID);
+        allSites = siteList.getAllSites(loginID);
         allSites.enqueue(new Callback<SiteData>() {
             @Override
             public void onResponse(Call<SiteData> call, Response<SiteData> response) {
@@ -147,6 +149,12 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
         super.onResume();
         MainActivity.setActionBarTitle("Site List",null);
         MainActivity.getFloatingActionButton().setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        HttpCallUtil.cancelCall(allSites);
     }
 
     @Override

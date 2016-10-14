@@ -8,9 +8,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about">"Content:  Retrofit,Glide,RxJava"</string>
 
 
-   <!-- <string name="app_name">m-ProTecht</string>-->
+    <!-- <string name="app_name">m-ProTecht</string>-->
     <string name="title_user_info">User info</string>
     <string name="title_site_list">Site list</string>
     <string name="title_site_map">Site map</string>
@@ -97,4 +98,5 @@
     <string name="generic_error">Generic error</string>
     <string name="no_internet">No internet connection</string>
     <string name="name">Name</string>
+    <string name="change_password">Change Password</string>
 </resources>

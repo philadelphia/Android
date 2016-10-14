@@ -20,6 +20,7 @@ import com.example.atm.apiInterface.ApiClient;
 import com.example.atm.bean.SiteInfoData;
 import com.example.atm.entities.SiteInfo;
 import com.example.atm.utils.Constatnts;
+import com.example.atm.utils.HttpCallUtil;
 import com.example.atm.utils.MyRetrofit;
 
 import java.util.ArrayList;
@@ -216,8 +217,12 @@ public class SiteInfoFragment extends Fragment {
 
 	@Override
 	public void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
+	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		HttpCallUtil.cancelCall(siteInformation);
 	}
 }

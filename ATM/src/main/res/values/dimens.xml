@@ -10,4 +10,23 @@
     <dimen name="list_item_icon_margin_left">16dp</dimen>
     <dimen name="list_item_margin_left">16dp</dimen>
     <dimen name="list_item_margin_right">16dp</dimen>
+
+
+
+    <!--
+         Per the design guidelines, navigation drawers should be between 240dp and 320dp:
+         https://developer.android.com/design/patterns/navigation-drawer.html
+    -->
+    <dimen name="navigation_drawer_width">240dp</dimen>
+    <dimen name="navigation_drawer_user_info_item_height">56dp</dimen>
+    <dimen name="navigation_drawer_user_info_item_margin_button">8dp</dimen>
+    <dimen name="navigation_drawer_user_icon_margin_top">16dp</dimen>
+    <dimen name="navigation_drawer_header_height">192dp</dimen>
+    <!-- For list items -->
+
+    <dimen name="list_item_text_margin_left">72dp</dimen>
+
+    <dimen name="list_item_primary_font_size">16sp</dimen>
+    <dimen name="list_item_secondary_font_size">11sp</dimen>
+    <dimen name="list_item_site_id">13sp</dimen>
 </resources>

@@ -34,6 +34,7 @@ import com.example.atm.adapter.TroubleTicketListRecyclerViewAdapter;
 import com.example.atm.apiInterface.ApiClient;
 import com.example.atm.bean.TroubleTicket;
 import com.example.atm.utils.CustomItemClickListener;
+import com.example.atm.utils.HttpCallUtil;
 import com.example.atm.utils.MyRetrofit;
 
 
@@ -157,6 +158,12 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 	public void onDestroyView() {
 		super.onDestroyView();
 		root = null;
+		getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				Log.i(TAG, "run: 厉害了我的哥");
+			}
+		});
 	}
 
 	@Override
@@ -176,5 +183,11 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 	@Override
 	public void onItemLongClick(View v, int position) {
 
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		HttpCallUtil.cancelCall(troubleTicketList);
 	}
 }

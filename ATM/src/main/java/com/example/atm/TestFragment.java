@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.atm.apiInterface.ApiClient;
-import com.example.atm.apiInterface.LoginService;
 import com.example.atm.bean.LoginResult;
 
 import com.example.atm.bean.SiteData;
@@ -94,7 +93,7 @@ public Retrofit initRetrofit(){
 
         Retrofit retrofit = initRetrofit();
         //2.创建访问API的请求
-        LoginService service = retrofit.create(LoginService.class);
+        ApiClient service = retrofit.create(ApiClient.class);
         Call<LoginResult> call = service.login("drc", "drc@123");
 
 

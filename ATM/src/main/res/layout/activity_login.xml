@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg">
+    android:background="@mipmap/bg_login">
 
         <ImageView
             android:id="@+id/logo"
@@ -11,7 +11,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="80dp"
-            android:src="@drawable/login_pro" />
+            android:src="@mipmap/login_pro" />
 
        
 		        <LinearLayout
@@ -19,7 +19,6 @@
 		            android:layout_width="match_parent"
 		            android:layout_height="wrap_content"
 		            android:layout_alignParentLeft="true"
-		            android:layout_below="@+id/test"
 		            android:orientation="horizontal"
 		            android:layout_marginTop="230dp"
 		             >
@@ -28,23 +27,23 @@
 		                android:id="@+id/user"
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
-		                android:layout_below="@id/test"
+
 		                android:layout_marginLeft="49dp"
-		                android:src="@drawable/user" />
+		                android:src="@mipmap/user" />
 		            
 		            <ImageView
 		                android:id="@+id/line1"
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
-		                android:layout_below="@id/test"
+
 		                android:layout_marginLeft="15dp"
-		                android:src="@drawable/line" />
+		                android:src="@mipmap/line" />
 		
 		            <EditText
 		               	android:id="@+id/edit1"
 		                android:layout_width="match_parent"
 		                android:layout_height="match_parent"
-		                android:layout_below="@id/test"
+
 		                android:layout_marginLeft="17dp"
 		                android:layout_toRightOf="@id/line1"
 		                android:textSize="12sp"
@@ -72,23 +71,22 @@
            		         android:id="@+id/password"
            		         android:layout_width="wrap_content"
            		         android:layout_height="wrap_content"
-           		         android:layout_below="@id/test"
            		         android:layout_marginLeft="49dp"
-           		         android:src="@drawable/mm" />
+           		         android:src="@mipmap/mm" />
 
            		     <ImageView
            		         android:id="@+id/line2"
            		         android:layout_width="wrap_content"
            		         android:layout_height="wrap_content"
-           		         android:layout_below="@id/test"
+
            		         android:layout_marginLeft="15dp"
-           		         android:src="@drawable/line" />
+           		         android:src="@mipmap/line" />
 
            		     <EditText
            		         android:id="@+id/edit2"
            		         android:layout_width="match_parent"
            		         android:layout_height="match_parent"
-           		         android:layout_below="@id/test"
+
            		         android:layout_marginLeft="17dp"
            		         android:layout_toRightOf="@id/line1"
            		         android:textColor="#ffffff"
@@ -112,7 +110,7 @@
            	    android:layout_below="@+id/userlayout"
            	    android:layout_centerHorizontal="true"
            	    android:layout_marginTop="12dp"
-           	    android:src="@drawable/bailine" />
+           	    android:src="@mipmap/bailine" />
 
            	<ImageView
            	    android:id="@+id/line_2"
@@ -121,7 +119,7 @@
            	    android:layout_alignLeft="@+id/line"
            	    android:layout_below="@+id/passwordlayout"
            	    android:layout_marginTop="14dp"
-           	    android:src="@drawable/bailine" />
+           	    android:src="@mipmap/bailine" />
            		 
            		 
            	<LinearLayout 
@@ -140,7 +138,7 @@
    			    android:layout_width="0dp"
    			    android:layout_height="wrap_content"
    			    android:layout_weight="365"
-   			    android:background="@drawable/buttonlan"
+   			    android:background="@drawable/btn_selector"
    			    android:text="Login"
    			    android:textColor="#ffffff"
    			    android:layout_centerInParent="true"
@@ -152,8 +150,8 @@
            		         />
            	</LinearLayout>
 
-           	<TextView
-           	    android:id="@+id/textview"
+           	<Button
+           	    android:id="@+id/btn_forgetPassword"
            	    android:layout_width="wrap_content"
            	    android:layout_height="wrap_content"
            	    android:layout_alignParentBottom="true"
@@ -163,6 +161,7 @@
            	    android:textColor="#00aeef"
            	    android:layout_marginBottom="13dp"
            	    android:textSize="15sp"
-           	    android:clickable="true" />
+				android:background="#00000000"
+           	    />
 
 </RelativeLayout>

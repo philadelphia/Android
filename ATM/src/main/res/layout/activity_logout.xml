@@ -12,21 +12,21 @@
         android:layout_marginTop="31dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:text="Do you want to logout?"
+        android:text="Do you want to logout ?"
         android:textColor="#5a5a5a"
         android:textSize="18sp" />
 
     <Button
         android:id="@+id/logoutbutton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
         android:layout_marginTop="38dp"
-        android:background="@drawable/buttonlan"
+        android:background="@drawable/btn_selector"
         android:text="Send"
-        android:textColor="#ffffff" />
+        android:textColor="@color/white" />
 
 </LinearLayout>

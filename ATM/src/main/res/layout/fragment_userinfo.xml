@@ -78,12 +78,16 @@
         android:layout_height="1dp"
         android:background="#5a5a5a" />
 
-    <TextView
-        android:id="@+id/tv_changepassword"
+    <Button
+        android:id="@+id/btn_changepassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Change Password"
+        android:text="@string/change_password"
         android:textColor="#00aeef"
+        android:gravity="left|center"
+        android:textAllCaps="false"
+        android:background="#00000000"
         android:textSize="18sp" />
-</LinearLayout>
+
+</LinearLayout>
