@@ -8,6 +8,7 @@ import com.example.atm.bean.UpdatePasswordResult;
 import com.example.atm.bean.UserInfo;
 import com.example.atm.entities.PCFilter;
 import com.example.atm.entities.SiteAlarmData;
+import com.example.atm.entities.SiteMap;
 
 import retrofit2.Call;
 import retrofit2.http.Header;
@@ -54,4 +55,8 @@ public interface ApiClient {
 
     @POST("/WebAPI/API/Cluster")
     Call<SiteData> queryCluster(@Header("LoginID") String id, @Header("ProductID") String productID,@Header("CircleID") String circleID,@Header("ClusterID")String clusterID);
+
+    /*get siteMap information*/
+    @POST("/WebAPI/API/SiteMap")
+    Call<SiteMap>getAllSiteMapInfo(@Header("LoginID") String id);
 }

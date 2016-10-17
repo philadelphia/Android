@@ -18,6 +18,9 @@ import com.example.atm.utils.HttpCallUtil;
 import com.example.atm.utils.MyNetworkStatus;
 import com.example.atm.utils.MyRetrofit;
 import com.example.atm.utils.ToastUtil;
+import com.example.atm.utils.Url;
+
+import java.lang.reflect.Method;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,7 +28,6 @@ import retrofit2.Response;
 
 
 public class ChangePasswordActivity extends Activity implements OnClickListener {
-
 
 	private EditText current_Password, new_Password, confirm_Password;
 

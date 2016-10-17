@@ -21,6 +21,7 @@ import android.widget.Button;
 
 import com.example.atm.ui.about.AboutFragment;
 import com.example.atm.ui.setting.SettingsFragment;
+import com.example.atm.ui.siteMap.SiteMapFragment;
 import com.example.atm.ui.sitelist.SiteListFragment;
 import com.example.atm.ui.troubleticket.TroubleTicketListFragment;
 import com.example.atm.ui.userinfo.UserInfoFragment;
@@ -105,10 +106,13 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_siteMap:
+                SiteMapFragment siteMapFragment = new SiteMapFragment();
+                fragmentManager.beginTransaction().replace(R.id.container,siteMapFragment).commit();
                 break;
 
             case R.id.nav_bookmark:
                 break;
+
             case R.id.nav_troubleTicket:
                 fragmentManager.beginTransaction().replace(R.id.container, new TroubleTicketListFragment()).commit();
                 break;

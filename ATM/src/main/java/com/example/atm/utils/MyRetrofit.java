@@ -1,5 +1,9 @@
 package com.example.atm.utils;
 
+import android.util.Log;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -9,10 +13,30 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MyRetrofit {
     public static Retrofit initRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
+                .client(getHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())//解析方法
                 .baseUrl(Url.BASE_URL)//主机地址
                 .build();
 
         return retrofit;
+    }
+
+    public static HttpLoggingInterceptor getHttpInterceptor() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Log.i("RxJava", message);
+            }
+        });
+
+        return interceptor;
+    }
+
+    public static OkHttpClient getHttpClient() {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(getHttpInterceptor())
+                .build();
+
+        return client;
     }
 }
