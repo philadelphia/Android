@@ -6,8 +6,11 @@ import com.example.atm.bean.SiteInfoData;
 import com.example.atm.bean.TroubleTicket;
 import com.example.atm.bean.UpdatePasswordResult;
 import com.example.atm.bean.UserInfo;
+import com.example.atm.entities.PCFilter;
 import com.example.atm.entities.SiteAlarmData;
 import com.example.atm.entities.SiteMap;
+
+import retrofit2.Call;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -30,6 +33,9 @@ public interface ApiClientRxJava {
 
     @POST("/WebAPI/API/ConsolidatedSite")
     Observable<SiteData> getAllSites(@Header("LoginID") String id);
+
+    @POST("/WebAPI/API/PCCFilter")
+    Observable<PCFilter> getAllProducts(@Header("LoginID") String id);
 
     @POST("/WebAPI/API/SiteSearch")
     Observable<SiteData> getSiteResults(@Header("LoginID") String id, @Header("SiteName") String siteName);
@@ -55,4 +61,6 @@ public interface ApiClientRxJava {
     /*get siteMap information*/
     @POST("/WebAPI/API/SiteMap")
     Observable<SiteMap>getAllSiteMapInfo(@Header("LoginID") String id);
+
+
 }

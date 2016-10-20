@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.atm.R;
+import com.example.atm.apiInterface.ApiClientRxJava;
 import com.example.atm.entities.Product;
 import com.example.atm.utils.Constatnts;
 import com.example.atm.utils.HttpCallUtil;
@@ -38,11 +39,14 @@ import com.example.atm.entities.PCFilter;
 
 
 import com.example.atm.entities.FilterBean;
+import com.example.atm.utils.RxsRxSchedulers;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import rx.Observable;
+import rx.Subscriber;
 
 
 public class SearchFragment extends Fragment implements OnClickListener, OnItemClickListener {
@@ -94,6 +98,7 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
     private int selectedProductID;
     private int selectedCircleID;
     private int selectedClusterID;
+    private Observable<PCFilter> allProductsRxjava;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -178,7 +183,8 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
         super.onResume();
         Log.i(TAG, "onResume");
         MainActivity.setActionBarTitle("Filter & search", null);
-        fetchFilterData("drc");
+//        fetchFilterData("drc");
+        fetchFilterDataByRxjava("drc");
 
         tv_product.setText(sharePreference.getString(Constatnts.SelectedProductName, "Please select a product"));
         tv_circle.setText(sharePreference.getString(Constatnts.SelectedCircleName, "Please select a circle"));
@@ -216,10 +222,60 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
                 loadDialog.dismiss();
             }
         });
-
-
     }
 
+    public void fetchFilterDataByRxjava(final String loginID) {
+        Log.i(TAG, "fetchFilterData: ");
+        Retrofit retrofit = MyRetrofit.initRetrofit();
+        ApiClientRxJava apiClient = retrofit.create(ApiClientRxJava.class);
+        allProductsRxjava = apiClient.getAllProducts(loginID);
+        this.allProducts.enqueue(new Callback<PCFilter>() {
+            @Override
+            public void onResponse(Call<PCFilter> call, Response<PCFilter> response) {
+                if (HttpCallUtil.isResponseValid(response)) {
+                    loadDialog.dismiss();
+                    productList.clear();
+                    productList.addAll(response.body().getPrDetail());
+                    circleList.clear();
+                    circleList.addAll(response.body().getPrCircleDetail());
+                    clusterList.clear();
+                    clusterList.addAll(response.body().getPrClusterDetail());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PCFilter> call, Throwable t) {
+                Log.i(TAG, "onFailure: ");
+                loadDialog.dismiss();
+            }
+        });
+
+        allProductsRxjava.compose(RxsRxSchedulers.io_main()).subscribe(new Subscriber<PCFilter>() {
+            @Override
+            public void onCompleted() {
+                Log.i(TAG, "onCompleted: ");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.i(TAG, "onError: ");
+                loadDialog.dismiss();
+            }
+
+            @Override
+            public void onNext(PCFilter pcFilter) {
+                Log.i(TAG, "onNext: ");
+                loadDialog.dismiss();
+                productList.clear();
+                productList.addAll(pcFilter.getPrDetail());
+                circleList.clear();
+                circleList.addAll(pcFilter.getPrCircleDetail());
+                clusterList.clear();
+                clusterList.addAll(pcFilter.getPrClusterDetail());
+            }
+        });
+
+    }
 
     private ArrayList<String> getProductNameList() {
         Log.i(TAG, "getProductNameList");

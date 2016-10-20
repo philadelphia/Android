@@ -32,10 +32,12 @@ import com.example.atm.MainActivity;
 import com.example.atm.R;
 import com.example.atm.adapter.TroubleTicketListRecyclerViewAdapter;
 import com.example.atm.apiInterface.ApiClient;
+import com.example.atm.apiInterface.ApiClientRxJava;
 import com.example.atm.bean.TroubleTicket;
 import com.example.atm.utils.CustomItemClickListener;
 import com.example.atm.utils.HttpCallUtil;
 import com.example.atm.utils.MyRetrofit;
+import com.example.atm.utils.RxsRxSchedulers;
 
 
 import okhttp3.Headers;
@@ -43,6 +45,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import rx.Observable;
+import rx.Subscriber;
 
 
 public class TroubleTicketListFragment extends Fragment implements CustomItemClickListener{
@@ -62,6 +66,7 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 	private static final String TAG = "TroubleTicketListFragme";
 	private Call<TroubleTicket> troubleTicketList;
 	private TroubleTicketListRecyclerViewAdapter mAdapter;
+	private Observable<TroubleTicket> troubleTicketListRxjava;
 
 	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
@@ -78,7 +83,8 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 		Log.i(TAG, "onCreateView:LoginID ==  " + LoginID);
 		mFragmentManager = getActivity().getSupportFragmentManager();
 		initView(root);
-		getAllTroubleTicketes("drc");
+//		getAllTroubleTicketes("drc");
+		getAllTroubleTicketesByRxjava("drc");
 		return root;
 	}
 
@@ -128,6 +134,33 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 		});
 	}
 
+	public void getAllTroubleTicketesByRxjava(String loginID){
+		Log.i(TAG, "getAllTroubleTicketes: ");
+		Retrofit retrofit = MyRetrofit.initRetrofit();
+		ApiClientRxJava apiClient = retrofit.create(ApiClientRxJava.class);
+		troubleTicketListRxjava = apiClient.getTroubleTicketList(loginID);
+		troubleTicketListRxjava.compose(RxsRxSchedulers.io_main()).subscribe(new Subscriber<TroubleTicket>() {
+			@Override
+			public void onCompleted() {
+				Log.i(TAG, "onCompleted: ");
+			}
+
+			@Override
+			public void onError(Throwable e) {
+				Log.i(TAG, "onError: ");
+			}
+
+			@Override
+			public void onNext(TroubleTicket troubleTicket) {
+				Log.i(TAG, "onNext: ");
+				mTroubletList.clear();
+				Log.i(TAG, "onResponse: " + troubleTicket.getTTData().size());
+				mTroubletList.addAll(troubleTicket.getTTData());
+				mAdapter.notifyDataSetChanged();
+			}
+		});
+
+	}
 
 	@Override
 	public void onResume() {
