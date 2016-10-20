@@ -161,7 +161,7 @@ public class SiteMapFragment extends Fragment {
         mDialog = new ProgressDialog(getActivity());
         mDialog.setMessage("Loading...");
         mDialog.show();
-        allSiteMapInfo = MyRetrofit.initRetrofit().create(ApiClient.class).getAllSiteMapInfo(loginID);
+        allSiteMapInfo = MyRetrofit.getInstance().create(ApiClient.class).getAllSiteMapInfo(loginID);
         allSiteMapInfo.enqueue(new Callback<SiteMap>() {
             @Override
             public void onResponse(Call<SiteMap> call, Response<SiteMap> response) {

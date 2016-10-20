@@ -65,8 +65,7 @@ public class SiteInfoFragment extends Fragment {
     }
 
     public void fetSiteInformation(String loginID, String siteID) {
-        Retrofit retrofit = MyRetrofit.initRetrofit();
-        ApiClient apiClient = retrofit.create(ApiClient.class);
+        ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
         siteInformation = apiClient.getSiteInformation(loginID, siteID);
         siteInformation.enqueue(new Callback<SiteInfoData>() {
             @Override

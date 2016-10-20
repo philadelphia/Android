@@ -44,6 +44,7 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -122,7 +123,7 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
 
     public void fetchSiteList(String loginID) {
         Log.i(TAG, "fetchSiteList: ");
-        ApiClient siteList = MyRetrofit.initRetrofit().create(ApiClient.class);
+        ApiClient siteList = MyRetrofit.getInstance().create(ApiClient.class);
 
         allSites = siteList.getAllSites(loginID);
         allSites.enqueue(new Callback<SiteData>() {
@@ -148,7 +149,8 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
     
     public  void fetchSiteListByRxJava(String loginID){
         Log.i(TAG, "fetchSiteListByRxJava: ");
-        ApiClientRxJava apiClientRxJava = MyRetrofit.initRetrofit().create(ApiClientRxJava.class);
+
+        ApiClientRxJava apiClientRxJava = MyRetrofit.getInstance().create(ApiClientRxJava.class);
         allSitesRxjava = apiClientRxJava.getAllSites(loginID);
         allSitesRxjava.compose(RxsRxSchedulers.io_main())
         .subscribe(new Observer<SiteData>() {

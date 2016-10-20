@@ -152,8 +152,8 @@ public class SearchResultFragment extends Fragment implements
 	}
 
 	private void showSearchResult(String loginID, String siteName)  {
-		Retrofit retrofit = MyRetrofit.initRetrofit();
-		ApiClient apiClient = retrofit.create(ApiClient.class);
+
+		ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
 		siteResults = apiClient.getSiteResults(loginID, siteName);
         loadDialog.dismiss();
 		siteResults.enqueue(new Callback<SiteData>() {
@@ -180,8 +180,7 @@ public class SearchResultFragment extends Fragment implements
 	}
 
 	public  void showSearchResultByRxjava(String loginID, String siteName){
-		Retrofit retrofit = MyRetrofit.initRetrofit();
-		ApiClientRxJava apiClient = retrofit.create(ApiClientRxJava.class);
+		ApiClientRxJava apiClient = MyRetrofit.getInstance().create(ApiClientRxJava.class);
 		siteResultsRxjava = apiClient.getSiteResults(loginID, siteName);
 		siteResultsRxjava.compose(RxsRxSchedulers.io_main()).subscribe(new Subscriber<SiteData>() {
 			@Override

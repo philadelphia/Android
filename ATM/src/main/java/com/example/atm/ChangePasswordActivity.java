@@ -113,7 +113,7 @@ public class ChangePasswordActivity extends Activity implements OnClickListener 
 	}
 
 	private void updateUserPassword(String loginID, String currentPassword, String newPassword) {
-		ApiClient apiClient = MyRetrofit.initRetrofit().create(ApiClient.class);
+		ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
 		updatePasswordResultCall = apiClient.updateUserPassword(loginID, currentPassword, newPassword);
 		updatePasswordResultCall.enqueue(new Callback<UpdatePasswordResult>() {
 			@Override

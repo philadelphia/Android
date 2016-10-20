@@ -166,7 +166,7 @@ public class QueryResultFragment extends Fragment implements CustomItemClickList
 		view.setVisibility(View.VISIBLE);
 		Log.i(TAG, "showQueryResult was Called" + productid + circleid + clusterid);
 		MainActivity.setActionBarTitle(getString(R.string.Query_title), null);
-		ApiClientRxJava apiClient = MyRetrofit.initRetrofit().create(ApiClientRxJava.class);
+		ApiClientRxJava apiClient = MyRetrofit.getInstance().create(ApiClientRxJava.class);
 
 		if (productid != 0 && clusterid == 0 && circleid == 0) {
 			Log.i(TAG, "1 parameters");
@@ -272,7 +272,7 @@ public class QueryResultFragment extends Fragment implements CustomItemClickList
 		view.setVisibility (View.VISIBLE);
 		Log.i (TAG, "showQueryResult was Called" + productid + circleid + clusterid);
 		MainActivity.setActionBarTitle (getString (R.string.Query_title),null);
-		ApiClient apiClient = MyRetrofit.initRetrofit().create(ApiClient.class);
+		ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
 
 		if (productid != 0 && clusterid == 0 && circleid == 0)
 		{

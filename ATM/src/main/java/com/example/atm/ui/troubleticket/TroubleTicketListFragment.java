@@ -99,8 +99,7 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 	}
 	public void getAllTroubleTicketes(String loginID){
 		Log.i(TAG, "getAllTroubleTicketes: ");
-		Retrofit retrofit = MyRetrofit.initRetrofit();
-		ApiClient apiClient = retrofit.create(ApiClient.class);
+		ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
 		troubleTicketList = apiClient.getTroubleTicketList(loginID);
 		troubleTicketList.enqueue(new Callback<TroubleTicket>() {
 			@Override
@@ -136,8 +135,7 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 
 	public void getAllTroubleTicketesByRxjava(String loginID){
 		Log.i(TAG, "getAllTroubleTicketes: ");
-		Retrofit retrofit = MyRetrofit.initRetrofit();
-		ApiClientRxJava apiClient = retrofit.create(ApiClientRxJava.class);
+		ApiClientRxJava apiClient = MyRetrofit.getInstance().create(ApiClientRxJava.class);
 		troubleTicketListRxjava = apiClient.getTroubleTicketList(loginID);
 		troubleTicketListRxjava.compose(RxsRxSchedulers.io_main()).subscribe(new Subscriber<TroubleTicket>() {
 			@Override

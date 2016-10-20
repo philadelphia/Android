@@ -32,6 +32,7 @@ import com.example.atm.utils.RxsRxSchedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -147,7 +148,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 //			dialog.dismiss();
 
 		}
-		ApiClient apiClient = MyRetrofit.initRetrofit().create(ApiClient.class);
+		ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
 		login = apiClient.login(userName, userPassword);
 		login.enqueue(new Callback<LoginResult>() {
 			@Override
@@ -186,8 +187,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 //					.setMessage("Login ID or password cannot be empty!")
 //					.setPositiveButton("OK", null).show();
 //		}
-
-		ApiClientRxJava apiClient = MyRetrofit.initRetrofit().create(ApiClientRxJava.class);
+		ApiClientRxJava apiClient = MyRetrofit.getInstance().create(ApiClientRxJava.class);
 		loginRxJava = apiClient.login(userName, userPassword);
 		loginRxJava
 		.compose(RxsRxSchedulers.io_main())

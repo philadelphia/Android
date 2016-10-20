@@ -77,7 +77,7 @@ public class UserInfoFragment extends Fragment implements View.OnClickListener {
 	}
 
 	private void getUserInfo(String loginID) {
-		userInfo = MyRetrofit.initRetrofit().create(ApiClient.class).getUserInfo(loginID);
+		userInfo = MyRetrofit.getInstance().create(ApiClient.class).getUserInfo(loginID);
 		userInfo.enqueue(new Callback<UserInfo>() {
 			@Override
 			public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {

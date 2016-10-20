@@ -199,8 +199,8 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
 
     public void fetchFilterData(final String loginID) {
         Log.i(TAG, "fetchFilterData: ");
-        Retrofit retrofit = MyRetrofit.initRetrofit();
-        ApiClient apiClient = retrofit.create(ApiClient.class);
+
+        ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
         allProducts = apiClient.getAllProducts(loginID);
         allProducts.enqueue(new Callback<PCFilter>() {
             @Override
@@ -226,30 +226,8 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
 
     public void fetchFilterDataByRxjava(final String loginID) {
         Log.i(TAG, "fetchFilterData: ");
-        Retrofit retrofit = MyRetrofit.initRetrofit();
-        ApiClientRxJava apiClient = retrofit.create(ApiClientRxJava.class);
+        ApiClientRxJava apiClient = MyRetrofit.getInstance().create(ApiClientRxJava.class);
         allProductsRxjava = apiClient.getAllProducts(loginID);
-        this.allProducts.enqueue(new Callback<PCFilter>() {
-            @Override
-            public void onResponse(Call<PCFilter> call, Response<PCFilter> response) {
-                if (HttpCallUtil.isResponseValid(response)) {
-                    loadDialog.dismiss();
-                    productList.clear();
-                    productList.addAll(response.body().getPrDetail());
-                    circleList.clear();
-                    circleList.addAll(response.body().getPrCircleDetail());
-                    clusterList.clear();
-                    clusterList.addAll(response.body().getPrClusterDetail());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<PCFilter> call, Throwable t) {
-                Log.i(TAG, "onFailure: ");
-                loadDialog.dismiss();
-            }
-        });
-
         allProductsRxjava.compose(RxsRxSchedulers.io_main()).subscribe(new Subscriber<PCFilter>() {
             @Override
             public void onCompleted() {

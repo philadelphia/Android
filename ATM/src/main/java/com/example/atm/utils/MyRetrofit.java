@@ -13,15 +13,41 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class MyRetrofit {
     private static final String TAG = "MyRetrofit";
-    public static Retrofit initRetrofit() {
-        Retrofit retrofit = new Retrofit.Builder()
+    private Retrofit retrofit;
+    private static volatile  MyRetrofit instance;
+    private MyRetrofit(){
+        Log.i(TAG, "MyRetrofit: ----begin to new A class---");
+        retrofit = new Retrofit.Builder()
                 .client(getHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())//解析方法
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(Url.BASE_URL)//主机地址
                 .build();
+        Log.i(TAG, "retrofit's hashCode ==== " + retrofit.hashCode());
+    }
 
-        return retrofit;
+   public static MyRetrofit getInstance(){
+       Log.i(TAG, "getInstance: myretorfit's hashcode==  " + RetrofitHolder.myRetrofit.hashCode());
+        return  RetrofitHolder.myRetrofit;
+   }
+
+    public static MyRetrofit getInstance2(){
+        Log.i(TAG, "getInstance: myretorfit's hashcode==  " + RetrofitHolder.myRetrofit.hashCode());
+       if (instance == null){
+           synchronized (MyRetrofit.class){
+               if (instance == null){
+                   instance = new MyRetrofit();
+                   return  instance;
+               }
+           }
+       }
+        return instance;
+
+
+    }
+
+    public <T> T create(final Class<T> service) {
+        return retrofit.create(service);
     }
 
     public static HttpLoggingInterceptor getHttpInterceptor() {
@@ -42,4 +68,11 @@ public class MyRetrofit {
 
         return client;
     }
+
+    public  static class RetrofitHolder{
+        private static MyRetrofit myRetrofit = new MyRetrofit();
+
+    }
+
+
 }

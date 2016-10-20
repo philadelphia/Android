@@ -133,8 +133,7 @@ public class SiteAlarmFragment extends Fragment implements OnClickListener {
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
-        Retrofit retrofit = MyRetrofit.initRetrofit();
-        ApiClient apiClient = retrofit.create(ApiClient.class);
+        ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
         alarmInfo = apiClient.getAlarmInfo(loginID, siteID, siteInfoID, path);
         alarmInfo.enqueue(new Callback<SiteAlarmData>() {
             @Override
