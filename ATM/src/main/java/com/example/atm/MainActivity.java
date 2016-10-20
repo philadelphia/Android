@@ -73,25 +73,27 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public  static  AppBarLayout getAppBarLayout(){
+    public static AppBarLayout getAppBarLayout() {
         return appBarLayout;
     }
 
-    public static void setActionBarTitle(String title,String subTitle) {
+    public static void setActionBarTitle(String title, String subTitle) {
         mToolBar.setTitle(title);
         mToolBar.setSubtitle(subTitle);
     }
 
-    public static Toolbar getmToolBar(){
-        return  mToolBar;
-    }
-    public static TabLayout getTabLayout(){
-        return  mTabLayout;
+    public static Toolbar getmToolBar() {
+        return mToolBar;
     }
 
-    public static FloatingActionButton getFloatingActionButton(){
-        return  mFab;
+    public static TabLayout getTabLayout() {
+        return mTabLayout;
     }
+
+    public static FloatingActionButton getFloatingActionButton() {
+        return mFab;
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -107,7 +109,7 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_siteMap:
                 SiteMapFragment siteMapFragment = new SiteMapFragment();
-                fragmentManager.beginTransaction().replace(R.id.container,siteMapFragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, siteMapFragment).commit();
                 break;
 
             case R.id.nav_bookmark:
@@ -137,34 +139,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void logout() {
-        LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.activity_logout, null);
-
-        AlertDialog dialo = new AlertDialog.Builder(this).create();
-        dialo.setView(view);
-        // dialo.setCanceledOnTouchOutside(false);
-
-        Button btnLogout = (Button) view.findViewById(R.id.logoutbutton);
-        btnLogout
-                .setOnClickListener(new android.view.View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        Intent login = new Intent(MainActivity.this,
-                                LoginActivity.class);
-                        startActivity(login);
-//                        SharedPreferences sp = getSharedPreferences(
-//                                "login", MODE_APPEND);
-//                        Editor editor = sp.edit();
-//                        editor.putBoolean("hasLogined", false);
-//                        editor.commit();
-//                        listEdit.clear();
-//                        listEdit.commit();
-//                        selectItem.clear();
-//                        selectItem.commit();
-                        MainActivity.this.finish();
-                    }
-                });
-        dialo.show();
+        Intent intent = new Intent(this, LogoutActivity.class);
+        startActivity(intent);
     }
 }

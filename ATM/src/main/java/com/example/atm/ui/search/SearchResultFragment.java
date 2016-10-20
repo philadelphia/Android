@@ -28,18 +28,26 @@ import com.example.atm.MainActivity;
 import com.example.atm.R;
 import com.example.atm.adapter.RecyclerViewAdapter;
 import com.example.atm.apiInterface.ApiClient;
+import com.example.atm.apiInterface.ApiClientRxJava;
 import com.example.atm.bean.SiteData;
 import com.example.atm.bean.SiteItem;
 import com.example.atm.ui.sitePager.Fragment_SiteItem_ViewPager;
 import com.example.atm.utils.Constatnts;
 import com.example.atm.utils.CustomItemClickListener;
 import com.example.atm.utils.MyRetrofit;
+import com.example.atm.utils.RxsRxSchedulers;
 import com.example.atm.utils.SiteListSortUtil;
+import com.example.atm.utils.Url;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 
 
 public class SearchResultFragment extends Fragment implements
@@ -67,8 +75,9 @@ public class SearchResultFragment extends Fragment implements
 	private RecyclerViewAdapter myAdapter;
     private Bundle arg;
     private Call<SiteData> siteResults;
+	private Observable<SiteData> siteResultsRxjava;
 
-    @Override
+	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		Log.i(TAG, "onCreate(): ");
 		super.onCreate(savedInstanceState);
@@ -120,8 +129,8 @@ public class SearchResultFragment extends Fragment implements
                     }
                 });
 
-        loadDialog.setMessage("Loading...");
-        loadDialog.show();
+        /*loadDialog.setMessage("Loading...");
+        loadDialog.show();*/
 
     }
 
@@ -138,7 +147,8 @@ public class SearchResultFragment extends Fragment implements
     @Override
 	public void onResume() {
 		super.onResume();
-        showSearchResult("drc",siteName);
+//        showSearchResult("drc",siteName);
+        showSearchResultByRxjava("drc",siteName);
 	}
 
 	private void showSearchResult(String loginID, String siteName)  {
@@ -169,11 +179,42 @@ public class SearchResultFragment extends Fragment implements
 
 	}
 
+	public  void showSearchResultByRxjava(String loginID, String siteName){
+		Retrofit retrofit = MyRetrofit.initRetrofit();
+		ApiClientRxJava apiClient = retrofit.create(ApiClientRxJava.class);
+		siteResultsRxjava = apiClient.getSiteResults(loginID, siteName);
+		siteResultsRxjava.compose(RxsRxSchedulers.io_main()).subscribe(new Subscriber<SiteData>() {
+			@Override
+			public void onCompleted() {
+				Log.i(TAG, "onCompleted: ");
+			}
+
+			@Override
+			public void onError(Throwable e) {
+				Log.i(TAG, "onError: ");
+			}
+
+			@Override
+			public void onNext(SiteData siteData) {
+				Log.i(TAG, "onNext: ");
+				mSiteList.clear();
+				mSiteList.addAll(SiteListSortUtil.sortList(siteData.getSiteData()));
+				if (mSiteList.size() == 0){
+					dialog.show();
+				}else{
+					myAdapter.notifyDataSetChanged();
+				}
+
+
+			}
+		});
+
+	}
 
 
 	public void onStop() {
 		super.onStop();
-        siteResults.cancel();
+//        siteResults.cancel();
 
 	}
 

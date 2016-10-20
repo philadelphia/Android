@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.atm.apiInterface.ApiClientRxJava;
 import com.example.atm.ui.search.SearchFragment;
 import com.example.atm.ui.sitePager.Fragment_SiteItem_ViewPager;
 import com.example.atm.utils.Constatnts;
@@ -32,6 +33,7 @@ import com.example.atm.apiInterface.ApiClient;
 import com.example.atm.bean.SiteData;
 import com.example.atm.bean.SiteItem;
 import com.example.atm.utils.CustomItemClickListener;
+import com.example.atm.utils.RxsRxSchedulers;
 import com.example.atm.utils.SiteListSortUtil;
 
 import java.util.ArrayList;
@@ -42,6 +44,10 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 
 
 @SuppressLint("DefaultLocale")
@@ -63,6 +69,7 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
     private RecyclerViewAdapter myAdapter;
     private List<SiteItem> mSiteList = new ArrayList<>();
     private Call<SiteData> allSites;
+    private Observable<SiteData> allSitesRxjava;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,7 +94,8 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
         mRecyclerView.setAdapter(myAdapter);
 
         myAdapter.setOnCustomeItemClickListener(this);
-        fetchSiteList("drc");
+//        fetchSiteList("drc");
+        fetchSiteListByRxJava("drc");
 
         return view;
     }
@@ -115,6 +123,7 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
     public void fetchSiteList(String loginID) {
         Log.i(TAG, "fetchSiteList: ");
         ApiClient siteList = MyRetrofit.initRetrofit().create(ApiClient.class);
+
         allSites = siteList.getAllSites(loginID);
         allSites.enqueue(new Callback<SiteData>() {
             @Override
@@ -137,11 +146,42 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
         });
     }
     
+    public  void fetchSiteListByRxJava(String loginID){
+        Log.i(TAG, "fetchSiteListByRxJava: ");
+        ApiClientRxJava apiClientRxJava = MyRetrofit.initRetrofit().create(ApiClientRxJava.class);
+        allSitesRxjava = apiClientRxJava.getAllSites(loginID);
+        allSitesRxjava.compose(RxsRxSchedulers.io_main())
+        .subscribe(new Observer<SiteData>() {
+            @Override
+            public void onCompleted() {
+                Log.i(TAG, "onCompleted: ");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.i(TAG, "onError: " + e.getMessage());
+            }
+
+            @Override
+            public void onNext(SiteData siteData) {
+                Log.i(TAG, "onNext: ");
+                mSwipeRefreshLayout.setRefreshing(false);
+                mSiteList.clear();
+                mSiteList.addAll(SiteListSortUtil.sortList(siteData.getSiteData()));
+                myAdapter.notifyDataSetChanged();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+       });
+
+    }
+    
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
         mSwipeRefreshLayout.setRefreshing(true);
-        fetchSiteList("drc");
+//        fetchSiteList("drc");
+        fetchSiteListByRxJava("drc");
     }
     
     @Override
