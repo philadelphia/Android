@@ -23,11 +23,9 @@ public class MyRetrofit {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(Url.BASE_URL)//主机地址
                 .build();
-        Log.i(TAG, "retrofit's hashCode ==== " + retrofit.hashCode());
     }
 
    public static MyRetrofit getInstance(){
-       Log.i(TAG, "getInstance: myretorfit's hashcode==  " + RetrofitHolder.myRetrofit.hashCode());
         return  RetrofitHolder.myRetrofit;
    }
 
