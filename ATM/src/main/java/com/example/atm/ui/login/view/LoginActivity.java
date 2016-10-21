@@ -1,4 +1,4 @@
-package com.example.atm.login.view;
+package com.example.atm.ui.login.view;
 
 
 import android.app.Activity;
@@ -27,8 +27,6 @@ import com.example.atm.R;
 import com.example.atm.apiInterface.ApiClient;
 import com.example.atm.apiInterface.ApiClientRxJava;
 import com.example.atm.bean.LoginResult;
-import com.example.atm.login.presenter.ILoginPresenter;
-import com.example.atm.login.presenter.LoginPresenter;
 import com.example.atm.utils.MyNetworkStatus;
 import com.example.atm.utils.MyRetrofit;
 import com.example.atm.utils.RxsRxSchedulers;
@@ -40,11 +38,13 @@ import rx.Observable;
 import rx.Subscriber;
 
 
-public class LoginActivity extends Activity implements View.OnClickListener, LoginView {
+public class LoginActivity extends Activity implements View.OnClickListener {
 
     private EditText ed_userid, ed_password;
     private Button loginButton;
     private Button forgouPassword;
+    private String userName;
+    private String userPassword;
     private static final String TAG = "LoginActivity";
     private SharedPreferences sp;
     private SharedPreferences preferences;
@@ -52,7 +52,6 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
     private Editor edit;
     private Call<LoginResult> login;
     private Observable<LoginResult> loginRxJava;
-    private ILoginPresenter loginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +66,6 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
         edit = preferences.edit();
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("loging.....");
-        loginPresenter = new LoginPresenter(this);
 
         if (!hasLogined) {
             setContentView(R.layout.activity_login);
@@ -90,12 +88,13 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.loginbutton:
-//				final ProgressDialog dialog = new ProgressDialog(this).show(
-//						this, "", "Loading...");
+                userName = ed_userid.getText().toString().trim();
+                userPassword = ed_password.getText().toString().trim();
+//
 //              login(userName, userPassword);
-//				loginByRxjava(userName, userPassword);
+				loginByRxjava(userName, userPassword);
                 Log.i(TAG, "onClick: begin to call presenter.login");
-                loginPresenter.login();
+
                 break;
 
             case R.id.textview:
@@ -219,44 +218,6 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
                         finish();
                     }
                 });
-    }
-
-    @Override
-    public String getUserID() {
-        return ed_userid.getText().toString().trim();
-    }
-
-    @Override
-    public String getPassword() {
-        return ed_password.getText().toString().trim();
-    }
-
-    @Override
-    public void showDialog() {
-        progressDialog.show();
-    }
-
-    @Override
-    public void hideDialog() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
-    }
-
-    @Override
-    public void onSuccess() {
-        Log.i(TAG, "onSuccess: ");
-        Intent intent = new Intent(
-                LoginActivity.this,
-                MainActivity.class);
-        startActivity(intent);
-        finish();
-
-    }
-
-    @Override
-    public void onFailed() {
-
     }
 
 
