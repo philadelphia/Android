@@ -12,7 +12,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.internal.ForegroundLinearLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +33,7 @@ import com.example.atm.adapter.TroubleTicketListRecyclerViewAdapter;
 import com.example.atm.apiInterface.ApiClient;
 import com.example.atm.apiInterface.ApiClientRxJava;
 import com.example.atm.bean.TroubleTicket;
+import com.example.atm.ui.troubleticket.view.ITroubleTicketList;
 import com.example.atm.utils.CustomItemClickListener;
 import com.example.atm.utils.HttpCallUtil;
 import com.example.atm.utils.MyRetrofit;
@@ -49,7 +49,7 @@ import rx.Observable;
 import rx.Subscriber;
 
 
-public class TroubleTicketListFragment extends Fragment implements CustomItemClickListener{
+public class TroubleTicketListFragment extends Fragment implements CustomItemClickListener, ITroubleTicketList{
 
 	private SharedPreferences prefer;
 	private Editor editor;
@@ -57,7 +57,7 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 	private RecyclerView recyclerView;
 
 	private ArrayList<TroubleTicket.TTDataBean> mTroubletList = new ArrayList<TroubleTicket.TTDataBean>();
-	private ProgressDialog dialog;
+	private ProgressDialog progressDialog;
 	private String LoginID = null;
 	private SharedPreferences preferences;
 	private TextView textView;
@@ -83,9 +83,16 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 		Log.i(TAG, "onCreateView:LoginID ==  " + LoginID);
 		mFragmentManager = getActivity().getSupportFragmentManager();
 		initView(root);
+		initProgressDialog();
+		
 //		getAllTroubleTicketes("drc");
 		getAllTroubleTicketesByRxjava("drc");
 		return root;
+	}
+
+	private void initProgressDialog() {
+		progressDialog = new ProgressDialog(getContext());
+		progressDialog.setMessage("Loading...");
 	}
 
 	public void initView(View view){
@@ -221,4 +228,28 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 		super.onDestroy();
 		HttpCallUtil.cancelCall(troubleTicketList);
 	}
+
+	@Override
+	public void onSuccess() {
+
+	}
+
+	@Override
+	public void onFailed() {
+
+	}
+
+	@Override
+	public void showDialog() {
+		progressDialog.show();
+	}
+
+	@Override
+	public void hideDialog() {
+		if (progressDialog != null) {
+			progressDialog.dismiss();
+		}
+	}
+
+
 }

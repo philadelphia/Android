@@ -1,4 +1,4 @@
-package com.example.atm.login.view;
+package com.example.atm.ui.login;
 
 
 import android.app.Activity;
@@ -27,8 +27,6 @@ import com.example.atm.R;
 import com.example.atm.apiInterface.ApiClient;
 import com.example.atm.apiInterface.ApiClientRxJava;
 import com.example.atm.bean.LoginResult;
-import com.example.atm.login.presenter.ILoginPresenter;
-import com.example.atm.login.presenter.LoginPresenter;
 import com.example.atm.utils.MyNetworkStatus;
 import com.example.atm.utils.MyRetrofit;
 import com.example.atm.utils.RxsRxSchedulers;
@@ -40,7 +38,7 @@ import rx.Observable;
 import rx.Subscriber;
 
 
-public class LoginActivity extends Activity implements View.OnClickListener, LoginView {
+public class LoginActivity extends Activity implements View.OnClickListener, LoginContract.View {
 
     private EditText ed_userid, ed_password;
     private Button loginButton;
@@ -52,7 +50,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
     private Editor edit;
     private Call<LoginResult> login;
     private Observable<LoginResult> loginRxJava;
-    private ILoginPresenter loginPresenter;
+    private LoginContract.Presenter loginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +65,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
         edit = preferences.edit();
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("loging.....");
-        loginPresenter = new LoginPresenter(this);
+
 
         if (!hasLogined) {
             setContentView(R.layout.activity_login);
@@ -243,6 +241,12 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
         }
     }
 
+
+    @Override
+    public void setPresenter(LoginContract.Presenter presenter) {
+        this.loginPresenter = presenter;
+    }
+
     @Override
     public void onSuccess() {
         Log.i(TAG, "onSuccess: ");
@@ -259,5 +263,9 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        loginPresenter.dettatch(this);
+    }
 }

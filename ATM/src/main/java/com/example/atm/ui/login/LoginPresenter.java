@@ -1,12 +1,11 @@
-package com.example.atm.login.presenter;
+package com.example.atm.ui.login;
 
 import android.util.Log;
 
 import com.example.atm.apiInterface.ApiClient;
 import com.example.atm.bean.LoginResult;
-import com.example.atm.login.module.LoginModel;
-import com.example.atm.login.module.LoginModelImpl;
-import com.example.atm.login.view.LoginView;
+import com.example.atm.ui.login.LoginContract;
+import com.example.atm.ui.login.module.LoginModelImpl;
 import com.example.atm.utils.MyRetrofit;
 
 import retrofit2.Call;
@@ -17,15 +16,17 @@ import retrofit2.Response;
  * Created by Tao.ZT.Zhang on 2016/10/20.
  */
 
-public class LoginPresenter implements  ILoginPresenter {
-    private LoginView loginView;
-    private LoginModel loginModel;
+public class LoginPresenter extends LoginContract.Presenter {
+    private LoginContract.View loginView;
+    private LoginContract.Model loginModel;
     private static final String TAG = "LoginPresenter";
     
-    public LoginPresenter(LoginView loginView){
-        this.loginView = loginView;
+    public LoginPresenter(LoginContract.View loginView){
+        attach(loginView);
         loginModel = new LoginModelImpl();
+        loginView.setPresenter(this);
     }
+
 
     @Override
     public void login( ) {
@@ -43,6 +44,7 @@ public class LoginPresenter implements  ILoginPresenter {
                     LoginResult loginResult = response.body();
                     if ("Successful".equals(loginResult
                             .getResult())) {
+                        loginView.hideDialog();
                        loginView.onSuccess();
                     }
                 }
@@ -56,5 +58,13 @@ public class LoginPresenter implements  ILoginPresenter {
             }
         });
     }
+
+    @Override
+    public void start() {
+
+    }
+
+
+
 
 }
