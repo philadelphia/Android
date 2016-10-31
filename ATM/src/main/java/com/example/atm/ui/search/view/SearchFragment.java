@@ -1,4 +1,4 @@
-package com.example.atm.ui.search;
+package com.example.atm.ui.search.view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +28,15 @@ import android.widget.TextView;
 
 import com.example.atm.R;
 import com.example.atm.apiInterface.ApiClientRxJava;
-import com.example.atm.entities.Product;
+import com.example.atm.ui.search.QueryResultFragment;
+import com.example.atm.ui.search.SearchResultFragment;
+import com.example.atm.ui.search.presenter.ISearchPresenter;
+import com.example.atm.ui.search.presenter.SearchPresenterImpl;
 import com.example.atm.utils.Constatnts;
 import com.example.atm.utils.HttpCallUtil;
 import com.example.atm.utils.MyRetrofit;
 import com.example.atm.MainActivity;
 
-import com.example.atm.apiInterface.ApiClient;
 import com.example.atm.entities.PCFilter;
 
 
@@ -42,14 +44,11 @@ import com.example.atm.entities.FilterBean;
 import com.example.atm.utils.RxsRxSchedulers;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 import rx.Observable;
 import rx.Subscriber;
 
 
-public class SearchFragment extends Fragment implements OnClickListener, OnItemClickListener {
+public class SearchFragment extends Fragment implements OnClickListener, OnItemClickListener , ISearchView{
     private static final String TAG = "SearchFragment";
     private EditText ed_search;
     private ImageButton bt_search;
@@ -90,9 +89,9 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
     private final static String Product = "Product";
     private final static String Circle = "Circle";
     private final static String Cluster = "Cluster";
-    private ProgressDialog loadDialog;
+    private ProgressDialog progressDialog;
     private Call<PCFilter> allProducts;
-
+    private ISearchPresenter searchPresenter;
     private int index_product;
     private int index_circle;
     private int selectedProductID;
@@ -118,9 +117,8 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
 //		filterMarHelper = new FilterMarHelper(context);
         context = getContext();
         builder = new AlertDialog.Builder(context);
-        loadDialog = new ProgressDialog(context);
-        loadDialog.setMessage("Loading...");
-        loadDialog.show();
+        initDialog();
+        searchPresenter = new SearchPresenterImpl(this);
         inflate = inflater.inflate(R.layout.fragment_search_filter, container, false);
         sharePreference = context.getSharedPreferences("SelectedItem", Context.MODE_PRIVATE);
         editor = sharePreference.edit();
@@ -129,6 +127,12 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
         initView();
 
         return inflate;
+    }
+
+    private void initDialog() {
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
     }
 
     public void initView() {
@@ -183,8 +187,8 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
         super.onResume();
         Log.i(TAG, "onResume");
         MainActivity.setActionBarTitle("Filter & search", null);
-//        fetchFilterData("drc");
-        fetchFilterDataByRxjava("drc");
+        searchPresenter.fetchFilterData("drc");
+//        fetchFilterDataByRxjava("drc");
 
         tv_product.setText(sharePreference.getString(Constatnts.SelectedProductName, "Please select a product"));
         tv_circle.setText(sharePreference.getString(Constatnts.SelectedCircleName, "Please select a circle"));
@@ -197,32 +201,6 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
 //        Log.i(TAG, selectedClusterID + " --------" + selectedClusterName);
     }
 
-    public void fetchFilterData(final String loginID) {
-        Log.i(TAG, "fetchFilterData: ");
-
-        ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
-        allProducts = apiClient.getAllProducts(loginID);
-        allProducts.enqueue(new Callback<PCFilter>() {
-            @Override
-            public void onResponse(Call<PCFilter> call, Response<PCFilter> response) {
-                if (HttpCallUtil.isResponseValid(response)) {
-                    loadDialog.dismiss();
-                    productList.clear();
-                    productList.addAll(response.body().getPrDetail());
-                    circleList.clear();
-                    circleList.addAll(response.body().getPrCircleDetail());
-                    clusterList.clear();
-                    clusterList.addAll(response.body().getPrClusterDetail());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<PCFilter> call, Throwable t) {
-                Log.i(TAG, "onFailure: ");
-                loadDialog.dismiss();
-            }
-        });
-    }
 
     public void fetchFilterDataByRxjava(final String loginID) {
         Log.i(TAG, "fetchFilterData: ");
@@ -237,13 +215,13 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
             @Override
             public void onError(Throwable e) {
                 Log.i(TAG, "onError: ");
-                loadDialog.dismiss();
+                progressDialog.dismiss();
             }
 
             @Override
             public void onNext(PCFilter pcFilter) {
                 Log.i(TAG, "onNext: ");
-                loadDialog.dismiss();
+                progressDialog.dismiss();
                 productList.clear();
                 productList.addAll(pcFilter.getPrDetail());
                 circleList.clear();
@@ -598,6 +576,41 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
         HttpCallUtil.cancelCall(allProducts);
     }
 
-    
 
+    @Override
+    public void showData(PCFilter pcFilter) {
+        productList.clear();
+        productList.addAll(pcFilter.getPrDetail());
+        circleList.clear();
+        circleList.addAll(pcFilter.getPrCircleDetail());
+        clusterList.clear();
+        clusterList.addAll(pcFilter.getPrClusterDetail());
+    }
+
+    @Override
+    public void setPresenter(ISearchPresenter presenter) {
+        this.searchPresenter = presenter;
+    }
+
+    @Override
+    public void onSuccess() {
+
+    }
+
+    @Override
+    public void onFailed() {
+
+    }
+
+    @Override
+    public void showDialog() {
+        progressDialog.show();
+    }
+
+    @Override
+    public void hideDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
 }

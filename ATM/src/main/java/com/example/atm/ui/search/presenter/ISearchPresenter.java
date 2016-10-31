@@ -5,4 +5,5 @@ package com.example.atm.ui.search.presenter;
  */
 
 public interface ISearchPresenter {
+    public void fetchFilterData(String userID);
 }

@@ -60,7 +60,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
 
         sp = getSharedPreferences("login", MODE_APPEND);
         boolean hasLogined = sp.getBoolean("hasLogined", false);
-
+        setPresenter(new LoginPresenter(this));
         preferences = getSharedPreferences("config", MODE_PRIVATE);
         edit = preferences.edit();
         progressDialog = new ProgressDialog(this);

@@ -2,13 +2,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
-
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
 
+   /* dataBinding {
+        enabled = true
+    }*/
+
     defaultConfig {
-        applicationId "com.example.retrofitdemo"
+        applicationId "com.example.atm"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

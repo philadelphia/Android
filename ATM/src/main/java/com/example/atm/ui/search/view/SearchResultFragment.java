@@ -31,6 +31,8 @@ import com.example.atm.apiInterface.ApiClient;
 import com.example.atm.apiInterface.ApiClientRxJava;
 import com.example.atm.bean.SiteData;
 import com.example.atm.bean.SiteItem;
+import com.example.atm.ui.search.presenter.ISearchResultPresenter;
+import com.example.atm.ui.search.view.ISearchResultView;
 import com.example.atm.ui.sitePager.Fragment_SiteItem_ViewPager;
 import com.example.atm.utils.Constatnts;
 import com.example.atm.utils.CustomItemClickListener;
@@ -51,11 +53,8 @@ import rx.android.schedulers.AndroidSchedulers;
 
 
 public class SearchResultFragment extends Fragment implements
-        CustomItemClickListener,View.OnClickListener {
+        CustomItemClickListener,View.OnClickListener,ISearchResultView {
 	private static final String TAG = "SearchResultFragment";
-	private static final String REQUEST_TAG = "SiteList";
-	private static final String KEY_SITE_NAME = "key_site_name";
-	private static final String KEY_SITE_ID = "key_site_id";
 	private static final String KEY_SITE_LIVE_FLAG = "key_site_live_flag";
 	private ImageView iv_star;
 	private Context context;
@@ -76,7 +75,7 @@ public class SearchResultFragment extends Fragment implements
     private Bundle arg;
     private Call<SiteData> siteResults;
 	private Observable<SiteData> siteResultsRxjava;
-
+	private ISearchResultPresenter presenter;
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		Log.i(TAG, "onCreate(): ");
@@ -117,7 +116,8 @@ public class SearchResultFragment extends Fragment implements
         tvTilte.setText("Keyword: " + siteName);
         btn_delete.setOnClickListener(this);
 
-        loadDialog = new ProgressDialog(context);
+		initProgressDialog();
+
         fragmentManager = ((FragmentActivity) getActivity())
                 .getSupportFragmentManager();
         dialog = new AlertDialog.Builder(context);
@@ -134,8 +134,13 @@ public class SearchResultFragment extends Fragment implements
 
     }
 
+	private void initProgressDialog() {
+		loadDialog = new ProgressDialog(context);
+		loadDialog.setMessage("loading...");
+	}
 
-    private void initData() {
+
+	private void initData() {
         mSiteList = new ArrayList<SiteItem>();
         myAdapter = new RecyclerViewAdapter(getContext(), mSiteList);
         myAdapter.setOnCustomeItemClickListener(this);
@@ -149,34 +154,6 @@ public class SearchResultFragment extends Fragment implements
 		super.onResume();
 //        showSearchResult("drc",siteName);
         showSearchResultByRxjava("drc",siteName);
-	}
-
-	private void showSearchResult(String loginID, String siteName)  {
-
-		ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
-		siteResults = apiClient.getSiteResults(loginID, siteName);
-        loadDialog.dismiss();
-		siteResults.enqueue(new Callback<SiteData>() {
-			@Override
-			public void onResponse(Call<SiteData> call, Response<SiteData> response) {
-                Log.i(TAG, "onResponse: ");
-                Log.i(TAG, "onResponse: " + response.body().toString());
-                if (response.body().getSiteData() != null){
-                    mSiteList.clear();
-                    mSiteList.addAll(SiteListSortUtil.sortList(response.body().getSiteData()));
-                    myAdapter.notifyDataSetChanged();
-                }else{
-                   dialog.show();
-                }
-
-			}
-
-			@Override
-			public void onFailure(Call<SiteData> call, Throwable t) {
-                Log.i(TAG, "onFailure: ");
-            }
-		});
-
 	}
 
 	public  void showSearchResultByRxjava(String loginID, String siteName){
@@ -289,4 +266,38 @@ public class SearchResultFragment extends Fragment implements
     public void onItemLongClick(View v, int position) {
 
     }
+
+	@Override
+	public void showSearchResult(List<SiteItem> siteList) {
+		mSiteList.clear();
+		mSiteList.addAll(SiteListSortUtil.sortList(siteList));
+		myAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void setPresenter(ISearchResultPresenter presenter) {
+		this.presenter = presenter;
+	}
+
+	@Override
+	public void onSuccess() {
+
+	}
+
+	@Override
+	public void onFailed() {
+
+	}
+
+	@Override
+	public void showDialog() {
+		loadDialog.show();
+	}
+
+	@Override
+	public void hideDialog() {
+		if (loadDialog == null) {
+			loadDialog.dismiss();
+		}
+	}
 }

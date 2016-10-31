@@ -4,8 +4,6 @@ import android.util.Log;
 
 import com.example.atm.apiInterface.ApiClient;
 import com.example.atm.bean.LoginResult;
-import com.example.atm.ui.login.LoginContract;
-import com.example.atm.ui.login.module.LoginModelImpl;
 import com.example.atm.utils.MyRetrofit;
 
 import retrofit2.Call;
@@ -17,24 +15,24 @@ import retrofit2.Response;
  */
 
 public class LoginPresenter extends LoginContract.Presenter {
-    private LoginContract.View loginView;
     private LoginContract.Model loginModel;
     private static final String TAG = "LoginPresenter";
     
-    public LoginPresenter(LoginContract.View loginView){
-        attach(loginView);
-        loginModel = new LoginModelImpl();
-        loginView.setPresenter(this);
+    public LoginPresenter(LoginContract.View view){
+        attach(view);
+        loginModel = new LoginModel();
+        view.setPresenter(this);
     }
 
 
     @Override
     public void login( ) {
         Log.i(TAG, "login: ");
-        String userId = loginView.getUserID();
-        String userPassword = loginView.getPassword();
-        loginModel.saveUserInfo(userId, userPassword);
-        loginView.showDialog();
+        String userId = baseView.getUserID();
+        String userPassword = baseView.getPassword();
+//        loginModel.saveUserInfo(userId, userPassword);
+        loginModel.saveUserInfo("drc", "drc@123");
+        baseView.showDialog();
         ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
         Call<LoginResult> login = apiClient.login(userId, userPassword);
         login.enqueue(new Callback<LoginResult>() {
@@ -44,8 +42,8 @@ public class LoginPresenter extends LoginContract.Presenter {
                     LoginResult loginResult = response.body();
                     if ("Successful".equals(loginResult
                             .getResult())) {
-                        loginView.hideDialog();
-                       loginView.onSuccess();
+                        baseView.hideDialog();
+                        baseView.onSuccess();
                     }
                 }
             }
@@ -53,8 +51,8 @@ public class LoginPresenter extends LoginContract.Presenter {
             @Override
             public void onFailure(Call<LoginResult> call, Throwable t) {
                 Log.i(TAG, "onFailure: ");
-                    loginView.onFailed();
-                    loginView.hideDialog();
+                baseView.onFailed();
+                baseView.hideDialog();
             }
         });
     }
