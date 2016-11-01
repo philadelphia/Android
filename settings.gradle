@@ -1,1 +1,1 @@
-include ':myapplication', ':ATM', ':glidedemo', ':rxandroid'
+include ':myapplication', ':glidedemo', ':rxandroid', ':ATM'
