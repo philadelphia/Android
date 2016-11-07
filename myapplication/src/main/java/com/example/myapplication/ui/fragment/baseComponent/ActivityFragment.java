@@ -9,14 +9,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.activity.SecondActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 
 public class ActivityFragment extends Fragment implements View.OnClickListener {
 
@@ -38,6 +42,14 @@ public class ActivityFragment extends Fragment implements View.OnClickListener {
     Button btnSlide;
     @BindView(R.id.btn_fade)
     Button btnFade;
+    @BindView(R.id.btn_showStatsBar)
+    Button btnShowStatsBar;
+    @BindView(R.id.btn_hideStatusBar)
+    Button btnHideStatusBar;
+    @BindView(R.id.btn_showNavigationBar)
+    Button btnShowNavigationBar;
+    @BindView(R.id.btn_hideNavigationBar)
+    Button btnHideNavigationBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,7 +94,8 @@ public class ActivityFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    @OnClick({R.id.btn_jump, R.id.btn_standard, R.id.btn_singleTop, R.id.btn_singleTask, R.id.btn_singleInstance, R.id.btn_explode, R.id.btn_slide, R.id.btn_fade})
+    @OnClick({R.id.btn_jump, R.id.btn_standard, R.id.btn_singleTop, R.id.btn_singleTask, R.id.btn_singleInstance,
+            R.id.btn_explode, R.id.btn_slide, R.id.btn_fade,R.id.btn_showStatsBar, R.id.btn_hideStatusBar,R.id.btn_showNavigationBar,R.id.btn_hideNavigationBar})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_jump:
@@ -124,6 +137,44 @@ public class ActivityFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_fade:
                 fadeToSecondActivity();
                 break;
+            case R.id.btn_showStatsBar:
+                Log.i(TAG, "onClick: btn_showStatsBar");
+                setStatusBarVisiable(true);
+                break;
+            case R.id.btn_hideStatusBar:
+                Log.i(TAG, "onClick: btn_hideStatusBar");
+                setStatusBarVisiable(false);
+                break;
+            case R.id.btn_showNavigationBar:
+                Log.i(TAG, "onClick: btn_showNavigationBar");
+                setNavigationBarVisiable(true);
+                break;
+            case R.id.btn_hideNavigationBar:
+                setNavigationBarVisiable(false);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void setStatusBarVisiable(boolean flag) {
+        if (flag){
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
+        }else{
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+            getActivity().getActionBar().hide();
+        }
+
+    }
+
+    private void setNavigationBarVisiable(boolean flag) {
+        if (flag){
+            btnShowNavigationBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
+        }else {
+            btnShowNavigationBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+            getActivity().getActionBar().hide();
         }
     }
 

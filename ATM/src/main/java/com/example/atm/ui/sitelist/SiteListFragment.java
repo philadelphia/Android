@@ -205,11 +205,13 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
 
     @Override
     public void onSuccess() {
+        hideDialog();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onFailed() {
+        hideDialog();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

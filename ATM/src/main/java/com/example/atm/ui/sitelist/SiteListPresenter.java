@@ -34,7 +34,6 @@ public class SiteListPresenter extends SiteListContract.Presenter {
             public void onResponse(Call<SiteData> call, Response<SiteData> response) {
                 if(response.body() != null){
                     Log.i(TAG, "onResponse: "+response.body().toString());
-                    baseView.hideDialog();
                     baseView.onSuccess();
                     baseView.showSiteList(response.body().getSiteData());
                 }
@@ -44,7 +43,6 @@ public class SiteListPresenter extends SiteListContract.Presenter {
             public void onFailure(Call<SiteData> call, Throwable t) {
                 Log.i(TAG, "onFailure: ");
                 baseView.onFailed();
-                baseView.hideDialog();
             }
         });
     }

@@ -16,7 +16,7 @@ import com.example.myapplication.adapter.MyViewPagerAdapter;
 import com.example.myapplication.ui.fragment.manager.TestFragment;
 import com.example.myapplication.ui.fragment.manager.ActivityManagerFragment;
 import com.example.myapplication.ui.fragment.manager.PackageManagerFragment;
-import com.example.myapplication.ui.fragment.manager.WindowFragment;
+import com.example.myapplication.ui.fragment.other.WindowFragment;
 import com.example.myapplication.ui.fragment.manager.WindowManagerFragment;
 
 import java.util.ArrayList;

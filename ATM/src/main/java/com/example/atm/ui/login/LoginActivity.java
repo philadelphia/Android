@@ -250,6 +250,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
     @Override
     public void onSuccess() {
         Log.i(TAG, "onSuccess: ");
+        hideDialog();
         Intent intent = new Intent(
                 LoginActivity.this,
                 MainActivity.class);
@@ -260,7 +261,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
 
     @Override
     public void onFailed() {
-
+    hideDialog();
     }
 
     @Override

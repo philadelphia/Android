@@ -54,11 +54,12 @@ public class MainActivity extends AppCompatActivity
         initView();
 
         //default show android Base Fragment
-//        ManagerFragment managerFragment = new ManagerFragment();
-//       OtherFragment otherFragment = new OtherFragment();
+        AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
+        ManagerFragment managerFragment = new ManagerFragment();
+       OtherFragment otherFragment = new OtherFragment();
 //        OtherFragment otherFragment = new OtherFragment();
-        DatabaseFragment databaseFragment = new DatabaseFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, databaseFragment).commit();
+//        DatabaseFragment databaseFragment = new DatabaseFragment();
+        fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.

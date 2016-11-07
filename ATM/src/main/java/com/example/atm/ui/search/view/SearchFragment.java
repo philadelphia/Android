@@ -28,10 +28,8 @@ import android.widget.TextView;
 
 import com.example.atm.R;
 import com.example.atm.apiInterface.ApiClientRxJava;
-import com.example.atm.ui.search.QueryResultFragment;
-import com.example.atm.ui.search.SearchResultFragment;
-import com.example.atm.ui.search.presenter.ISearchPresenter;
-import com.example.atm.ui.search.presenter.SearchPresenterImpl;
+import com.example.atm.ui.search.SearchContract;
+import com.example.atm.ui.search.SearchPresenter;
 import com.example.atm.utils.Constatnts;
 import com.example.atm.utils.HttpCallUtil;
 import com.example.atm.utils.MyRetrofit;
@@ -48,7 +46,7 @@ import rx.Observable;
 import rx.Subscriber;
 
 
-public class SearchFragment extends Fragment implements OnClickListener, OnItemClickListener , ISearchView{
+public class SearchFragment extends Fragment implements OnClickListener, OnItemClickListener , SearchContract.View{
     private static final String TAG = "SearchFragment";
     private EditText ed_search;
     private ImageButton bt_search;
@@ -91,7 +89,7 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
     private final static String Cluster = "Cluster";
     private ProgressDialog progressDialog;
     private Call<PCFilter> allProducts;
-    private ISearchPresenter searchPresenter;
+    private SearchContract.Presenter searchPresenter;
     private int index_product;
     private int index_circle;
     private int selectedProductID;
@@ -113,12 +111,11 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
         Log.i(TAG, "Fragment's number is " + getFragmentManager().getFragments().size() + " ");
         mSharedPreferences = getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
         loginID = mSharedPreferences.getString("LoginID", null);
-
+        setPresenter(new SearchPresenter(this));
 //		filterMarHelper = new FilterMarHelper(context);
         context = getContext();
         builder = new AlertDialog.Builder(context);
         initDialog();
-        searchPresenter = new SearchPresenterImpl(this);
         inflate = inflater.inflate(R.layout.fragment_search_filter, container, false);
         sharePreference = context.getSharedPreferences("SelectedItem", Context.MODE_PRIVATE);
         editor = sharePreference.edit();
@@ -132,7 +129,7 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
     private void initDialog() {
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Loading...");
-        progressDialog.show();
+
     }
 
     public void initView() {
@@ -588,9 +585,10 @@ public class SearchFragment extends Fragment implements OnClickListener, OnItemC
     }
 
     @Override
-    public void setPresenter(ISearchPresenter presenter) {
+    public void setPresenter(SearchContract.Presenter presenter) {
         this.searchPresenter = presenter;
     }
+
 
     @Override
     public void onSuccess() {

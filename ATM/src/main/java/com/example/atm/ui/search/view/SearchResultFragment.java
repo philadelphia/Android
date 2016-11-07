@@ -1,7 +1,8 @@
-package com.example.atm.ui.search;
+package com.example.atm.ui.search.view;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -27,81 +28,75 @@ import android.widget.TextView;
 import com.example.atm.MainActivity;
 import com.example.atm.R;
 import com.example.atm.adapter.RecyclerViewAdapter;
-import com.example.atm.apiInterface.ApiClient;
 import com.example.atm.apiInterface.ApiClientRxJava;
 import com.example.atm.bean.SiteData;
 import com.example.atm.bean.SiteItem;
-import com.example.atm.ui.search.presenter.ISearchResultPresenter;
-import com.example.atm.ui.search.view.ISearchResultView;
+import com.example.atm.ui.search.SearchResultContract;
+import com.example.atm.ui.search.SearchResultPresenter;
 import com.example.atm.ui.sitePager.Fragment_SiteItem_ViewPager;
 import com.example.atm.utils.Constatnts;
 import com.example.atm.utils.CustomItemClickListener;
 import com.example.atm.utils.MyRetrofit;
 import com.example.atm.utils.RxsRxSchedulers;
 import com.example.atm.utils.SiteListSortUtil;
-import com.example.atm.utils.Url;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 
 
 public class SearchResultFragment extends Fragment implements
-        CustomItemClickListener,View.OnClickListener,ISearchResultView {
-	private static final String TAG = "SearchResultFragment";
-	private static final String KEY_SITE_LIVE_FLAG = "key_site_live_flag";
-	private ImageView iv_star;
-	private Context context;
-	private View view;
-	private LinearLayout layout;
+        CustomItemClickListener, View.OnClickListener, SearchResultContract.View {
+    private static final String TAG = "SearchResultFragment";
+    private static final String KEY_SITE_LIVE_FLAG = "key_site_live_flag";
+    private ImageView iv_star;
+    private Context context;
+    private View view;
+    private LinearLayout layout;
     private View divider;
-	private TextView tvTilte;
-	private ImageButton btn_delete;
+    private TextView tvTilte;
+    private ImageButton btn_delete;
 
-	private FragmentManager fragmentManager;
-	private List<SiteItem> mSiteList ;
-	private static AlertDialog.Builder dialog;
-	private int index = 0;
-	private RecyclerView mRecyclerView;
-	private ProgressDialog loadDialog ;
-	private String siteName;
-	private RecyclerViewAdapter myAdapter;
+    private FragmentManager fragmentManager;
+    private List<SiteItem> mSiteList;
+    private static AlertDialog.Builder dialog;
+    private int index = 0;
+    private RecyclerView mRecyclerView;
+    private ProgressDialog loadDialog;
+    private String siteName;
+    private RecyclerViewAdapter myAdapter;
     private Bundle arg;
     private Call<SiteData> siteResults;
-	private Observable<SiteData> siteResultsRxjava;
-	private ISearchResultPresenter presenter;
-	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		Log.i(TAG, "onCreate(): ");
-		super.onCreate(savedInstanceState);
-		context = getContext();
+    private Observable<SiteData> siteResultsRxjava;
+    private SearchResultContract.Presenter presenter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onCreate(): ");
+        super.onCreate(savedInstanceState);
+        context = getContext();
         arg = getArguments();
         siteName = arg.getString(Constatnts.SITENAME);
-        Log.i(TAG, "onCreate: SITENAME== " + siteName );
+        Log.i(TAG, "onCreate: SITENAME== " + siteName);
 
-	}
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		Log.i(TAG, "onCreateView ");
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView ");
         view = inflater.inflate(R.layout.fragment_searchresult_list,
                 container, false);
         initView(view);
+        setPresenter(new SearchResultPresenter(this));
         initData();
 
-		return view;
+        return view;
 
-	}
+    }
 
-    public void initView(View view){
-        MainActivity.setActionBarTitle("Filter & search",null);
+    public void initView(View view) {
+        MainActivity.setActionBarTitle("Filter & search", null);
         layout = (LinearLayout) view.findViewById(R.id.header);
         tvTilte = (TextView) view.findViewById(R.id.keywords);
         btn_delete = (ImageButton) view.findViewById(R.id.btn_delete);
@@ -116,7 +111,7 @@ public class SearchResultFragment extends Fragment implements
         tvTilte.setText("Keyword: " + siteName);
         btn_delete.setOnClickListener(this);
 
-		initProgressDialog();
+        initProgressDialog();
 
         fragmentManager = ((FragmentActivity) getActivity())
                 .getSupportFragmentManager();
@@ -134,13 +129,13 @@ public class SearchResultFragment extends Fragment implements
 
     }
 
-	private void initProgressDialog() {
-		loadDialog = new ProgressDialog(context);
-		loadDialog.setMessage("loading...");
-	}
+    private void initProgressDialog() {
+        loadDialog = new ProgressDialog(context);
+        loadDialog.setMessage("loading...");
+    }
 
 
-	private void initData() {
+    private void initData() {
         mSiteList = new ArrayList<SiteItem>();
         myAdapter = new RecyclerViewAdapter(getContext(), mSiteList);
         myAdapter.setOnCustomeItemClickListener(this);
@@ -150,93 +145,93 @@ public class SearchResultFragment extends Fragment implements
     }
 
     @Override
-	public void onResume() {
-		super.onResume();
-//        showSearchResult("drc",siteName);
-        showSearchResultByRxjava("drc",siteName);
-	}
+    public void onResume() {
+        super.onResume();
+        presenter.showSearchResult("drc", siteName);
+//        showSearchResultByRxjava("drc",siteName);
+    }
 
-	public  void showSearchResultByRxjava(String loginID, String siteName){
-		ApiClientRxJava apiClient = MyRetrofit.getInstance().create(ApiClientRxJava.class);
-		siteResultsRxjava = apiClient.getSiteResults(loginID, siteName);
-		siteResultsRxjava.compose(RxsRxSchedulers.io_main()).subscribe(new Subscriber<SiteData>() {
-			@Override
-			public void onCompleted() {
-				Log.i(TAG, "onCompleted: ");
-			}
+    public void showSearchResultByRxjava(String loginID, String siteName) {
+        ApiClientRxJava apiClient = MyRetrofit.getInstance().create(ApiClientRxJava.class);
+        siteResultsRxjava = apiClient.getSiteResults(loginID, siteName);
+        siteResultsRxjava.compose(RxsRxSchedulers.io_main()).subscribe(new Subscriber<SiteData>() {
+            @Override
+            public void onCompleted() {
+                Log.i(TAG, "onCompleted: ");
+            }
 
-			@Override
-			public void onError(Throwable e) {
-				Log.i(TAG, "onError: ");
-			}
+            @Override
+            public void onError(Throwable e) {
+                Log.i(TAG, "onError: ");
+            }
 
-			@Override
-			public void onNext(SiteData siteData) {
-				Log.i(TAG, "onNext: ");
-				mSiteList.clear();
-				mSiteList.addAll(SiteListSortUtil.sortList(siteData.getSiteData()));
-				if (mSiteList.size() == 0){
-					dialog.show();
-				}else{
-					myAdapter.notifyDataSetChanged();
-				}
-
-
-			}
-		});
-
-	}
+            @Override
+            public void onNext(SiteData siteData) {
+                Log.i(TAG, "onNext: ");
+                mSiteList.clear();
+                mSiteList.addAll(SiteListSortUtil.sortList(siteData.getSiteData()));
+                if (mSiteList.size() == 0) {
+                    dialog.show();
+                } else {
+                    myAdapter.notifyDataSetChanged();
+                }
 
 
-	public void onStop() {
-		super.onStop();
+            }
+        });
+
+    }
+
+
+    public void onStop() {
+        super.onStop();
 //        siteResults.cancel();
 
-	}
+    }
 
-	@Override
-	public void onAttach(Context context) {
-		// TODO Auto-generated method stub
-		super.onAttach(context);
-		Log.i(TAG, "onAttach");
-	}
+    @Override
+    public void onAttach(Context context) {
+        // TODO Auto-generated method stub
+        super.onAttach(context);
+        Log.i(TAG, "onAttach");
+    }
 
-	@Override
-	public void onDetach() {
-		Log.i(TAG, "onDetach");
-		super.onDetach();
-	}
+    @Override
+    public void onDetach() {
+        Log.i(TAG, "onDetach");
+        super.onDetach();
+    }
 
-	@Override
-	public void onDestroyView() {
-		Log.i(TAG, "onDestroyView");
-		super.onDestroyView();
-	}
-	
-	@Override
-	public void onDestroy() {
-		Log.i(TAG, "onDestroy");
-		super.onDestroy();
-	}
-	
+    @Override
+    public void onDestroyView() {
+        Log.i(TAG, "onDestroyView");
+        super.onDestroyView();
+    }
 
-	@Override
-	public void onClick(View v) {
-		int id = v.getId();
-		switch (id) {
-		case R.id.btn_delete:
-			Log.i(TAG, "delete was clicked!");
-			this.onDestroyView();
-			this.onDestroy();
-			this.onDetach();
-			getActivity().onBackPressed();
-			break;
+    @Override
+    public void onDestroy() {
+        Log.i(TAG, "onDestroy");
+        super.onDestroy();
+    }
 
-		default:
-			break;
-		}
-		
-	}
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.btn_delete:
+                Log.i(TAG, "delete was clicked!");
+                this.onDestroyView();
+                this.onDestroy();
+                this.onDetach();
+                getActivity().onBackPressed();
+                break;
+
+            default:
+                break;
+        }
+
+    }
 
     @Override
     public void onItemClick(View v, int position) {
@@ -267,37 +262,41 @@ public class SearchResultFragment extends Fragment implements
 
     }
 
-	@Override
-	public void showSearchResult(List<SiteItem> siteList) {
-		mSiteList.clear();
-		mSiteList.addAll(SiteListSortUtil.sortList(siteList));
-		myAdapter.notifyDataSetChanged();
-	}
+    @Override
+    public void showSearchResult(List<SiteItem> siteList) {
+        Log.i(TAG, "showSearchResult: ");
+        mSiteList.clear();
+        mSiteList.addAll(SiteListSortUtil.sortList(siteList));
+        myAdapter.notifyDataSetChanged();
+    }
 
-	@Override
-	public void setPresenter(ISearchResultPresenter presenter) {
-		this.presenter = presenter;
-	}
 
-	@Override
-	public void onSuccess() {
+    @Override
+    public void setPresenter(SearchResultContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
 
-	}
+    @Override
+    public void onSuccess() {
+        hideDialog();
+    }
 
-	@Override
-	public void onFailed() {
+    @Override
+    public void onFailed() {
+        Log.i(TAG, "onFailed: ");
+        hideDialog();
+        dialog.show();
+    }
 
-	}
+    @Override
+    public void showDialog() {
+        loadDialog.show();
+    }
 
-	@Override
-	public void showDialog() {
-		loadDialog.show();
-	}
-
-	@Override
-	public void hideDialog() {
-		if (loadDialog == null) {
-			loadDialog.dismiss();
-		}
-	}
+    @Override
+    public void hideDialog() {
+        if (loadDialog != null) {
+            loadDialog.dismiss();
+        }
+    }
 }

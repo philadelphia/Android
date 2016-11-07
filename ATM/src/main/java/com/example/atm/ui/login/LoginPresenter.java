@@ -42,7 +42,6 @@ public class LoginPresenter extends LoginContract.Presenter {
                     LoginResult loginResult = response.body();
                     if ("Successful".equals(loginResult
                             .getResult())) {
-                        baseView.hideDialog();
                         baseView.onSuccess();
                     }
                 }
@@ -52,7 +51,6 @@ public class LoginPresenter extends LoginContract.Presenter {
             public void onFailure(Call<LoginResult> call, Throwable t) {
                 Log.i(TAG, "onFailure: ");
                 baseView.onFailed();
-                baseView.hideDialog();
             }
         });
     }
