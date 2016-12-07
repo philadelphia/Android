@@ -1,13 +1,13 @@
 package com.example.atm.utils;
 
+
+import android.os.Environment;
 import android.util.Log;
 
-import java.util.List;
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cookie;
-import okhttp3.CookieJar;
-import okhttp3.HttpUrl;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -70,17 +70,7 @@ public class MyRetrofit {
                 .retryOnConnectionFailure(true)
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .addInterceptor(getHttpInterceptor())
-                .cookieJar(new CookieJar() {
-                    @Override
-                    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-
-                    }
-
-                    @Override
-                    public List<Cookie> loadForRequest(HttpUrl url) {
-                        return null;
-                    }
-                })
+                .cache(getCache())
                 .build();
 
         return client;
@@ -91,5 +81,11 @@ public class MyRetrofit {
 
     }
 
+    public static Cache getCache(){
+//        File cacheFile = new File(Environment.getExternalStoragePublicDirectory(""), "[缓存目录ATM]");
+        File cacheFile = Environment.getExternalStoragePublicDirectory("[缓存目录ATM]");
+        Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
+        return  cache;
+    }
 
 }

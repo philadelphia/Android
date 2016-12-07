@@ -17,9 +17,14 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.atm.MainActivity;
@@ -60,28 +65,58 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
 
         sp = getSharedPreferences("login", MODE_APPEND);
         boolean hasLogined = sp.getBoolean("hasLogined", false);
+
+        setContentView(R.layout.activity_login);
+
+        initView();
+
+//        if (!hasLogined) {
+//            setContentView(R.layout.activity_login);
+//
+//            ed_userid = (EditText) findViewById(R.id.edit1);
+//            ed_password = (EditText) findViewById(R.id.edit2);
+//            loginButton = (Button) findViewById(R.id.loginbutton);
+//            forgouPassword = (Button) findViewById(R.id.btn_forgetPassword);
+//            loginButton.setOnClickListener(this);
+//            forgouPassword.setOnClickListener(this);
+//            setPresenter(new LoginPresenter(this));
+//            preferences = getSharedPreferences("config", MODE_PRIVATE);
+//            edit = preferences.edit();
+//
+//        } else {
+//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//            startActivity(intent);
+////            finish();
+//        }
+
+
+
+    }
+
+    private void initView() {
         setPresenter(new LoginPresenter(this));
+        ed_userid = (EditText) findViewById(R.id.edit1);
+        ed_password = (EditText) findViewById(R.id.edit2);
+        ed_password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_GO){
+                    Log.i(TAG, "onEditorAction: gogogog");
+                    loginPresenter.login();
+                    return  true;
+                }
+                return false;
+            }
+
+        });
+        loginButton = (Button) findViewById(R.id.loginbutton);
+        forgouPassword = (Button) findViewById(R.id.btn_forgetPassword);
+        loginButton.setOnClickListener(this);
+        forgouPassword.setOnClickListener(this);
         preferences = getSharedPreferences("config", MODE_PRIVATE);
         edit = preferences.edit();
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("loging.....");
-
-
-        if (!hasLogined) {
-            setContentView(R.layout.activity_login);
-
-            ed_userid = (EditText) findViewById(R.id.edit1);
-            ed_password = (EditText) findViewById(R.id.edit2);
-            loginButton = (Button) findViewById(R.id.loginbutton);
-            forgouPassword = (Button) findViewById(R.id.btn_forgetPassword);
-            loginButton.setOnClickListener(this);
-            forgouPassword.setOnClickListener(this);
-        } else {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
     }
 
     @Override
@@ -134,51 +169,6 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
                 }
             }).show();
         }
-    }
-
-    private void login(String userName, String userPassword) {
-        Log.i(TAG, "login: ");
-        testConnectivity();
-        if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(userPassword)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(
-                    LoginActivity.this);
-            builder.setIcon(R.mipmap.alm)
-                    .setMessage("Login ID or password cannot be empty!")
-                    .setPositiveButton("OK", null).show();
-//			dialog.dismiss();
-
-        }
-        ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
-        login = apiClient.login(userName, userPassword);
-        login.enqueue(new Callback<LoginResult>() {
-            @Override
-            public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
-                Log.i(TAG, "onResponse: " + response.toString());
-                Log.i(TAG, "onResponse: " + response.message());
-                Log.i(TAG, "onResponse: " + response.code());
-                Log.i(TAG, "onResponse: " + response.errorBody().toString());
-                if (response.code() == 200 && response.message().equalsIgnoreCase("OK")) {
-                    LoginResult loginResult = response.body();
-                    if ("Successful".equals(loginResult
-                            .getResult())) {
-//						edit.putString("LoginID",
-//								userName);
-//						edit.commit();
-                        Intent intent = new Intent(
-                                LoginActivity.this,
-                                MainActivity.class);
-                        startActivity(intent);
-                        finish();
-//						dialog.dismiss();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginResult> call, Throwable t) {
-                Log.i(TAG, "onFailure: ");
-            }
-        });
     }
 
     private void loginByRxjava(String userName, String userPassword) {
@@ -236,7 +226,8 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
 
     @Override
     public void hideDialog() {
-        if (progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing())
+        {
             progressDialog.dismiss();
         }
     }
@@ -255,18 +246,86 @@ public class LoginActivity extends Activity implements View.OnClickListener, Log
                 LoginActivity.this,
                 MainActivity.class);
         startActivity(intent);
-        finish();
+//        finish();
 
     }
 
     @Override
     public void onFailed() {
-    hideDialog();
+        hideDialog();
+        Toast.makeText(this,"用户名或密码错误",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         loginPresenter.dettatch(this);
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        hideDialog();
+    }
+
+    @Override
+    public void finish()
+    {
+        if (progressDialog != null && progressDialog.isShowing())
+        {
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void attemptLogin() {
+        InputMethodManager imm = (InputMethodManager) LoginActivity.this
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(loginButton.getWindowToken(), 0);
+
+        // Reset errors.
+        ed_userid.setError(null);
+        ed_password.setError(null);
+
+        // Store values at the time of the login attempt.
+        String userName = ed_userid.getText().toString().trim();
+        String password = ed_password.getText().toString().trim();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(userName)) {
+            ed_userid.setError("不能为空");
+            focusView = ed_userid;
+            cancel = true;
+        }
+
+        // Check for a valid userid.
+        if (TextUtils.isEmpty(password)) {
+            ed_password.setError("不能为空");
+            focusView = ed_password;
+            cancel = true;
+        }
+
+        // Check for a valid password, if the user entered one.
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            ed_password.setError("不合法,密码长度需大于4");
+            focusView = ed_password;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+
+        }
+    }
+
+
+    private boolean isPasswordValid(String password) {
+            return password.length() > 4 ;
+        }
 }

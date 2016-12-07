@@ -90,6 +90,7 @@
             android:maxLength="20"
             android:password="true"
             android:singleLine="true"
+            android:imeOptions="actionGo"
             android:textColor="#ffffff"
             android:textColorHint="#949494"
             android:textSize="12sp">

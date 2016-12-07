@@ -70,6 +70,7 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
     private Observable<SiteData> allSitesRxjava;
     private SiteListContract.Presenter siteListPresenter;
     private ProgressDialog progressDialog;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: ");
@@ -230,6 +231,7 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
     @Override
     public void showSiteList(List<SiteItem> siteList) {
         mSiteList.clear();
+        Log.i(TAG, "showSiteList's size is= " + siteList.size());
         mSiteList.addAll(SiteListSortUtil.sortList(siteList));
         myAdapter.notifyDataSetChanged();
     }

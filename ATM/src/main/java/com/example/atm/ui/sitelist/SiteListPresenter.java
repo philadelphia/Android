@@ -26,7 +26,7 @@ public class SiteListPresenter extends SiteListContract.Presenter {
 
     @Override
     public void fetchSiteList(String userID) {
-        baseView.showDialog();
+//        baseView.showDialog();
         ApiClient siteList = MyRetrofit.getInstance().create(ApiClient.class);
         Call<SiteData> allSites = siteList.getAllSites(userID);
         allSites.enqueue(new Callback<SiteData>() {

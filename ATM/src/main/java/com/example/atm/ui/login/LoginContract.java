@@ -21,6 +21,7 @@ public interface LoginContract {
     public interface View extends BaseView<Presenter> {
         public String getUserID();
         public String getPassword();
+        public void attemptLogin();
 
     }
 
