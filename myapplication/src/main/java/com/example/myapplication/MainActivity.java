@@ -1,10 +1,13 @@
 package com.example.myapplication;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,14 +19,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.design.widget.TabLayout;
+import android.widget.ShareActionProvider;
+
 import com.example.myapplication.ui.AndroidBaseFragment;
 import com.example.myapplication.ui.DatabaseFragment;
-import com.example.myapplication.ui.fragment.widget.AndroidBaseViewFragment;
 import com.example.myapplication.ui.ManagerFragment;
 import com.example.myapplication.ui.MaterialDesginFragment;
 import com.example.myapplication.ui.OtherFragment;
 import com.example.myapplication.ui.SendFragment;
 import com.example.myapplication.ui.ShareFragment;
+import com.example.myapplication.ui.fragment.widget.AndroidBaseViewFragment;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -38,6 +43,8 @@ public class MainActivity extends AppCompatActivity
     private static DrawerLayout drawer;
     private static ActionBarDrawerToggle toggle;
     private static NavigationView navigationView;
+    private ShareActionProvider mShareActionProvider;
+    private Menu menu;
     private static final String TAG = "MainActivity";
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -56,8 +63,8 @@ public class MainActivity extends AppCompatActivity
         //default show android Base Fragment
         AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
         ManagerFragment managerFragment = new ManagerFragment();
-       OtherFragment otherFragment = new OtherFragment();
-//        OtherFragment otherFragment = new OtherFragment();
+        OtherFragment otherFragment = new OtherFragment();
+        AndroidBaseViewFragment androidBaseViewFragment = new AndroidBaseViewFragment();
 //        DatabaseFragment databaseFragment = new DatabaseFragment();
         fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
 
@@ -107,20 +114,28 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        this.menu = menu;
+        MenuItem item = menu.findItem(R.id.action_share);
+//        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        Log.i(TAG, "onOptionsItemSelected: setting");
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+//        Log.i(TAG, "onOptionsItemSelected: setting");
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Log.i(TAG, "add a new item: ");
+//              手动添加一项MenuItem.
+                menu.add("SD");
+                Log.i(TAG, "onOptionsItemSelected: action_settings");
+                return true;
+            case R.id.action_search:
+                Log.i(TAG, "onOptionsItemSelected: action_search ");
+                return  true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-
-        return super.onOptionsItemSelected(item);
     }
 
 
@@ -144,7 +159,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_database:
                 Log.e(TAG, "onNavigationItemSelected: database");
                 DatabaseFragment databaseFragment = new DatabaseFragment();
-                fragmentManager.beginTransaction().replace(R.id.container,databaseFragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, databaseFragment).commit();
                 break;
 
             case R.id.nav_other:
@@ -259,4 +274,30 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
     }
 
+
+    public boolean onClick(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                Log.i(TAG, "onClick: action_settings");
+                return true;
+            case R.id.action_search:
+                Log.i(TAG, "onClick: action_search ");
+                return  true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.i(TAG, "onConfigurationChanged: ");
+        Log.i(TAG, "onConfigurationChanged: " + (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE ? "Horizontal" : "Vertical"));
+    }
+
+    public void onShare(Intent shareIntent){
+        if (mShareActionProvider != null){
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
+    }
 }

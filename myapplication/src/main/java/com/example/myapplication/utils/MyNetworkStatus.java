@@ -28,10 +28,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.Toast;
 
-import com.delta.mprotecht.R;
+import com.example.myapplication.R;
 
-public class MyNetworkStatus extends Activity {
+
+public class MyNetworkStatus  {
 	private static ConnectivityManager connectivityManager;
+
 	public static void getNetworkConnection(final Context context, String title) {
 		connectivityManager = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -41,7 +43,7 @@ public class MyNetworkStatus extends Activity {
 			Toast.makeText(context, "Network not available", Toast.LENGTH_SHORT)
 					.show();
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			builder.setIcon(R.drawable.ic_exclamation_red)
+			builder.setIcon(R.mipmap.ic_exclamation_red)
 					.setMessage(" No Connection")
 					.setPositiveButton("SETTINGS", new OnClickListener() {
 
@@ -71,10 +73,33 @@ public class MyNetworkStatus extends Activity {
 		connectivityManager = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo info = connectivityManager.getActiveNetworkInfo();
-		if (info != null) {
+		if (info != null && info.isConnectedOrConnecting()) {
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	public String getNetworkType(Context context) {
+		connectivityManager = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+		int type = -1 ;
+		if (info != null && info.isConnected()) {
+			type = info.getType();
+		}
+
+		switch (type){
+			case ConnectivityManager.TYPE_MOBILE:
+				return "Moblie";
+			case ConnectivityManager.TYPE_WIFI:
+				return "WIFI";
+			case ConnectivityManager.TYPE_WIMAX:
+				return "WI-MXA";
+			case ConnectivityManager.TYPE_ETHERNET:
+				return "ETHERNET";
+			default:
+				return null;
 		}
 	}
 

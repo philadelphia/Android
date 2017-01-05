@@ -8,12 +8,21 @@
 
     <!-- TODO: Update blank fragment layout -->
     <Button
-        android:id="@+id/btn_send"
+    android:id="@+id/btn_send"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center"
+    android:text="发送普通通知"
+    android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btn_sendBigViewNotification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:text="发送普通通知"
+        android:text="发送BigView通知"
         android:textSize="20sp" />
 
     <Button

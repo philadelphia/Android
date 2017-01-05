@@ -29,10 +29,8 @@ public class CustomViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       LinearLayout  linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_custom_view, container,false);
-        View view = inflater.inflate(R.layout.layout_test,linearLayout);
-        Log.i(TAG, "onCreateView: getRootView  " + view.getRootView().getClass().getSimpleName());
-        Intent intent = new Intent();
+      View view = inflater.inflate(R.layout.fragment_custom_view, container,true);
+
         return  view;
     }
 

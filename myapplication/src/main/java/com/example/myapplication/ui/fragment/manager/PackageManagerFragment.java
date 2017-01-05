@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +41,6 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     private RecyclerViewAdapter myAdapter;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    //    private  RecyclerView recyclerView;
 
 
     private static final String TAG = "PackageManagerFragment";
@@ -48,9 +48,8 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         Log.i(TAG, "onCreateView: ");
-        final View view = inflater.inflate(R.layout.fragment_package_manager, null);
+        View view = inflater.inflate(R.layout.fragment_package_manager, container,false);
         packageManager = getContext().getPackageManager();
         ButterKnife.bind(this, view);
 //        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
@@ -180,18 +179,18 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         switch (item.getItemId()) {
             case 0:
                 addOneItems(position, new PackageInfo());
-                break;
+                return  true;
             case 1:
                 signAsImportant();
-                break;
+                return  true;
             case 2:
                 deleteItem(position);
                 Log.i(TAG, "deleting......: ");
-                break;
+                return  true;
             default:
-                break;
+                return super.onContextItemSelected(item);
         }
-        return super.onContextItemSelected(item);
+
     }
 
     private void addOneItems(int position, PackageInfo packageInfo) {
@@ -222,5 +221,6 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     public void onDestroy() {
         super.onDestroy();
     }
+
 
 }

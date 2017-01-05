@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
     public void initView() {
         mTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+//        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         setSupportActionBar(mToolBar);
         mFab = (FloatingActionButton) findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {

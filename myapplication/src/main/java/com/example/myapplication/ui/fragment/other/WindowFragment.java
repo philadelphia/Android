@@ -36,12 +36,12 @@ public class WindowFragment extends Fragment {
 //        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION );
 
 //      设置 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN后。contentview 会填充navigationbar的区域。
-        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION );
+//        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION );
 
 
 
-        MainActivity.getToolbar().setVisibility(View.GONE);
-        MainActivity.getmTabLayout().setVisibility(View.GONE);
+//        MainActivity.getToolbar().setVisibility(View.GONE);
+//        MainActivity.getmTabLayout().setVisibility(View.GONE);
 
         return view;
     }
