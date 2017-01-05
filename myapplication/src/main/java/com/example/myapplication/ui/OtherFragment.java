@@ -15,9 +15,9 @@ import com.example.myapplication.adapter.MyViewPagerAdapter;
 import com.example.myapplication.ui.fragment.other.AnimationFragment;
 import com.example.myapplication.ui.fragment.other.CameraFragment;
 import com.example.myapplication.ui.fragment.other.CustomViewFragment;
-import com.example.myapplication.ui.fragment.other.MultiMediaFragment;
 import com.example.myapplication.ui.fragment.other.NotificationFragment;
 import com.example.myapplication.ui.fragment.other.WebViewFragment;
+import com.example.myapplication.ui.fragment.other.WindowFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
 public class OtherFragment extends Fragment  {
     private final String TAG = OtherFragment.class.getSimpleName();
     private ViewPager mViewPager;
-    private final String[] mTabTitles = {"Notification", "Animation", "WebView" ,"Camera", "CustomView", "MultiMedia",  "MapService", "Dialog"};
+    private final String[] mTabTitles = {"Window", "Notification", "Animation", "WebView" ,"Camera", "CustomView", "MultiMedia",  "MapService", "Dialog"};
     private List<Fragment> mTabFragments ;
     private MyViewPagerAdapter mPagerAdapter;
     private TabLayout mTablayout;
@@ -58,6 +58,7 @@ public class OtherFragment extends Fragment  {
     private void setUpViewPagerAndTabs (){
         toolbar.setTitle("其他");
         mTabFragments = new ArrayList<>();
+        mTabFragments.add(new WindowFragment());
         mTabFragments.add(new NotificationFragment());
         mTabFragments.add(new AnimationFragment());
         mTabFragments.add(new WebViewFragment());

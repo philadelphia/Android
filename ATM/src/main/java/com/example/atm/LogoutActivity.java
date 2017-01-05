@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+<<<<<<< HEAD
 import com.example.atm.ui.login.view.LoginActivity;
+=======
+import com.example.atm.ui.login.LoginActivity;
+>>>>>>> mvpDemo
 
 public class LogoutActivity extends Activity {
     private Button  btnLogout;

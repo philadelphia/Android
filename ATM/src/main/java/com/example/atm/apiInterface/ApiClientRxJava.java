@@ -12,6 +12,7 @@ import com.example.atm.entities.SiteMap;
 
 import retrofit2.Call;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -30,6 +31,7 @@ public interface ApiClientRxJava {
 
     @POST("/WebAPI/API/ChangePass")
     Observable<UpdatePasswordResult> updateUserPassword(@Header("LoginID") String id, @Header("CurPass") String currentPasswd, @Header("NewPass") String newPasswd);
+
 
     @POST("/WebAPI/API/ConsolidatedSite")
     Observable<SiteData> getAllSites(@Header("LoginID") String id);

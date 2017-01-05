@@ -1,7 +1,13 @@
 package com.example.atm.utils;
 
+
+import android.os.Environment;
 import android.util.Log;
 
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -18,10 +24,10 @@ public class MyRetrofit {
     private MyRetrofit(){
         Log.i(TAG, "MyRetrofit: ----begin to new A class---");
         retrofit = new Retrofit.Builder()
+                .baseUrl(Url.BASE_URL)//主机地址
                 .client(getHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())//解析方法
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(Url.BASE_URL)//主机地址
                 .build();
     }
 
@@ -55,13 +61,16 @@ public class MyRetrofit {
                 Log.i(TAG, message);
             }
         });
-
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return interceptor;
     }
 
     public static OkHttpClient getHttpClient() {
         OkHttpClient client = new OkHttpClient.Builder()
+                .retryOnConnectionFailure(true)
+                .connectTimeout(15, TimeUnit.SECONDS)
                 .addInterceptor(getHttpInterceptor())
+                .cache(getCache())
                 .build();
 
         return client;
@@ -72,5 +81,11 @@ public class MyRetrofit {
 
     }
 
+    public static Cache getCache(){
+//        File cacheFile = new File(Environment.getExternalStoragePublicDirectory(""), "[缓存目录ATM]");
+        File cacheFile = Environment.getExternalStoragePublicDirectory("[缓存目录ATM]");
+        Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
+        return  cache;
+    }
 
 }

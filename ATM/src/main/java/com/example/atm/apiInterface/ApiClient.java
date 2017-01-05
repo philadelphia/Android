@@ -12,6 +12,7 @@ import com.example.atm.entities.SiteMap;
 
 import retrofit2.Call;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -29,6 +30,7 @@ public interface ApiClient {
     @POST("/WebAPI/API/ChangePass")
     Call<UpdatePasswordResult> updateUserPassword(@Header("LoginID") String id, @Header("CurPass") String currentPasswd, @Header("NewPass") String newPasswd);
 
+    @Headers("Cache-Control: public, max-age=3600")
     @POST("/WebAPI/API/ConsolidatedSite")
     Call<SiteData> getAllSites(@Header("LoginID") String id);
 

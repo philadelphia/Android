@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="贴片机预警">
+        <menu>
+            <item
+                android:id="@+id/home"
+                android:icon="@mipmap/ic_launcher"
+                android:title="接料超领预警" />
+            <item
+                android:id="@+id/nav_gallery"
+                android:icon="@mipmap/ic_launcher"
+                android:title="超领清单" />
+        </menu>
+    </item>
+    <group android:checkableBehavior="single">
+        <item android:title="叠送一体机预警">
+            <menu>
+                <item
+                    android:id="@+id/folding_machine_waring"
+                    android:icon="@mipmap/ic_launcher"
+                    android:title="叠送一体机预警" />
+                <item
+                    android:id="@+id/warehouse"
+                    android:icon="@mipmap/ic_launcher"
+                    android:title="PCB库房" />
+
+
+            </menu>
+        </item>
+
+    </group>
+
+
+</menu>

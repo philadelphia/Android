@@ -1,10 +1,7 @@
 package com.example.atm.ui.troubleticket;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -12,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.internal.ForegroundLinearLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,17 +17,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+
 import android.widget.LinearLayout;
-import android.widget.ListView;
+
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.atm.MainActivity;
 import com.example.atm.R;
 import com.example.atm.adapter.TroubleTicketListRecyclerViewAdapter;
-import com.example.atm.apiInterface.ApiClient;
 import com.example.atm.apiInterface.ApiClientRxJava;
 import com.example.atm.bean.TroubleTicket;
 import com.example.atm.utils.CustomItemClickListener;
@@ -40,16 +34,13 @@ import com.example.atm.utils.MyRetrofit;
 import com.example.atm.utils.RxsRxSchedulers;
 
 
-import okhttp3.Headers;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+
 import rx.Observable;
 import rx.Subscriber;
 
 
-public class TroubleTicketListFragment extends Fragment implements CustomItemClickListener{
+public class TroubleTicketListFragment extends Fragment implements CustomItemClickListener, TroubleTicketListContract.View{
 
 	private SharedPreferences prefer;
 	private Editor editor;
@@ -57,7 +48,7 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 	private RecyclerView recyclerView;
 
 	private ArrayList<TroubleTicket.TTDataBean> mTroubletList = new ArrayList<TroubleTicket.TTDataBean>();
-	private ProgressDialog dialog;
+	private ProgressDialog progressDialog;
 	private String LoginID = null;
 	private SharedPreferences preferences;
 	private TextView textView;
@@ -67,7 +58,7 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 	private Call<TroubleTicket> troubleTicketList;
 	private TroubleTicketListRecyclerViewAdapter mAdapter;
 	private Observable<TroubleTicket> troubleTicketListRxjava;
-
+	private TroubleTicketListContract.Presenter troubleTicketListPresenter;
 	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
 	@Nullable
@@ -83,9 +74,17 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 		Log.i(TAG, "onCreateView:LoginID ==  " + LoginID);
 		mFragmentManager = getActivity().getSupportFragmentManager();
 		initView(root);
-//		getAllTroubleTicketes("drc");
-		getAllTroubleTicketesByRxjava("drc");
+		setPresenter(new TroubleTicketListPresenter(this));
+		initProgressDialog();
+
+		troubleTicketListPresenter.getAllTroubleTicketes("drc");
+//		getAllTroubleTicketesByRxjava("drc");
 		return root;
+	}
+
+	private void initProgressDialog() {
+		progressDialog = new ProgressDialog(getContext());
+		progressDialog.setMessage("Loading...");
 	}
 
 	public void initView(View view){
@@ -96,41 +95,6 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false));
 		recyclerView.setAdapter(mAdapter);
 		mAdapter.setOnCustomeItemClickListener(this);
-	}
-	public void getAllTroubleTicketes(String loginID){
-		Log.i(TAG, "getAllTroubleTicketes: ");
-		ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
-		troubleTicketList = apiClient.getTroubleTicketList(loginID);
-		troubleTicketList.enqueue(new Callback<TroubleTicket>() {
-			@Override
-			public void onResponse(Call<TroubleTicket> call, Response<TroubleTicket> response) {
-				Log.i(TAG, "onResponse:code ===  " + response.code());
-				Log.i(TAG, "onResponse: message == " + response.message());
-				Headers headers =  response.headers();
-
-				Map<String, List<String>> stringListMap = headers.toMultimap();
-				for (Map.Entry<String,List<String>> entry : stringListMap.entrySet()
-					 ) {
-					Log.i(TAG, "key== " + entry.getKey());
-					Log.i(TAG, "value'size ==: " + entry.getValue().size());
-					Log.i(TAG, "value== " + entry.getValue().toString());
-				}
-				
-
-				if (response.body() != null){
-					mTroubletList.clear();
-					Log.i(TAG, "onResponse: " + response.body().getTTData().size());
-					mTroubletList.addAll(response.body().getTTData());
-					mAdapter.notifyDataSetChanged();
-
-				}
-			}
-
-			@Override
-			public void onFailure(Call<TroubleTicket> call, Throwable t) {
-				Log.i(TAG, "onFailure: ");
-			}
-		});
 	}
 
 	public void getAllTroubleTicketesByRxjava(String loginID){
@@ -166,7 +130,7 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 		MainActivity.setActionBarTitle(getString(R.string.title_trouble_ticket),null);
 	}
 
-	public ArrayList<TroubleTicket.TTDataBean> sortList(ArrayList<TroubleTicket.TTDataBean> sitelist) {
+	public ArrayList<TroubleTicket.TTDataBean> sortList(List<TroubleTicket.TTDataBean> sitelist) {
 
 		ArrayList<TroubleTicket.TTDataBean> sortedList = new ArrayList<TroubleTicket.TTDataBean>();
 		ArrayList<TroubleTicket.TTDataBean> criticalList = new ArrayList<TroubleTicket.TTDataBean>();
@@ -209,6 +173,7 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 		mFragmentManager.beginTransaction()
 				.replace(R.id.container, fragment).addToBackStack(null)
 				.commit();
+
 	}
 
 	@Override
@@ -220,5 +185,41 @@ public class TroubleTicketListFragment extends Fragment implements CustomItemCli
 	public void onDestroy() {
 		super.onDestroy();
 		HttpCallUtil.cancelCall(troubleTicketList);
+	}
+
+	@Override
+	public void setPresenter(TroubleTicketListContract.Presenter presenter) {
+		this.troubleTicketListPresenter = presenter;
+	}
+
+	@Override
+	public void onSuccess() {
+
+	}
+
+	@Override
+	public void onFailed() {
+
+	}
+
+	@Override
+	public void showDialog() {
+		progressDialog.show();
+	}
+
+	@Override
+	public void hideDialog() {
+		if (progressDialog != null) {
+			progressDialog.dismiss();
+		}
+	}
+
+
+	@Override
+	public void showData(List<TroubleTicket.TTDataBean> data) {
+		mTroubletList.clear();
+		Log.i(TAG, "onResponse: " + data.size());
+		mTroubletList.addAll(sortList(data));
+		mAdapter.notifyDataSetChanged();
 	}
 }

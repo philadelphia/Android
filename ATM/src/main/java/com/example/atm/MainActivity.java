@@ -7,8 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,7 +15,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import com.example.atm.ui.about.AboutFragment;
 import com.example.atm.ui.setting.SettingsFragment;
@@ -51,7 +48,7 @@ public class MainActivity extends AppCompatActivity
     public void initView() {
         mTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+//        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         setSupportActionBar(mToolBar);
         mFab = (FloatingActionButton) findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {

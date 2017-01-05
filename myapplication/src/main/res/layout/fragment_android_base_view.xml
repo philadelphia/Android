@@ -1,41 +1,147 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edt1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="please input something"
-        android:cursorVisible="true"
-        android:digits="1234567890.+-*/%\n()"
-        android:drawableBottom="#00ff00" />
-
-    <EditText
-        android:id="@+id/edt2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="please input something          "
-        android:cursorVisible="false"
-        android:drawableBottom="#ff0000"
-        android:drawablePadding="@dimen/activity_horizontal_margin" />
-
-    <Button
-        android:id="@+id/btn_showDialog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:gravity="center"
-        android:text="show Dialog" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-    <Button
-        android:id="@+id/btn_popupWindow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:gravity="center"
-        android:text="popupWindow Test" />
+        <EditText
+            android:id="@+id/edt1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            android:drawableBottom="#00ff00"
+            android:hint="please input something"
+            android:imeOptions="actionDone"/>
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/edt2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:drawableBottom="#ff0000"
+            android:drawablePadding="@dimen/activity_horizontal_margin"
+            android:hint="please input something  "
+            android:imeOptions="actionDone"
+            android:inputType="textCapSentences"/>
+
+        <Button
+            android:id="@+id/btn_showKeyBoard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="show KeyBoard"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/btn_showDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="show Dialog"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/btn_showDialogFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Dialog Fragment"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/btn_showDialogActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Dialog Activity"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/btn_popupWindow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="popupWindow Test"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/btn_share"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="shareTest"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/btn_setAlpha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="setting Alpha"
+            android:textSize="14sp"/>
+
+        <ImageView
+            android:id="@+id/img_beauty"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:scaleType="center"
+            android:src="@mipmap/ic_beauty"/>
+
+        <ImageView
+            android:id="@+id/img_beauty1"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_beauty"/>
+
+        <ImageView
+            android:id="@+id/img_beauty2"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_beauty"/>
+
+        <ImageView
+            android:id="@+id/img_beauty3"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_beauty"/>
+
+
+        <ImageView
+            android:id="@+id/img_beauty5"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:scaleType="fitStart"
+            android:src="@mipmap/ic_beauty"/>
+
+        <ImageView
+            android:id="@+id/img_beauty6"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:scaleType="fitEnd"
+            android:src="@mipmap/ic_beauty"/>
+
+
+        <ImageView
+            android:id="@+id/img_beauty7"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_beauty"/>
+
+        <ImageView
+            android:id="@+id/img_beauty8"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:scaleType="matrix"
+            android:src="@mipmap/ic_beauty"/>
+
+    </LinearLayout>
+</ScrollView>
