@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,11 +60,13 @@ public class BroadCastReceiverFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        Log.i(TAG, "onStop: ");
     }
 
     @Override
     public void onDestroy() {
         getActivity().unregisterReceiver(myNetworkChangeReceiver);
+        Log.i(TAG, "onDestroy: ");
         super.onDestroy();
     }
 

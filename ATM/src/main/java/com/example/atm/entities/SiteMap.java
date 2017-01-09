@@ -1,55 +1,74 @@
 package com.example.atm.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class SiteMap implements Serializable {
 
-	private static final long serialVersionUID = -6031901364706391488L;
 
-	private String SiteID;
-	private String SiteName;
-	private String Longitude;
-	private String Lattitude;
-	private String IsAlarm;
+	/**
+	 * SiteID : 00S1ACCM02
+	 * SiteName :  Robinson Road
+	 * Longitude : 00
+	 * Lattitude : 00
+	 * IsAlarm : No
+	 */
 
-	public String getSiteID() {
-		return SiteID;
+	private List<SiteMapDataBean> SiteMapData;
+
+	public List<SiteMapDataBean> getSiteMapData() {
+		return SiteMapData;
 	}
 
-	public void setSiteID(String siteID) {
-		SiteID = siteID;
+	public void setSiteMapData(List<SiteMapDataBean> SiteMapData) {
+		this.SiteMapData = SiteMapData;
 	}
 
-	public String getSiteName() {
-		return SiteName;
-	}
+	public static class SiteMapDataBean {
+		private String SiteID;
+		private String SiteName;
+		private String Longitude;
+		private String Lattitude;
+		private String IsAlarm;
 
-	public void setSiteName(String siteName) {
-		SiteName = siteName;
-	}
+		public String getSiteID() {
+			return SiteID;
+		}
 
-	public String getIsAlarm() {
-		return IsAlarm;
-	}
+		public void setSiteID(String SiteID) {
+			this.SiteID = SiteID;
+		}
 
-	public void setIsAlarm(String isAlarm) {
-		IsAlarm = isAlarm;
-	}
+		public String getSiteName() {
+			return SiteName;
+		}
 
-	public String getLongitude() {
-		return Longitude;
-	}
+		public void setSiteName(String SiteName) {
+			this.SiteName = SiteName;
+		}
 
-	public void setLongitude(String longitude) {
-		Longitude = longitude;
-	}
+		public String getLongitude() {
+			return Longitude;
+		}
 
-	public String getLattitude() {
-		return Lattitude;
-	}
+		public void setLongitude(String Longitude) {
+			this.Longitude = Longitude;
+		}
 
-	public void setLattitude(String lattitude) {
-		Lattitude = lattitude;
-	}
+		public String getLattitude() {
+			return Lattitude;
+		}
 
+		public void setLattitude(String Lattitude) {
+			this.Lattitude = Lattitude;
+		}
+
+		public String getIsAlarm() {
+			return IsAlarm;
+		}
+
+		public void setIsAlarm(String IsAlarm) {
+			this.IsAlarm = IsAlarm;
+		}
+	}
 }

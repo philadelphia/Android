@@ -64,13 +64,43 @@
 
 
  <Button
-     android:id="@+id/btn_fade"
+    android:id="@+id/btn_fade"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="淡出"
+    />
+
+ <Button
+     android:id="@+id/btn_showStatsBar"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
      android:gravity="center"
-     android:text="淡出"
+     android:text="显示状态栏"
+     />
+ <Button
+     android:id="@+id/btn_hideStatusBar"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:gravity="center"
+     android:text="隐藏状态栏"
      />
 
+ <Button
+     android:id="@+id/btn_showNavigationBar"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:gravity="center"
+     android:text="显示导航栏"
+     />
+
+ <Button
+     android:id="@+id/btn_hideNavigationBar"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:gravity="center"
+     android:text="隐藏导航栏"
+     />
 
 
 

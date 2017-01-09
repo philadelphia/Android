@@ -20,8 +20,9 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.Switch;
 
-import com.delta.mprotecht.R;
-import com.delta.mprotecht.ui.MainActivity;
+import com.example.atm.MainActivity;
+import com.example.atm.R;
+
 
 public class SettingsFragment extends Fragment implements
 		OnItemSelectedListener {
@@ -39,7 +40,7 @@ public class SettingsFragment extends Fragment implements
 	@Nullable
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.settings, container, false);
+		View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
 		initView(view);
 
@@ -106,8 +107,7 @@ public class SettingsFragment extends Fragment implements
 	@Override
 	public void onResume() {
 		super.onResume();
-		((MainActivity) getActivity())
-				.setActionBarTitle(getString(R.string.title_settings));
+		MainActivity.setActionBarTitle(getString(R.string.title_settings),null);
 
 		SharedPreferences preferences = getActivity().getSharedPreferences(
 				"spinner", Context.MODE_PRIVATE);

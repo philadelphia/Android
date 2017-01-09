@@ -24,6 +24,7 @@ import com.example.atm.adapter.MyAdapter;
 import com.example.atm.apiInterface.ApiClient;
 import com.example.atm.entities.SiteAlarmData;
 import com.example.atm.utils.Constatnts;
+import com.example.atm.utils.HttpCallUtil;
 import com.example.atm.utils.ListviewUtlis;
 import com.example.atm.utils.MyRetrofit;
 
@@ -132,8 +133,7 @@ public class SiteAlarmFragment extends Fragment implements OnClickListener {
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
-        Retrofit retrofit = MyRetrofit.initRetrofit();
-        ApiClient apiClient = retrofit.create(ApiClient.class);
+        ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
         alarmInfo = apiClient.getAlarmInfo(loginID, siteID, siteInfoID, path);
         alarmInfo.enqueue(new Callback<SiteAlarmData>() {
             @Override
@@ -262,5 +262,6 @@ public class SiteAlarmFragment extends Fragment implements OnClickListener {
     public void onDestroy() {
         Log.i(TAG, "onDestroy");
         super.onDestroy();
+        HttpCallUtil.cancelCall(alarmInfo);
     }
 }

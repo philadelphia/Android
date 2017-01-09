@@ -14,7 +14,6 @@ import android.view.ViewGroup;
  */
 public class MyViewPagerAdapter extends FragmentPagerAdapter
 {
-        FragmentManager			fm;
 
         public List<Fragment>	mTabFraments;
 
@@ -23,13 +22,11 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter
         public MyViewPagerAdapter(FragmentManager fm)
         {
             super (fm);
-            this.fm = fm;
         }
 
         public MyViewPagerAdapter(FragmentManager fm, List<Fragment> fragments, String[] titles)
         {
             super (fm);
-            this.fm = fm;
             mTabTitles = titles;
             mTabFraments = fragments;
         }
@@ -63,4 +60,6 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter
     public void destroyItem(ViewGroup container, int position, Object object) {
         super.destroyItem(container, position, object);
     }
+
+
 }

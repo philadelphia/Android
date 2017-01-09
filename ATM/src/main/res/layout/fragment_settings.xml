@@ -8,7 +8,7 @@
         android:id="@+id/locationacces"
         android:layout_width="match_parent"
         android:layout_height="28dp"
-        android:layout_below="@id/bo2"
+
         android:background="#eaeaec"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"

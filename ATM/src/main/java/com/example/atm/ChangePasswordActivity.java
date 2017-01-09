@@ -3,6 +3,7 @@ package com.example.atm;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,18 +12,20 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
-import com.delta.common.BaseApplication;
-import com.delta.common.utils.GsonTools;
-import com.delta.mprotecht.R;
-import com.delta.mprotecht.common.utils.MyNetworkStatus;
-import com.delta.mprotecht.common.utils.MyStringRequest;
-import com.delta.mprotecht.common.utils.ToastUtil;
-import com.delta.mprotecht.common.utils.Url;
-import com.delta.mprotecht.entities.LoginResult;
+import com.example.atm.apiInterface.ApiClient;
+import com.example.atm.bean.UpdatePasswordResult;
+import com.example.atm.utils.HttpCallUtil;
+import com.example.atm.utils.MyNetworkStatus;
+import com.example.atm.utils.MyRetrofit;
+import com.example.atm.utils.ToastUtil;
+import com.example.atm.utils.Url;
+
+import java.lang.reflect.Method;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class ChangePasswordActivity extends Activity implements OnClickListener {
 
@@ -38,6 +41,7 @@ public class ChangePasswordActivity extends Activity implements OnClickListener 
 	private AlertDialog.Builder builder;
 	private Intent intent;
 	private Bundle bundle;
+	private Call<UpdatePasswordResult> updatePasswordResultCall;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class ChangePasswordActivity extends Activity implements OnClickListener 
 		MyNetworkStatus.getNetworkConnection(this, TAG);
 		setFinishOnTouchOutside(false);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.password_change);
+		setContentView(R.layout.fragment_change_password);
 
 		current_Password = (EditText) this.findViewById(R.id.current_Password);
 		confirm_Password = (EditText) this.findViewById(R.id.confirm_Password);
@@ -102,56 +106,45 @@ public class ChangePasswordActivity extends Activity implements OnClickListener 
 						"Current password and  New password can not be same!");
 				dialog.dismiss();
 				return;
-			} else {
-				MyStringRequest myStringRequest = new MyStringRequest(
-						Method.POST, Url.CHANGE_PASSWORD_URL,
-						new Listener<String>() {
-
-							@Override
-							public void onResponse(String response) {
-								if (null != response || "".equals(response)) {
-									String str = response.substring(0,
-											response.length());
-									LoginResult loginResult = GsonTools
-											.changeGsonToBean(str,
-													LoginResult.class);
-									String s = loginResult.getMessage();
-									intent = new Intent(
-											getApplicationContext(),
-											ChangePasswordSureActivity.class);
-									bundle.putString("result", s);
-									intent.putExtras(bundle);
-									startActivityForResult(intent, 1);
-									dialog.dismiss();
-								} else {
-									builder.setMessage(
-											"Current password does not match! or Current password and new password can not be same! or Login ID does not match!")
-											.setPositiveButton("OK", null)
-											.show();
-									dialog.dismiss();
-								}
-							}
-						}, new ErrorListener() {
-
-							@Override
-							public void onErrorResponse(VolleyError error) {
-								builder.setMessage(
-										"Current password does not match! or Current password and new password can not be same! or Login ID does not match!")
-										.setPositiveButton("OK", null).show();
-								dialog.dismiss();
-								dialog.dismiss();
-							}
-						});
-				myStringRequest.addHeaders("LoginID", loginID);
-				myStringRequest.addHeaders("CurPass", txt_current_Password);
-				myStringRequest.addHeaders("NewPass", txt_new_Password);
-				BaseApplication.getRequestQueue().add(myStringRequest);
-
 			}
-			break;
-		default:
+
 			break;
 		}
+	}
+
+	private void updateUserPassword(String loginID, String currentPassword, String newPassword) {
+		ApiClient apiClient = MyRetrofit.getInstance().create(ApiClient.class);
+		updatePasswordResultCall = apiClient.updateUserPassword(loginID, currentPassword, newPassword);
+		updatePasswordResultCall.enqueue(new Callback<UpdatePasswordResult>() {
+			@Override
+			public void onResponse(Call<UpdatePasswordResult> call, Response<UpdatePasswordResult> response) {
+				if (HttpCallUtil.isResponseValid(response)){
+					UpdatePasswordResult body = response.body();
+					if(body.getMessage().equalsIgnoreCase("Successfully Updated")){
+						builder.setMessage("Update Successful")
+								.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog, int which) {
+
+									}
+								})
+								.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog, int which) {
+
+									}
+								}).show();
+					}
+
+				}
+			}
+
+			@Override
+			public void onFailure(Call<UpdatePasswordResult> call, Throwable t) {
+
+			}
+		});
+
 	}
 
 	@Override
@@ -168,5 +161,11 @@ public class ChangePasswordActivity extends Activity implements OnClickListener 
 		default:
 			break;
 		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		HttpCallUtil.cancelCall(updatePasswordResultCall);
 	}
 }

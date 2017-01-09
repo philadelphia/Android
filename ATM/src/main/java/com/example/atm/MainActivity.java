@@ -1,6 +1,8 @@
 package com.example.atm;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -14,6 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.example.atm.ui.about.AboutFragment;
+import com.example.atm.ui.setting.SettingsFragment;
+import com.example.atm.ui.siteMap.SiteMapFragment;
 import com.example.atm.ui.sitelist.SiteListFragment;
 import com.example.atm.ui.troubleticket.TroubleTicketListFragment;
 import com.example.atm.ui.userinfo.UserInfoFragment;
@@ -21,6 +26,7 @@ import com.example.atm.ui.userinfo.UserInfoFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static AppBarLayout appBarLayout;
     private static TabLayout mTabLayout;
     private static Toolbar mToolBar;
     private static FloatingActionButton mFab;
@@ -32,15 +38,17 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
 //        UserInfoFragment userInfoFragment = new UserInfoFragment();
-//        SiteListFragment siteListFragment = new SiteListFragment();
-        TroubleTicketListFragment troubleTicketListFragment = new TroubleTicketListFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, troubleTicketListFragment).commit();
+        SiteListFragment siteListFragment = new SiteListFragment();
+//        TroubleTicketListFragment troubleTicketListFragment = new TroubleTicketListFragment();
+//        SettingsFragment settingsFragment = new SettingsFragment();
+        fragmentManager.beginTransaction().replace(R.id.container, siteListFragment).commit();
         initView();
     }
 
     public void initView() {
         mTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
+//        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         setSupportActionBar(mToolBar);
         mFab = (FloatingActionButton) findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -62,22 +70,27 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public static AppBarLayout getAppBarLayout() {
+        return appBarLayout;
+    }
 
-    public static void setActionBarTitle(String title,String subTitle) {
+    public static void setActionBarTitle(String title, String subTitle) {
         mToolBar.setTitle(title);
         mToolBar.setSubtitle(subTitle);
     }
 
-    public static Toolbar getmToolBar(){
-        return  mToolBar;
-    }
-    public static TabLayout getTabLayout(){
-        return  mTabLayout;
+    public static Toolbar getmToolBar() {
+        return mToolBar;
     }
 
-    public static FloatingActionButton getFloatingActionButton(){
-        return  mFab;
+    public static TabLayout getTabLayout() {
+        return mTabLayout;
     }
+
+    public static FloatingActionButton getFloatingActionButton() {
+        return mFab;
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -92,12 +105,25 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_siteMap:
+                SiteMapFragment siteMapFragment = new SiteMapFragment();
+                fragmentManager.beginTransaction().replace(R.id.container, siteMapFragment).commit();
                 break;
 
             case R.id.nav_bookmark:
                 break;
+
             case R.id.nav_troubleTicket:
                 fragmentManager.beginTransaction().replace(R.id.container, new TroubleTicketListFragment()).commit();
+                break;
+
+            case R.id.nav_setting:
+                fragmentManager.beginTransaction().replace(R.id.container, new SettingsFragment()).commit();
+                break;
+            case R.id.nav_logout:
+                logout();
+                break;
+            case R.id.nav_about:
+                fragmentManager.beginTransaction().replace(R.id.container, new AboutFragment()).commit();
                 break;
             default:
                 break;
@@ -107,5 +133,10 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout() {
+        Intent intent = new Intent(this, LogoutActivity.class);
+        startActivity(intent);
     }
 }

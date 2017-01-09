@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,8 @@ public class AndroidBaseViewFragment extends Fragment implements View.OnClickLis
     EditText edt2;
     Button btnShowDialog;
     Button btnPopupWindow;
+    private ImageView img;
+    private Button btnSetAlpha;
 
     private long mExitTime = 0;
     private View view;
@@ -61,9 +64,12 @@ public class AndroidBaseViewFragment extends Fragment implements View.OnClickLis
     }
 
     private void initView(View view) {
+        tv1  = (TextView) view.findViewById(R.id.edt1);
         btnPopupWindow = (Button) view.findViewById(R.id.btn_popupWindow);
         btnPopupWindow.setOnClickListener(this);
-
+        img = (ImageView) view.findViewById(R.id.img_beauty);
+        btnSetAlpha = (Button) view.findViewById(R.id.btn_setAlpha);
+        btnSetAlpha.setOnClickListener(this);
     }
 
     public void onClick(View view) {
@@ -88,7 +94,15 @@ public class AndroidBaseViewFragment extends Fragment implements View.OnClickLis
             case R.id.tv_exit:
                 getActivity().finish();
                 break;
+            case R.id.btn_setAlpha:
+                setAlpha();
+                break;
         }
+    }
+
+    private void setAlpha() {
+        img.setAlpha(Float.parseFloat(tv1.getText().toString()));
+        img.setScaleType(ImageView.ScaleType.CENTER);
     }
 
     private void showPopUpWindow() {

@@ -1,6 +1,7 @@
 package com.example.atm.ui.sitelist;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,17 +21,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.atm.ui.fragment.SearchFragment;
+import com.example.atm.apiInterface.ApiClientRxJava;
+import com.example.atm.ui.search.view.SearchFragment;
 import com.example.atm.ui.sitePager.Fragment_SiteItem_ViewPager;
+import com.example.atm.ui.sitelist.SiteListContract;
 import com.example.atm.utils.Constatnts;
+import com.example.atm.utils.HttpCallUtil;
 import com.example.atm.utils.MyRetrofit;
 import com.example.atm.MainActivity;
 import com.example.atm.R;
 import com.example.atm.adapter.RecyclerViewAdapter;
-import com.example.atm.apiInterface.ApiClient;
+
 import com.example.atm.bean.SiteData;
 import com.example.atm.bean.SiteItem;
 import com.example.atm.utils.CustomItemClickListener;
+import com.example.atm.utils.RxsRxSchedulers;
 import com.example.atm.utils.SiteListSortUtil;
 
 import java.util.ArrayList;
@@ -39,12 +44,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Observable;
+import rx.Observer;
 
 
 @SuppressLint("DefaultLocale")
-public class SiteListFragment extends Fragment implements CustomItemClickListener, OnRefreshListener {
+public class SiteListFragment extends Fragment implements CustomItemClickListener, OnRefreshListener, SiteListContract.View {
     private static final boolean DEBUG = true;
     private static final String TAG = "SiteListFragment";
     private static final String PREF_KEY_SITE_LIST = "pref_site_list";
@@ -61,6 +66,10 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
     private Context context;
     private RecyclerViewAdapter myAdapter;
     private List<SiteItem> mSiteList = new ArrayList<>();
+    private Call<SiteData> allSites;
+    private Observable<SiteData> allSitesRxjava;
+    private SiteListContract.Presenter siteListPresenter;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,16 +87,21 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
         View view = inflater.inflate(R.layout.fragment_site_list, container,false);
         setHasOptionsMenu(true);
         ButterKnife.bind(this, view);
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("loading......");
+        setPresenter(new SiteListPresenter(this));
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        myAdapter = new RecyclerViewAdapter(getContext(), mSiteList);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false));
-//       mRecyclerView.addItemDecoration();
-        mRecyclerView.setAdapter(myAdapter);
-
-        myAdapter.setOnCustomeItemClickListener(this);
-        fetchSiteList("drc");
+        initAdapter();
+        siteListPresenter.fetchSiteList("drc");
 
         return view;
+    }
+
+    public void initAdapter(){
+        myAdapter = new RecyclerViewAdapter(getContext(), mSiteList);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false));
+        mRecyclerView.setAdapter(myAdapter);
+        myAdapter.setOnCustomeItemClickListener(this);
     }
 
     @Override
@@ -109,37 +123,43 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
 
         return super.onOptionsItemSelected(item);
     }
+    
+    public  void fetchSiteListByRxJava(String loginID){
+        Log.i(TAG, "fetchSiteListByRxJava: ");
 
-    public void fetchSiteList(String loginID) {
-        Log.i(TAG, "fetchSiteList: ");
-        ApiClient siteList = MyRetrofit.initRetrofit().create(ApiClient.class);
-        Call<SiteData> allSites = siteList.getAllSites(loginID);
-        allSites.enqueue(new Callback<SiteData>() {
+        ApiClientRxJava apiClientRxJava = MyRetrofit.getInstance().create(ApiClientRxJava.class);
+        allSitesRxjava = apiClientRxJava.getAllSites(loginID);
+        allSitesRxjava.compose(RxsRxSchedulers.io_main())
+        .subscribe(new Observer<SiteData>() {
             @Override
-            public void onResponse(Call<SiteData> call, Response<SiteData> response) {
-                if(response.body() != null){
-                    Log.i(TAG, "onResponse: ");
-                    Log.i(TAG, "onResponse: "+response.body().toString());
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    mSiteList.clear();
-                    mSiteList.addAll(SiteListSortUtil.sortList(response.body().getSiteData()));
-                    myAdapter.notifyDataSetChanged();
-                }
+            public void onCompleted() {
+                Log.i(TAG, "onCompleted: ");
             }
 
             @Override
-            public void onFailure(Call<SiteData> call, Throwable t) {
-                Log.i(TAG, "onFailure: ");
+            public void onError(Throwable e) {
+                Log.i(TAG, "onError: " + e.getMessage());
+            }
+
+            @Override
+            public void onNext(SiteData siteData) {
+                Log.i(TAG, "onNext: ");
+                mSwipeRefreshLayout.setRefreshing(false);
+                mSiteList.clear();
+                mSiteList.addAll(SiteListSortUtil.sortList(siteData.getSiteData()));
+                myAdapter.notifyDataSetChanged();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
-        });
+
+       });
+
     }
     
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
         mSwipeRefreshLayout.setRefreshing(true);
-        fetchSiteList("drc");
+        siteListPresenter.fetchSiteList("drc");
     }
     
     @Override
@@ -147,6 +167,12 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
         super.onResume();
         MainActivity.setActionBarTitle("Site List",null);
         MainActivity.getFloatingActionButton().setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        HttpCallUtil.cancelCall(allSites);
     }
 
     @Override
@@ -172,4 +198,43 @@ public class SiteListFragment extends Fragment implements CustomItemClickListene
         SearchFragment searchFragment = new SearchFragment();
         fragmentManager.beginTransaction().replace(R.id.container, searchFragment).addToBackStack(null).commit();
     }
+
+    @Override
+    public void setPresenter(SiteListContract.Presenter presenter) {
+        this.siteListPresenter = presenter;
+    }
+
+    @Override
+    public void onSuccess() {
+        hideDialog();
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onFailed() {
+        hideDialog();
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showDialog() {
+        progressDialog.show();
+    }
+
+    @Override
+    public void hideDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void showSiteList(List<SiteItem> siteList) {
+        mSiteList.clear();
+        Log.i(TAG, "showSiteList's size is= " + siteList.size());
+        mSiteList.addAll(SiteListSortUtil.sortList(siteList));
+        myAdapter.notifyDataSetChanged();
+    }
+
+
 }

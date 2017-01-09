@@ -1,14 +1,18 @@
 package com.example.atm.apiInterface;
 
+import com.example.atm.bean.LoginResult;
 import com.example.atm.bean.SiteData;
 import com.example.atm.bean.SiteInfoData;
 import com.example.atm.bean.TroubleTicket;
+import com.example.atm.bean.UpdatePasswordResult;
+import com.example.atm.bean.UserInfo;
 import com.example.atm.entities.PCFilter;
 import com.example.atm.entities.SiteAlarmData;
+import com.example.atm.entities.SiteMap;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -17,6 +21,16 @@ import retrofit2.http.Path;
  */
 
 public interface ApiClient {
+    @POST("/WebAPI/API/Login")
+    Call<LoginResult> login(@Header("LoginID") String id, @Header("Password") String password);
+
+    @POST("/WebAPI/API/UserProfile")
+    Call<UserInfo> getUserInfo(@Header("LoginID") String id);
+
+    @POST("/WebAPI/API/ChangePass")
+    Call<UpdatePasswordResult> updateUserPassword(@Header("LoginID") String id, @Header("CurPass") String currentPasswd, @Header("NewPass") String newPasswd);
+
+    @Headers("Cache-Control: public, max-age=3600")
     @POST("/WebAPI/API/ConsolidatedSite")
     Call<SiteData> getAllSites(@Header("LoginID") String id);
 
@@ -35,4 +49,16 @@ public interface ApiClient {
     @POST("/WebAPI/API/TroubleTicket")
     Call<TroubleTicket> getTroubleTicketList(@Header("LoginID") String id);
 
+    @POST("/WebAPI/API/Product")
+    Call<SiteData> queryProduct(@Header("LoginID") String id, @Header("ProductID") String productID);
+
+    @POST("/WebAPI/API/Circle")
+    Call<SiteData> queryCircle(@Header("LoginID") String id, @Header("ProductID") String productID, @Header("CircleID") String circleID);
+
+    @POST("/WebAPI/API/Cluster")
+    Call<SiteData> queryCluster(@Header("LoginID") String id, @Header("ProductID") String productID,@Header("CircleID") String circleID,@Header("ClusterID")String clusterID);
+
+    /*get siteMap information*/
+    @POST("/WebAPI/API/SiteMap")
+    Call<SiteMap>getAllSiteMapInfo(@Header("LoginID") String id);
 }
