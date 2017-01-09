@@ -3,6 +3,7 @@ package com.example.atm.apiInterface;
 import com.example.atm.bean.LoginResult;
 import com.example.atm.bean.SiteData;
 import com.example.atm.bean.SiteInfoData;
+import com.example.atm.bean.Test;
 import com.example.atm.bean.TroubleTicket;
 import com.example.atm.bean.UpdatePasswordResult;
 import com.example.atm.bean.UserInfo;
@@ -11,10 +12,13 @@ import com.example.atm.entities.SiteAlarmData;
 import com.example.atm.entities.SiteMap;
 
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+
+import static rx.schedulers.Schedulers.test;
 
 /**
  * Created by Tao.ZT.Zhang on 2016/9/22.
@@ -61,4 +65,7 @@ public interface ApiClient {
     /*get siteMap information*/
     @POST("/WebAPI/API/SiteMap")
     Call<SiteMap>getAllSiteMapInfo(@Header("LoginID") String id);
+
+    @GET("http://172.22.34.27:8081/webapi/SMM/NewMaterialStorage/startNewMaterialStorage?param=[\"{\"userName\":\"admin\"}\"]")
+    Call<Test> test();
 }
