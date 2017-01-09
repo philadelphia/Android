@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.database.CreateDBFragment">
+
+    <Button
+        android:id="@+id/btn_createDB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create DB"
+        android:textSize="20sp"
+        android:layout_gravity="center"/>
+
+
+    <Button
+        android:id="@+id/btn_deleteDB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delte DB"
+        android:textSize="20sp"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/btn_modifyDB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Modify DB"
+        android:textSize="20sp"
+        android:layout_gravity="center"/>
+
+
+    <Button
+        android:id="@+id/query_DB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Query DB"
+        android:textSize="20sp"
+        android:layout_gravity="center"/>
+</LinearLayout>

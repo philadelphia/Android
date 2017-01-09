@@ -1,4 +1,6 @@
-package com.delta.mprotecht.common.utils;
+package com.example.myapplication.utils;
+import android.view.ViewGroup;
+
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,7 @@ public class ListviewUtlis {
             totalHeight += listItem.getMeasuredHeight();  
         }  
   
-        ViewGroup.LayoutParams params = listView.getLayoutParams();  
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));  
         listView.setLayoutParams(params);  
     }  

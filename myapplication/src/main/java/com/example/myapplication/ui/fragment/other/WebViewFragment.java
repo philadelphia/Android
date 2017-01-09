@@ -1,9 +1,9 @@
 package com.example.myapplication.ui.fragment.other;
 
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -42,8 +42,10 @@ public class WebViewFragment extends Fragment implements View.OnKeyListener {
     Button btnLoad;
 
     private static final String TAG = "WebViewFragment";
+
     public WebViewFragment() {
         // Required empty public constructor
+
     }
 
 
@@ -78,16 +80,16 @@ public class WebViewFragment extends Fragment implements View.OnKeyListener {
         switch (view.getId()) {
             case R.id.btn_load:
                 webView.loadUrl(url.getText().toString().trim());
-                webView.setWebViewClient(new WebViewClient(){
+                webView.setWebViewClient(new WebViewClient() {
                     @Override
                     public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                        Log.i(TAG, "onPageStarted: --started url ==" + url   );
+                        Log.i(TAG, "onPageStarted: --started url ==" + url);
                         super.onPageStarted(view, url, favicon);
                     }
 
                     @Override
                     public void onPageFinished(WebView view, String url) {
-                        Log.i(TAG, "onPageStarted: --page finished url ==" + url );
+                        Log.i(TAG, "onPageStarted: --page finished url ==" + url);
                         super.onPageFinished(view, url);
                     }
 
@@ -99,9 +101,9 @@ public class WebViewFragment extends Fragment implements View.OnKeyListener {
                     }
                 });
 
-            // 果说WebViewClient是帮助WebView处理各种通知、请求事件的“内政大臣”的话，那么WebChromeClient就是辅
-            // 助WebView处理Javascript的对话框，网站图标，网站title，加载进度等偏外部事件的“外交大臣”。
-                webView.setWebChromeClient(new WebChromeClient(){
+                // 果说WebViewClient是帮助WebView处理各种通知、请求事件的“内政大臣”的话，那么WebChromeClient就是辅
+                // 助WebView处理Javascript的对话框，网站图标，网站title，加载进度等偏外部事件的“外交大臣”。
+                webView.setWebChromeClient(new WebChromeClient() {
                     @Override
                     public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
                         Log.i(TAG, "onCreateWindow: ");
@@ -142,15 +144,38 @@ public class WebViewFragment extends Fragment implements View.OnKeyListener {
 
 
     @Override
-    public boolean onKey(View view, int i, KeyEvent keyEvent) {
+    public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+        switch (keyEvent.getAction()) {
+            case KeyEvent.ACTION_DOWN:
+                Log.i(TAG, "onKey: KeyDown");
+                switch (keyCode) {
+                    case KeyEvent.KEYCODE_BACK:
+                        Log.i(TAG, "onKey: KEYCODE_BACK");
+                        if (webView.canGoBack()) {
+                            webView.goBack();
+                            return true;
+                        }
+                        break;
+                    case KeyEvent.KEYCODE_HOME:
+                        Log.i(TAG, "onKey: KEYCODE_HOME");
+                        break;
+                    case KeyEvent.KEYCODE_MENU:
+                        Log.i(TAG, "onKey:KEYCODE_MENU ");
+                        break;
+                    default:
+                        break;
+                }
 
-            if  (keyEvent.getAction() == KeyEvent.ACTION_DOWN && i == KeyEvent.KEYCODE_BACK){
-            if (webView.canGoBack()){
-                webView.goBack();
-                return  true;
-            }
+                break;
+            case KeyEvent.ACTION_UP:
+                Log.i(TAG, "onKey: ACTION_UP");
+                break;
 
+            default:
+                break;
         }
+
         return false;
     }
+
 }

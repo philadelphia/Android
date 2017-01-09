@@ -1,4 +1,4 @@
-package com.delta.mprotecht.common.utils;
+package com.example.myapplication.utils;
 
 import android.app.ProgressDialog;
 import android.content.Context;
