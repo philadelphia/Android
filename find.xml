@@ -1,8 +1,10 @@
 <application>
   <component name="FindSettings">
+    <option name="caseSensitive" value="true" />
     <option name="customScope" value="File 'D:\AndroidStudioProjects\Android\myapplication\src\main\java\com\example\myapplication\ui\fragment\other\NotificationFragment.java'" />
     <option name="defaultScopeName" value="File 'D:\AndroidStudioProjects\Android\myapplication\src\main\java\com\example\myapplication\ui\fragment\other\NotificationFragment.java'" />
     <option name="localWholeWordsOnly" value="true" />
+    <option name="CASE_SENSITIVE_SEARCH" value="true" />
     <option name="LOCAL_WHOLE_WORDS_ONLY" value="true" />
     <option name="SEARCH_SCOPE" value="File 'D:\AndroidStudioProjects\Android\myapplication\src\main\java\com\example\myapplication\ui\fragment\other\NotificationFragment.java'" />
   </component>
