@@ -6,15 +6,15 @@
   </font>
   <font>
     <option name="EDITOR_FONT_NAME" value="Source Code Pro" />
-    <option name="EDITOR_FONT_SIZE" value="53" />
+    <option name="EDITOR_FONT_SIZE" value="60" />
   </font>
   <console-font>
     <option name="EDITOR_FONT_NAME" value="Consolas" />
-    <option name="EDITOR_FONT_SIZE" value="35" />
+    <option name="EDITOR_FONT_SIZE" value="30" />
   </console-font>
   <console-font>
     <option name="EDITOR_FONT_NAME" value="Source Code Pro" />
-    <option name="EDITOR_FONT_SIZE" value="21" />
+    <option name="EDITOR_FONT_SIZE" value="30" />
   </console-font>
   <colors>
     <option name="ADDED_LINES_COLOR" value="212c32" />
