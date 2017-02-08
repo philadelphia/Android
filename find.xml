@@ -1,9 +1,9 @@
 <application>
   <component name="FindSettings">
     <option name="caseSensitive" value="true" />
-    <option name="customScope" value="File 'D:\AndroidStudioProjects\Android\myapplication\src\main\java\com\example\myapplication\ui\fragment\other\NotificationFragment.java'" />
-    <option name="defaultScopeName" value="File 'D:\AndroidStudioProjects\Android\myapplication\src\main\java\com\example\myapplication\ui\fragment\other\NotificationFragment.java'" />
+    <option name="customScope" value="Module 'app'" />
+    <option name="defaultScopeName" value="Module 'app'" />
     <option name="CASE_SENSITIVE_SEARCH" value="true" />
-    <option name="SEARCH_SCOPE" value="File 'D:\AndroidStudioProjects\Android\myapplication\src\main\java\com\example\myapplication\ui\fragment\other\NotificationFragment.java'" />
+    <option name="SEARCH_SCOPE" value="Module 'app'" />
   </component>
 </application>
