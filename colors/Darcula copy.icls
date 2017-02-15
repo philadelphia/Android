@@ -2,12 +2,20 @@
   <option name="LINE_SPACING" value="1.0" />
   <font>
     <option name="EDITOR_FONT_NAME" value="Consolas" />
-    <option name="EDITOR_FONT_SIZE" value="35" />
+    <option name="EDITOR_FONT_SIZE" value="25" />
   </font>
   <font>
     <option name="EDITOR_FONT_NAME" value="DialogInput" />
-    <option name="EDITOR_FONT_SIZE" value="70" />
+    <option name="EDITOR_FONT_SIZE" value="53" />
   </font>
+  <console-font>
+    <option name="EDITOR_FONT_NAME" value="Consolas" />
+    <option name="EDITOR_FONT_SIZE" value="38" />
+  </console-font>
+  <console-font>
+    <option name="EDITOR_FONT_NAME" value="DialogInput" />
+    <option name="EDITOR_FONT_SIZE" value="38" />
+  </console-font>
   <colors>
     <option name="ADDED_LINES_COLOR" value="384c38" />
     <option name="FILESTATUS_MERGED" value="9876aa" />
