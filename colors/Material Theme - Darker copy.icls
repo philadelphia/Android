@@ -2,14 +2,14 @@
   <option name="LINE_SPACING" value="1.6" />
   <option name="EDITOR_FONT_SIZE" value="25" />
   <console-font>
-    <option name="EDITOR_FONT_NAME" value="Monospaced" />
-    <option name="EDITOR_FONT_SIZE" value="61" />
+    <option name="EDITOR_FONT_NAME" value="Consolas" />
+    <option name="EDITOR_FONT_SIZE" value="25" />
   </console-font>
   <console-font>
     <option name="EDITOR_FONT_NAME" value="Source Code Pro" />
-    <option name="EDITOR_FONT_SIZE" value="61" />
+    <option name="EDITOR_FONT_SIZE" value="25" />
   </console-font>
-  <option name="EDITOR_FONT_NAME" value="Arial" />
+  <option name="EDITOR_FONT_NAME" value="Consolas" />
   <colors>
     <option name="ADDED_LINES_COLOR" value="444444" />
     <option name="ANNOTATIONS_COLOR" value="8b999f" />
