@@ -8,14 +8,6 @@
     <option name="EDITOR_FONT_NAME" value="DialogInput" />
     <option name="EDITOR_FONT_SIZE" value="25" />
   </font>
-  <console-font>
-    <option name="EDITOR_FONT_NAME" value="Consolas" />
-    <option name="EDITOR_FONT_SIZE" value="25" />
-  </console-font>
-  <console-font>
-    <option name="EDITOR_FONT_NAME" value="DialogInput" />
-    <option name="EDITOR_FONT_SIZE" value="57" />
-  </console-font>
   <colors>
     <option name="ADDED_LINES_COLOR" value="384c38" />
     <option name="FILESTATUS_MERGED" value="9876aa" />
