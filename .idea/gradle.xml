@@ -8,7 +8,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/ATM" />
             <option value="$PROJECT_DIR$/bluetoothdemo" />
             <option value="$PROJECT_DIR$/drawerlayoutdemo" />
             <option value="$PROJECT_DIR$/glidedemo" />
