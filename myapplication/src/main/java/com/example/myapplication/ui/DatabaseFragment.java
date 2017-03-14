@@ -57,7 +57,6 @@ public class DatabaseFragment extends Fragment {
     }
 
     private void setUpViewPagerAndTabs (){
-        toolbar.setTitle("DataBase");
         mTabFragments = new ArrayList<>();
         mTabFragments.add(new CreateDBFragment());
         mTabFragments.add(new TestFragment());

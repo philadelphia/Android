@@ -56,7 +56,6 @@ public class OtherFragment extends Fragment  {
     }
 
     private void setUpViewPagerAndTabs (){
-        toolbar.setTitle("其他");
         mTabFragments = new ArrayList<>();
         mTabFragments.add(new WindowFragment());
         mTabFragments.add(new NotificationFragment());

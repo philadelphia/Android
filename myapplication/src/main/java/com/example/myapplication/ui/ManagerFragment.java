@@ -57,7 +57,6 @@ public class ManagerFragment extends Fragment {
     }
 
     private void setUpViewPagerAndTabs (){
-        toolbar.setTitle("Manager");
         mTabFragments = new ArrayList<>();
         mTabFragments.add(new PackageManagerFragment());
         mTabFragments.add(new TestFragment());

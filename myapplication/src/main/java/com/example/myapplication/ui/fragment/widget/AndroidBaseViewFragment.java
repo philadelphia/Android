@@ -47,7 +47,6 @@ public class AndroidBaseViewFragment extends Fragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: ");
-        MainActivity.getToolbar().setTitle("Android 基本组件");
         MainActivity.getmTabLayout().setVisibility(View.GONE);
         view = inflater.inflate(R.layout.fragment_android_base_view, container, false);
 //        view = inflater.inflate(R.layout.fragment_android_base_view, null);

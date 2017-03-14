@@ -56,7 +56,6 @@ public class MaterialDesginFragment extends Fragment {
         toolbar = MainActivity.getToolbar();
         mTablayout.setVisibility(View.VISIBLE);
         mTablayout.setTabMode (TabLayout.MODE_FIXED);
-        toolbar.setTitle("Material Design");
         mTabFragments = new ArrayList<>();
         mTabFragments.add(new RippleFragment());
         mTabFragments.add(new CircularRevealFragment());
