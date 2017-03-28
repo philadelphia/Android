@@ -27,7 +27,7 @@
         android:orderInCategory="100"
         android:title="Search"
         android:onClick="onClick"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         tools:ignore="HardcodedText"/>
 
 

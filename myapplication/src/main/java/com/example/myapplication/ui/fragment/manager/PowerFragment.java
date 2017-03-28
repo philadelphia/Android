@@ -28,6 +28,7 @@ public class PowerFragment extends Fragment {
     private Intent batteryStatus;
     private Context context;
     private static final String TAG = "PowerFragment";
+    private IntentFilter intentFilter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +43,10 @@ public class PowerFragment extends Fragment {
 
         String s = "dsfgf";
         s.replaceAll("","");
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_POWER_USAGE_SUMMARY);
+        intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
+        intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
 
         return  view;
     }
@@ -103,6 +108,13 @@ public class PowerFragment extends Fragment {
                 Toast.makeText(context, "AC charging", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getActivity().registerReceiver(new PowerConnectionReceiver(),intentFilter);
     }
 
     @Override
