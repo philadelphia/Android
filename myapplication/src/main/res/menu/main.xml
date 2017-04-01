@@ -3,33 +3,10 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools">
 
-    <!--android:onClick="onClick"-->
-    <!--可以给item 添加onClick属性，然后再activity中实现该方法。方法名必须和该属性的值一样，
-    同时签名必须为 public boolean xxxx(MenuItem item) 效果等同于onOptionsItemSelected -->
-
     <item
         android:id="@+id/action_settings"
-        android:icon="@mipmap/icon_setting"
         android:orderInCategory="100"
         android:title="@string/action_settings"
-        app:showAsAction="ifRoom"/>
-
-    <item
-        android:id="@+id/action_share"
-        android:title="Share"
-        android:icon="@mipmap/ic_share"
-        android:actionProviderClass="android.widget.ShareActionProvider"
-        app:showAsAction="ifRoom"
-        tools:ignore="HardcodedText"/>
-
-    <item
-        android:id="@+id/action_search"
-        android:orderInCategory="100"
-        android:title="Search"
-        android:onClick="onClick"
-        app:showAsAction="always"
-        tools:ignore="HardcodedText"/>
-
-
+        app:showAsAction="never"/>
 
 </menu>

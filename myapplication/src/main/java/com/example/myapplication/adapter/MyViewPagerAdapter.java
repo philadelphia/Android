@@ -19,12 +19,8 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter
 
         private String[]		mTabTitles;
 
-        public MyViewPagerAdapter(FragmentManager fm)
-        {
-            super (fm);
-        }
 
-        public MyViewPagerAdapter(FragmentManager fm, List<Fragment> fragments, String[] titles)
+    public MyViewPagerAdapter(FragmentManager fm, List<Fragment> fragments, String[] titles)
         {
             super (fm);
             mTabTitles = titles;
@@ -52,6 +48,9 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+
+
+
         return super.instantiateItem(container, position);
     }
 

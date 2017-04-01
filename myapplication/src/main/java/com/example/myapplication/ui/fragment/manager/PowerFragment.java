@@ -29,6 +29,7 @@ public class PowerFragment extends Fragment {
     private Context context;
     private static final String TAG = "PowerFragment";
     private IntentFilter intentFilter;
+    private PowerConnectionReceiver receiver;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +41,7 @@ public class PowerFragment extends Fragment {
         ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         batteryStatus = getContext().registerReceiver(null, ifilter);
         setData(batteryStatus);
+        receiver = new PowerConnectionReceiver();
 
         String s = "dsfgf";
         s.replaceAll("","");
@@ -114,12 +116,12 @@ public class PowerFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        getActivity().registerReceiver(new PowerConnectionReceiver(),intentFilter);
+        getActivity().registerReceiver(receiver,intentFilter);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        getActivity().unregisterReceiver(null);
+        getActivity().unregisterReceiver(receiver);
     }
 }
