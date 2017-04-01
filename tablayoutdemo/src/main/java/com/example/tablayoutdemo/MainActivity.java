@@ -1,19 +1,14 @@
 package com.example.tablayoutdemo;
 
-import android.icu.text.BreakIterator;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.EventLogTags;
 import android.util.Log;
-import android.view.View;
 
 import com.example.tablayoutdemo.fragment.FiveFragment;
 import com.example.tablayoutdemo.fragment.FourFragment;
@@ -28,7 +23,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class MainActivity extends AppCompatActivity {
