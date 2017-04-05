@@ -121,9 +121,7 @@ public class MainActivity extends AppCompatActivity
                 menu.add("SD");
                 Log.i(TAG, "onOptionsItemSelected: action_settings");
                 return true;
-            case R.id.action_search:
-                Log.i(TAG, "onOptionsItemSelected: action_search ");
-                return  true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -242,9 +240,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_settings:
                 Log.i(TAG, "onClick: action_settings");
                 return true;
-            case R.id.action_search:
-                Log.i(TAG, "onClick: action_search ");
-                return  true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -257,9 +253,5 @@ public class MainActivity extends AppCompatActivity
         Log.i(TAG, "onConfigurationChanged: " + (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE ? "Horizontal" : "Vertical"));
     }
 
-    public void onShare(Intent shareIntent){
-        if (mShareActionProvider != null){
-            mShareActionProvider.setShareIntent(shareIntent);
-        }
-    }
+
 }

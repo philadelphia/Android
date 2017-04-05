@@ -28,6 +28,8 @@ public class PowerFragment extends Fragment {
     private Intent batteryStatus;
     private Context context;
     private static final String TAG = "PowerFragment";
+    private IntentFilter intentFilter;
+    private PowerConnectionReceiver receiver;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,9 +41,14 @@ public class PowerFragment extends Fragment {
         ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         batteryStatus = getContext().registerReceiver(null, ifilter);
         setData(batteryStatus);
+        receiver = new PowerConnectionReceiver();
 
         String s = "dsfgf";
         s.replaceAll("","");
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_POWER_USAGE_SUMMARY);
+        intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
+        intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
 
         return  view;
     }
@@ -106,8 +113,15 @@ public class PowerFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        getActivity().registerReceiver(receiver,intentFilter);
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
-        getActivity().unregisterReceiver(null);
+        getActivity().unregisterReceiver(receiver);
     }
 }
