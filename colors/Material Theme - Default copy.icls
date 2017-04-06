@@ -3,7 +3,7 @@
     <property name="created">2017-04-05T10:56:13</property>
     <property name="ide">AndroidStudio</property>
     <property name="ideVersion">2.3.0.8</property>
-    <property name="modified">2017-04-05T10:57:14</property>
+    <property name="modified">2017-04-06T15:39:13</property>
     <property name="originalScheme">Material Theme - Default</property>
   </metaInfo>
   <option name="LINE_SPACING" value="1.6" />
@@ -15,8 +15,7 @@
     <option name="EDITOR_FONT_NAME" value="Source Code Pro" />
     <option name="EDITOR_FONT_SIZE" value="20" />
   </font>
-  <option name="CONSOLE_FONT_NAME" value="Monospaced" />
-  <option name="CONSOLE_FONT_SIZE" value="12" />
+  <option name="CONSOLE_FONT_NAME" value="Consolas" />
   <colors>
     <option name="ADDED_LINES_COLOR" value="212c32" />
     <option name="ANNOTATIONS_COLOR" value="8b999f" />
