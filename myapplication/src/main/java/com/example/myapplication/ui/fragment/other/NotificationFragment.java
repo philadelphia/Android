@@ -41,17 +41,32 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class NotificationFragment extends Fragment implements View.OnClickListener {
-    private final  String TAG = NotificationFragment.class.getSimpleName();
+    private final String TAG = NotificationFragment.class.getSimpleName();
+    @BindView(R.id.btn_send)
+    Button btnSend;
+    @BindView(R.id.btn_sendBigViewNotification)
+    Button btnSendBigViewNotification;
+    @BindView(R.id.btn_sendcollapse)
+    Button btnSendcollapse;
+    @BindView(R.id.btn_sendhang)
+    Button btnSendhang;
+    @BindView(R.id.btn_bigTextStyle)
+    Button btnBigTextStyle;
+    @BindView(R.id.btn_InboxStyle)
+    Button btnInboxStyle;
+    @BindView(R.id.btn_cancel)
+    Button btnCancel;
+    @BindView(R.id.btn_image)
+    Button btnImage;
     private NotificationManager notificationManager;
     private NotificationCompat.Builder builder;
     private Context context;
-    private Button btn_send;
-    private Button btn_sendBigViewNotification;
-    private Button btn_sendCollapse;
-    private Button btn_sendHang;
-    private Button btn_cancel;
-    private  Button btn_img;
+
     private File file;
 
     @Override
@@ -63,68 +78,21 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.i(TAG,"onCreateView");
+        Log.i(TAG, "onCreateView");
         context = getContext();
-        notificationManager =(NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         builder = new NotificationCompat.Builder(getContext());
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
-        initView(view);
-        return  view;
-    }
-
-    public void initView(View view){
-        btn_send = (Button) view.findViewById(R.id.btn_send);
-        btn_sendBigViewNotification = (Button) view.findViewById(R.id.btn_sendBigViewNotification);
-        btn_cancel = (Button)view.findViewById(R.id.btn_cancel);
-        btn_sendHang = (Button) view.findViewById(R.id.btn_sendhang);
-        btn_sendCollapse = (Button) view.findViewById(R.id.btn_sendcollapse);
-        btn_img = (Button) view.findViewById(R.id.btn_image);
-
-        btn_send.setOnClickListener(this);
-        btn_sendBigViewNotification.setOnClickListener(this);
-        btn_sendCollapse.setOnClickListener(this);
-        btn_cancel.setOnClickListener(this);
-        btn_sendHang.setOnClickListener(this);
-        btn_img.setOnClickListener(this);
-    }
-
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.btn_send:
-            sendNotification();
-                break;
-
-            case R.id.btn_sendBigViewNotification:
-                sendBigViewNotification();
-                break;
-
-            case R.id.btn_sendcollapse:
-                sendCollapsedNotification();
-                break;
-
-            case  R.id.btn_sendhang:
-                sendHangNotification();
-                break;
-
-            case R.id.btn_cancel:
-                cancelNotification();
-                break;
-            case  R.id.btn_image:
-                captureAndSendNotification();
-                break;
-            default:
-                break;
-        }
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     private void sendNotification() {
-        Log.i(TAG,"sendNotification");
+        Log.i(TAG, "sendNotification");
 //        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.baidu.com"));
-        Intent intent = new Intent(getContext(),DialogActivity.class);
+        Intent intent = new Intent(getContext(), DialogActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(),0,intent,0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(), 0, intent, 0);
         builder.setContentIntent(pendingIntent);
         builder.setAutoCancel(true);
         builder.setContentTitle("title");
@@ -132,16 +100,15 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         builder.setSubText("subText");
         builder.setTicker("ticker");
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher));
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
         builder.setWhen(System.currentTimeMillis());
         Notification notification = builder.build();
         notificationManager.notify(12, notification);
     }
 
 
-
     private void sendBigViewNotification() {
-        Intent intent = new Intent(getContext(),DialogActivity.class);
+        Intent intent = new Intent(getContext(), DialogActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Intent dismissIntent = new Intent(getContext(), DialogActivity.class);
 //        dismissIntent.setAction(CommonConstants.ACTION_DISMISS);
@@ -160,51 +127,51 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         builder.setSubText("subText");
         builder.setTicker("ticker");
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher));
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
         builder.setWhen(System.currentTimeMillis())
-        .setStyle(new NotificationCompat.BigTextStyle()
-                .bigText("Big"))
-                .addAction (R.mipmap.ic_launcher, "Dismiss", piDismiss)
-                .addAction (R.mipmap.icon_setting,"snooze", piSnooze);
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Big"))
+                .addAction(R.mipmap.ic_launcher, "Dismiss", piDismiss)
+                .addAction(R.mipmap.icon_setting, "snooze", piSnooze);
         Notification notification = builder.build();
         notificationManager.notify(12, notification);
     }
 
     private void captureAndSendNotification() {
         Log.i(TAG, "captureAndSendNotification: ");
-       Bitmap bitmap =  capture(getActivity());
+        Bitmap bitmap = capture(getActivity());
         boolean flag = savePic(bitmap);
         Log.i(TAG, "captureAndSendNotification: flag = " + flag);
 
         sendNotification1();
     }
 
-    public Bitmap capture(Activity pActivity){
+    public Bitmap capture(Activity pActivity) {
         Log.i(TAG, "capture: ");
-        Bitmap bitmap=null;
-        View view=pActivity.getWindow().getDecorView();
+        Bitmap bitmap = null;
+        View view = pActivity.getWindow().getDecorView();
         // 设置是否可以进行绘图缓存
         view.setDrawingCacheEnabled(true);
         // 如果绘图缓存无法，强制构建绘图缓存
         view.buildDrawingCache();
         // 返回这个缓存视图
-        bitmap=view.getDrawingCache();
+        bitmap = view.getDrawingCache();
 
         // 获取状态栏高度
-        Rect frame=new Rect();
+        Rect frame = new Rect();
         // 测量屏幕宽和高
         view.getWindowVisibleDisplayFrame(frame);
-        int statutsHeight=frame.top;
-        Log.d(TAG, "状态栏的高度为:"+statutsHeight);
+        int statutsHeight = frame.top;
+        Log.d(TAG, "状态栏的高度为:" + statutsHeight);
 
-        int width=pActivity.getWindowManager().getDefaultDisplay().getWidth();
-        int height=pActivity.getWindowManager().getDefaultDisplay().getHeight();
+        int width = pActivity.getWindowManager().getDefaultDisplay().getWidth();
+        int height = pActivity.getWindowManager().getDefaultDisplay().getHeight();
         // 根据坐标点和需要的宽和高创建bitmap
-        bitmap=Bitmap.createBitmap(bitmap, 0, statutsHeight, width, height-statutsHeight);
+        bitmap = Bitmap.createBitmap(bitmap, 0, statutsHeight, width, height - statutsHeight);
         return bitmap;
     }
 
-    public boolean savePic(Bitmap pBitmap){
+    public boolean savePic(Bitmap pBitmap) {
         if (pBitmap == null) {
             Log.i(TAG, "savePic: btimap == null");
         }
@@ -229,7 +196,7 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
                     fos.flush();
                     fos.close();
                     Log.i(TAG, "savePic: write over!");
-                    return  true;
+                    return true;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -255,11 +222,11 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         return false;
 
 
-        }
+    }
 
     private void sendNotification1() {
         Log.i(TAG, "sendNotification1: ");
-        NotificationManager mManager = (NotificationManager)getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
         Notification.Builder builder = new Notification.Builder(getContext());
 
         builder.setTicker("正在截屏...");
@@ -273,18 +240,18 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
 //        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.addCategory("android.intent.category.DEFAULT");
         intent.setType("image/*");
-        intent.setDataAndType( Uri.fromFile(file), "image/*");
+        intent.setDataAndType(Uri.fromFile(file), "image/*");
 //        Log.i(TAG, "uri: " + Uri.fromFile(new File("/sdcard/Damily/" + fileName) ));
 
         Log.i(TAG, "data: " + intent.getData().toString());
 //        Bundle bundle=new Bundle();
 //        bundle.putString("path",file.getAbsolutePath().toString());
 //        intent.putExtras(bundle);
-        PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0, intent,PendingIntent.FLAG_ONE_SHOT,null);
+        PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT, null);
         builder.setContentIntent(contentIntent);
         builder.setAutoCancel(true);
 
-       Notification notification = builder.build();
+        Notification notification = builder.build();
         mManager.notify(0, notification);
     }
 
@@ -294,23 +261,23 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         builder.setContentText("Content--折叠式通知");
         builder.setSubText("subText");
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher));
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
         builder.setWhen(System.currentTimeMillis());
 
 //        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.baidu.com"));
         Intent intent = new Intent();
-        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(),0,intent,0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(), 0, intent, 0);
         builder.setContentIntent(pendingIntent);
 //        RemoteViews normalContentView = new RemoteViews(context.getPackageName(),R.layout.notification_normal);
 //        normalContentView.setTextViewText(R.id.Text,"show me when collapsed!");
         RemoteViews expandedContentView = new RemoteViews(context.getPackageName(), R.layout.notification_big);
-        expandedContentView.setTextViewText(R.id.Text,"show me when expanded!");
+        expandedContentView.setTextViewText(R.id.Text, "show me when expanded!");
 
         Notification notification = builder.build();
 //        notification.contentView = normalContentView;
         notification.bigContentView = expandedContentView;
 
-        notificationManager.notify(12,notification);
+        notificationManager.notify(12, notification);
 
 
     }
@@ -323,20 +290,18 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         builder.setPriority(Notification.PRIORITY_DEFAULT);
         builder.setCategory(Notification.CATEGORY_MESSAGE);
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher));
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
         builder.setWhen(System.currentTimeMillis());
 
         Intent push = new Intent();
         push.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         push.setClass(getActivity(), SecondActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(),0,push,PendingIntent.FLAG_CANCEL_CURRENT);
-        builder.setFullScreenIntent(pendingIntent,true);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(), 0, push, PendingIntent.FLAG_CANCEL_CURRENT);
+        builder.setFullScreenIntent(pendingIntent, true);
         builder.setColor(Color.RED);
         notificationManager.notify(12, builder.build());
 
     }
-
-
 
 
     private void cancelNotification() {
@@ -371,4 +336,72 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         return super.onOptionsItemSelected(item);
     }
 
+    @OnClick({R.id.btn_send, R.id.btn_sendBigViewNotification, R.id.btn_sendcollapse, R.id.btn_sendhang, R.id.btn_bigTextStyle, R.id.btn_InboxStyle, R.id.btn_cancel, R.id.btn_image})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_send:
+                sendNotification();
+                break;
+
+            case R.id.btn_sendBigViewNotification:
+                sendBigViewNotification();
+                break;
+
+            case R.id.btn_sendcollapse:
+                sendCollapsedNotification();
+                break;
+
+            case R.id.btn_sendhang:
+                sendHangNotification();
+                break;
+
+            case R.id.btn_bigTextStyle:
+                sendBigTextStyleNofitication();
+                break;
+
+            case R.id.btn_InboxStyle:
+                sendInboxStyleNofitication();
+                break;
+
+            case R.id.btn_cancel:
+                cancelNotification();
+                break;
+            case R.id.btn_image:
+                captureAndSendNotification();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void sendInboxStyleNofitication() {
+        Intent intent = new Intent(getContext(), DialogActivity.class);
+        builder.setAutoCancel(true);
+        builder.setContentTitle("title");
+        builder.setContentText("Content--普通通知");
+        builder.setSubText("subText");
+        builder.setTicker("ticker");
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
+        builder.setWhen(System.currentTimeMillis())
+                .setStyle(new NotificationCompat.InboxStyle());
+        Notification notification = builder.build();
+        notificationManager.notify(12, notification);
+    }
+
+    private void sendBigTextStyleNofitication() {
+        Intent intent = new Intent(getContext(), DialogActivity.class);
+        builder.setAutoCancel(true);
+        builder.setContentTitle("title");
+        builder.setContentText("Content--普通通知");
+        builder.setSubText("subText");
+        builder.setTicker("ticker");
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
+        builder.setWhen(System.currentTimeMillis())
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Android 4.1 supports expandable notifications. In addition to normal notification view it is possible to define a big view which gets shown when notification is expanded. There are three styles to be used with the big view: big picture style, big text style, Inbox style. The following code demonstrates the usage of the BigTextStyle() which allows to use up to 256 dp."));
+        Notification notification = builder.build();
+        notificationManager.notify(12, notification);
+    }
 }

@@ -44,6 +44,22 @@
         android:textSize="20sp" />
 
     <Button
+        android:id="@+id/btn_bigTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="发送BigStyle通知"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btn_InboxStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="发送InBoxStyle通知"
+        android:textSize="20sp" />
+
+    <Button
         android:id="@+id/btn_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

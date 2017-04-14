@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity
     private ShareActionProvider mShareActionProvider;
     private Menu menu;
     private static final String TAG = "MainActivity";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

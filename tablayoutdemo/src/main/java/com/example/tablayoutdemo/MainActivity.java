@@ -1,5 +1,7 @@
 package com.example.tablayoutdemo;
 
+import android.app.Service;
+import android.app.job.JobScheduler;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.tablayoutdemo.fragment.FiveFragment;
 import com.example.tablayoutdemo.fragment.FourFragment;
@@ -20,12 +24,13 @@ import com.example.tablayoutdemo.fragment.TwoFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
 
     @BindView(R.id.toolbar)
@@ -47,6 +52,20 @@ public class MainActivity extends AppCompatActivity {
         flag = getIntent().getIntExtra("Flag", 1);
         Log.i(TAG, "flag == " + flag);
         setupTabLayout();
+
+        int tabCount = tabLayout.getTabCount();
+        for (int i = 0; i < tabCount; i++) {
+            final int index = i;
+            TabLayout.Tab tabAt = tabLayout.getTabAt(i);
+            tabAt.getCustomView().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewPager.setCurrentItem(index);
+                }
+            });
+        }
+
+
     }
 
     private void setupTabLayout() {
@@ -94,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(this);
 
     }
 
@@ -108,6 +128,21 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(drawables[0]);
         tabLayout.getTabAt(1).setIcon(drawables[1]);
+
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        Log.e(TAG, "onTabSelected: ");
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
 
     }
 
