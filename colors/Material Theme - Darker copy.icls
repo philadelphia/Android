@@ -1,11 +1,4 @@
 <scheme name="Material Theme - Darker copy" version="142" parent_scheme="Default">
-  <metaInfo>
-    <property name="created">2017-04-24T16:58:22</property>
-    <property name="ide">AndroidStudio</property>
-    <property name="ideVersion">2.3.0.8</property>
-    <property name="modified">2017-04-25T11:34:36</property>
-    <property name="originalScheme">Material Theme - Darker</property>
-  </metaInfo>
   <option name="LINE_SPACING" value="1.6" />
   <font>
     <option name="EDITOR_FONT_NAME" value="Consolas" />
@@ -242,6 +235,12 @@
         <option name="FOREGROUND" value="f8f8f0" />
       </value>
     </option>
+    <option name="CONSOLE_USER_INPUT">
+      <value>
+        <option name="FOREGROUND" value="7f00" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
     <option name="CONSOLE_WHITE_OUTPUT">
       <value>
         <option name="FOREGROUND" value="f8f8f0" />
@@ -381,6 +380,12 @@
     <option name="CUSTOM_VALID_STRING_ESCAPE_ATTRIBUTES">
       <value>
         <option name="FOREGROUND" value="4646f1" />
+      </value>
+    </option>
+    <option name="DEBUGGER_INLINED_VALUES_EXECUTION_LINE">
+      <value>
+        <option name="FOREGROUND" value="ff56" />
+        <option name="FONT_TYPE" value="2" />
       </value>
     </option>
     <option name="DEFAULT_ATTRIBUTE">
@@ -531,6 +536,7 @@
         <option name="FOREGROUND" value="c3e887" />
       </value>
     </option>
+    <option name="DEFAULT_TAG" baseAttributes="TEXT" />
     <option name="DEFAULT_TEMPLATE_LANGUAGE_COLOR">
       <value>
         <option name="FOREGROUND" value="a7dbd8" />
@@ -953,6 +959,11 @@
     <option name="LOG_ERROR_OUTPUT">
       <value>
         <option name="FOREGROUND" value="ff6b68" />
+      </value>
+    </option>
+    <option name="LOG_WARNING_OUTPUT">
+      <value>
+        <option name="FOREGROUND" value="a66f00" />
       </value>
     </option>
     <option name="List/map to object conversion">
