@@ -1,11 +1,14 @@
 package com.example.myapplication.adapter;
 
 import android.content.pm.PackageInfo;
+import android.graphics.Color;
+import android.support.annotation.ColorRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -88,7 +91,7 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
     }
 
 
-    public class MyViewHolder extends  RecyclerView.ViewHolder  implements View.OnCreateContextMenuListener{
+    public class MyViewHolder extends  RecyclerView.ViewHolder implements AdapterView.OnItemSelectedListener{
         public TextView tv_pkgName;
         public TextView tv_pkgVersionCode;
         public TextView tv_pkgVersionName;
@@ -98,15 +101,25 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
             tv_pkgName = (TextView) itemView.findViewById(R.id.tv_pkgName);
             tv_pkgVersionCode = (TextView) itemView.findViewById(R.id.tv_VersionCode);
             tv_pkgVersionName = (TextView) itemView.findViewById(R.id.tv_VersionName);
-            itemView.setOnCreateContextMenuListener(this);
+//            itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
-        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.setHeaderTitle("操作");
-            contextMenu.add(0, 0, 0, "添加");
-            contextMenu.add(0, 1, 1, "标记为重要");
-            contextMenu.add(0, 2, 2, "删除");
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            itemView.setBackgroundColor(Color.BLUE);
         }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+
+//        @Override
+//        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+//            contextMenu.setHeaderTitle("操作");
+//            contextMenu.add(0, 0, 0, "添加");
+//            contextMenu.add(0, 1, 1, "标记为重要");
+//            contextMenu.add(0, 2, 2, "删除");
+//        }
     }
 }
