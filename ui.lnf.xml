@@ -1,7 +1,7 @@
 <application>
   <component name="UISettings">
     <option name="FONT_FACE" value="Microsoft YaHei" />
-    <option name="FONT_SIZE" value="22" />
+    <option name="FONT_SIZE" value="20" />
     <option name="HIDE_TOOL_STRIPES" value="false" />
     <option name="SHOW_MAIN_TOOLBAR" value="true" />
     <option name="COLOR_BLINDNESS" value="deuteranopia" />
