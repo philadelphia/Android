@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.myapplication">
+    package="com.example.myapplication">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:allowBackup="true"
@@ -23,58 +23,66 @@
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|locale|layoutDirection"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <!-- SecondActivity -->
-        <activity android:name=".ui.activity.SecondActivity"/>
+        <activity
+            android:name=".ui.activity.SecondActivity"
+            android:label="SecondActivity" />
 
         <!-- Dialog Activity -->
         <activity
             android:name=".ui.activity.DialogActivity"
             android:configChanges="orientation|screenSize|locale"
-            android:label="DialogActivity"
-            android:taskAffinity=".FLAG_ACTIVITY_NEW_TASK"
             android:excludeFromRecents="true"
-            android:launchMode="singleTask"/>
-        <!--android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"-->
+            android:label="DialogActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity=".FLAG_ACTIVITY_NEW_TASK" />
+        <!-- android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" -->
 
-        <service android:name=".service.MyService"/>
+        <service android:name=".service.MyService" />
 
         <receiver
             android:name=".recevier.MyNetworkChangeReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="E2EGBPHrsreBGIN0l649lqSRbE8tbGae"/>
+            android:value="E2EGBPHrsreBGIN0l649lqSRbE8tbGae" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         -->
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
 
         <receiver android:name=".ui.fragment.manager.PowerFragment$PowerConnectionReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
 
                 <!-- 监控电量显著变化 -->
-                <action android:name="android.intent.action.ACTION_BATTERY_LOW"/>
-                <action android:name="android.intent.action.ACTION_BATTERY_OKAY"/>
+                <action android:name="android.intent.action.ACTION_BATTERY_LOW" />
+                <action android:name="android.intent.action.ACTION_BATTERY_OKAY" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.activity.ThirdActivity">
+        <activity
+            android:name=".ui.activity.ThirdActivity"
+            android:label="ThirdActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activity.FourActivity"
+            android:label="@string/title_activity_four"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

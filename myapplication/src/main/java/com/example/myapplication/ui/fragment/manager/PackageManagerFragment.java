@@ -53,6 +53,7 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     RecyclerView recyclerView;
 
 
+
     private static final String TAG = "PackageManagerFragment";
 
     @Override
