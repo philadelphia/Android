@@ -1,27 +1,24 @@
-package com.example.myapplication.adapter;
+package com.example.coordinatorlayoutdemo.adapter;
 
 import android.content.pm.PackageInfo;
 import android.graphics.Color;
-import android.support.annotation.ColorRes;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-import com.example.myapplication.R;
-import com.example.myapplication.utils.CustomItemClickListener;
+
+import com.example.coordinatorlayoutdemo.R;
 
 import java.util.List;
 
 /**
  * Created by Tao.ZT.Zhang on 2016/7/27.
  */
-public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
     private  List<PackageInfo> dataList;
-    private CustomItemClickListener customItemClickListener;
 
     private int position;
     public RecyclerViewAdapter(List<PackageInfo> dataList) {
@@ -30,9 +27,7 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
     }
 
 
-    public void setOnCustomeItemClickListener(CustomItemClickListener customItemClickListener){
-        this.customItemClickListener = customItemClickListener;
-    }
+
 
     public int getPosition() {
         return position;
@@ -46,20 +41,7 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
     public MyViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_packages,parent,false);
         final MyViewHolder viewHolder = new MyViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                customItemClickListener.onItemClick(view,viewHolder.getAdapterPosition() );
-            }
-        });
 
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                customItemClickListener.onItemLongClick(view,viewHolder.getAdapterPosition() );
-                return true;
-            }
-        });
         return viewHolder ;
     }
 
@@ -114,12 +96,6 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
 
         }
 
-//        @Override
-//        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-//            contextMenu.setHeaderTitle("操作");
-//            contextMenu.add(0, 0, 0, "添加");
-//            contextMenu.add(0, 1, 1, "标记为重要");
-//            contextMenu.add(0, 2, 2, "删除");
-//        }
+
     }
 }

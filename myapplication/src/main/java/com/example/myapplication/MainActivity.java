@@ -28,6 +28,7 @@ import com.example.myapplication.ui.MaterialDesginFragment;
 import com.example.myapplication.ui.OtherFragment;
 import com.example.myapplication.ui.SendFragment;
 import com.example.myapplication.ui.ShareFragment;
+import com.example.myapplication.ui.activity.ThirdActivity;
 import com.example.myapplication.ui.fragment.widget.AndroidBaseViewFragment;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -73,8 +74,10 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, ThirdActivity.class);
+                startActivity(intent);
             }
         });
 
