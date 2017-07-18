@@ -1,1 +1,1 @@
-include ':myapplication', ':glidedemo', ':rxandroid', ':uidemo', ':drawerlayoutdemo', ':bluetoothdemo', ':tablayoutdemo', ':switchicon', ':coordinatorlayoutdemo'
+include ':myapplication', ':glidedemo', ':rxandroid', ':uidemo', ':drawerlayoutdemo', ':tablayoutdemo', ':switchicon', ':coordinatorlayoutdemo'

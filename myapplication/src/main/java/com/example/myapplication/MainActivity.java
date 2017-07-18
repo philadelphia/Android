@@ -29,6 +29,7 @@ import com.example.myapplication.ui.OtherFragment;
 import com.example.myapplication.ui.SendFragment;
 import com.example.myapplication.ui.ShareFragment;
 import com.example.myapplication.ui.activity.ThirdActivity;
+import com.example.myapplication.ui.fragment.other.CustomViewFragment;
 import com.example.myapplication.ui.fragment.widget.AndroidBaseViewFragment;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -55,12 +56,13 @@ public class MainActivity extends AppCompatActivity
         initView();
 
         //default show android Base Fragment
-        AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
-        ManagerFragment managerFragment = new ManagerFragment();
-        OtherFragment otherFragment = new OtherFragment();
-        AndroidBaseViewFragment androidBaseViewFragment = new AndroidBaseViewFragment();
+//        AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
+//        ManagerFragment managerFragment = new ManagerFragment();
+//        OtherFragment otherFragment = new OtherFragment();
+//        AndroidBaseViewFragment androidBaseViewFragment = new AndroidBaseViewFragment();
 //        DatabaseFragment databaseFragment = new DatabaseFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
+        CustomViewFragment customViewFragment = new CustomViewFragment();
+        fragmentManager.beginTransaction().replace(R.id.container, customViewFragment).commit();
 
 
 
@@ -164,6 +166,10 @@ public class MainActivity extends AppCompatActivity
                 fragmentManager.beginTransaction().replace(R.id.container, managerFragment).commit();
                 break;
 
+            case R.id.nav_CustomView:
+                CustomViewFragment customViewFragment = new CustomViewFragment();
+                fragmentManager.beginTransaction().replace(R.id.container, customViewFragment).commit();
+                break;
 
             case R.id.nav_materialDesign:
                 MaterialDesginFragment materialDesgin = new MaterialDesginFragment();

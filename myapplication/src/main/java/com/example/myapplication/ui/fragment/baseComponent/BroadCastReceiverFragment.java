@@ -1,6 +1,8 @@
 package com.example.myapplication.ui.fragment.baseComponent;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -10,9 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.recevier.MyNetworkChangeReceiver;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,15 +31,16 @@ public class BroadCastReceiverFragment extends Fragment {
     private IntentFilter intentFilter;
     private MyNetworkChangeReceiver myNetworkChangeReceiver;
     private WifiManager wifiManager;
-    private static final String TAG = "BroadCastReceiverFragment";
+    private static final String TAG = "BroadReceiverFragment";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         myNetworkChangeReceiver = new MyNetworkChangeReceiver();
+        Log.i(TAG, "onCreate: registerReceiver");
         getActivity().registerReceiver(myNetworkChangeReceiver, intentFilter);
-        wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
+        wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         super.onCreate(savedInstanceState);
     }
@@ -53,14 +56,9 @@ public class BroadCastReceiverFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.i(TAG, "onStop: ");
+    public void onResume() {
+        super.onResume();
+        getActivity().registerReceiver(myNetworkChangeReceiver, intentFilter);
     }
 
     @Override
@@ -70,10 +68,6 @@ public class BroadCastReceiverFragment extends Fragment {
         super.onDestroy();
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
 
     @OnClick({R.id.btn_openWiFi, R.id.btn_stopWiFi, R.id.btn_wifiStatus})
     public void onClick(View view) {
@@ -86,22 +80,41 @@ public class BroadCastReceiverFragment extends Fragment {
                 wifiManager.setWifiEnabled(false);
                 break;
 
-            case R.id.btn_wifiStatus:
-                String status = null;
-                switch (wifiManager.getWifiState()) {
-                    case 1:
-                        status = "closed";
-                        break;
-                    case 3:
-                        status = "open";
-                        break;
-                    case 4:
-                        status = "unkonwn";
-                        break;
+        }
+    }
 
-                }
-                btnWifiStatus.setText("status :" + status);
-                break;
+
+
+    public class MyNetworkChangeReceiver extends BroadcastReceiver {
+        public MyNetworkChangeReceiver() {
+        }
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(context, "network status changed"  , Toast.LENGTH_SHORT).show();
+            String wifiStatus = null;
+            switch (wifiManager.getWifiState()) {
+                case 0:
+                    wifiStatus = "WIFI_STATE_DISABLING";
+                    break;
+
+                case 1:
+                    wifiStatus = "WIFI_STATE_DISABLED";
+                    break;
+                case 2:
+                    wifiStatus = "WIFI_STATE_ENABLING";
+                    break;
+                case 3:
+                    wifiStatus = "WIFI_STATE_ENABLED";
+                    break;
+                case 4:
+                    wifiStatus = "WIFI_STATE_UNKNOWN";
+                    break;
+
+            }
+            btnWifiStatus.setText("wifiStatus :" + wifiStatus);
+
         }
     }
 

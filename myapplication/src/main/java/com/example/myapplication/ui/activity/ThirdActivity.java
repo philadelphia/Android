@@ -35,13 +35,13 @@ public class ThirdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        flb = (FloatingActionButton) findViewById(R.id.fab);
-        flb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ThirdActivity.this, FourActivity.class));
-            }
-        });
+//        flb = (FloatingActionButton) findViewById(R.id.fab);
+//        flb.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(ThirdActivity.this, FourActivity.class));
+//            }
+//        });
         packageManager = getPackageManager();
         initData();
 

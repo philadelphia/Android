@@ -1,5 +1,6 @@
 package com.example.coordinatorlayoutdemo;
 
+import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
