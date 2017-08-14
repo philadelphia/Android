@@ -52,8 +52,8 @@ public class MaterialDesginFragment extends Fragment {
 
     public void setUpViewPagerAndTabs (){
         Log.i(TAG, "setUpViewPagerAndTabs: ");
-        mTablayout =MainActivity.getmTabLayout();
-        toolbar = MainActivity.getToolbar();
+        mTablayout =((MainActivity) getActivity()).getmTabLayout();
+        toolbar = ((MainActivity) getActivity()).getToolbar();
         mTablayout.setVisibility(View.VISIBLE);
         mTablayout.setTabMode (TabLayout.MODE_FIXED);
         mTabFragments = new ArrayList<>();

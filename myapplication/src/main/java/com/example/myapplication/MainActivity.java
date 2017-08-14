@@ -1,11 +1,9 @@
 package com.example.myapplication;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 
 import android.util.Log;
@@ -29,20 +27,19 @@ import com.example.myapplication.ui.OtherFragment;
 import com.example.myapplication.ui.SendFragment;
 import com.example.myapplication.ui.ShareFragment;
 import com.example.myapplication.ui.activity.ThirdActivity;
-import com.example.myapplication.ui.fragment.other.CustomViewFragment;
+import com.example.myapplication.ui.CustomViewFragment;
 import com.example.myapplication.ui.fragment.widget.AndroidBaseViewFragment;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FragmentManager fragmentManager;
-    private static Toolbar toolbar;
-    private static FloatingActionButton fab;
-    private static TabLayout mTabLayout;
-    private static DrawerLayout drawer;
-    private static ActionBarDrawerToggle toggle;
-    private static NavigationView navigationView;
+    private  Toolbar toolbar;
+    private  FloatingActionButton fab;
+    private  TabLayout mTabLayout;
+    private  DrawerLayout drawer;
+    private  ActionBarDrawerToggle toggle;
+    private  NavigationView navigationView;
     private ShareActionProvider mShareActionProvider;
     private Menu menu;
     private static final String TAG = "MainActivity";
@@ -57,12 +54,12 @@ public class MainActivity extends AppCompatActivity
 
         //default show android Base Fragment
 //        AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
-//        ManagerFragment managerFragment = new ManagerFragment();
+        ManagerFragment managerFragment = new ManagerFragment();
 //        OtherFragment otherFragment = new OtherFragment();
 //        AndroidBaseViewFragment androidBaseViewFragment = new AndroidBaseViewFragment();
 //        DatabaseFragment databaseFragment = new DatabaseFragment();
         CustomViewFragment customViewFragment = new CustomViewFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, customViewFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.container, managerFragment).commit();
 
 
 
@@ -196,12 +193,16 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public static TabLayout getmTabLayout() {
+    public  TabLayout getmTabLayout() {
         return mTabLayout;
     }
 
-    public static Toolbar getToolbar() {
+    public  Toolbar getToolbar() {
         return toolbar;
+    }
+
+    public FloatingActionButton getFloatingActionBar(){
+        return  fab;
     }
 
     @Override

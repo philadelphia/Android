@@ -50,8 +50,8 @@ public class ManagerFragment extends Fragment {
 
     public void initView(View view) {
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        mTablayout = MainActivity.getmTabLayout();
-        toolbar = MainActivity.getToolbar();
+        mTablayout = ((MainActivity) getActivity()).getmTabLayout();
+        toolbar = ((MainActivity) getActivity()).getToolbar();
         mTablayout.setVisibility(View.VISIBLE);
         mTablayout.setTabMode (TabLayout.MODE_FIXED);
     }

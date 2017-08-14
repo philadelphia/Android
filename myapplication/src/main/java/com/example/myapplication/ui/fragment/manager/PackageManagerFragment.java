@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.fragment.manager;
 
 
+import android.animation.ObjectAnimator;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -11,6 +12,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -29,6 +32,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
 import com.example.myapplication.utils.CustomItemClickListener;
@@ -51,6 +55,8 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     private RecyclerViewAdapter myAdapter;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.flab)
+    FloatingActionButton flb;
 
 
 
@@ -58,12 +64,12 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: ");
         final View view = inflater.inflate(R.layout.fragment_package_manager, container,false);
         packageManager = getContext().getPackageManager();
         ButterKnife.bind(this, view);
-//        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        ((MainActivity) getActivity()).getFloatingActionBar().setVisibility(View.GONE);
 
         myAdapter = new RecyclerViewAdapter(installedPackages);
         myAdapter.setOnCustomeItemClickListener(this);
@@ -76,6 +82,48 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         recyclerView.setAdapter(myAdapter);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         new ItemTouchHelper(new MyOnItemTouchHelperCallBack(myAdapter)).attachToRecyclerView(recyclerView);
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                Log.i(TAG, "onScrollStateChanged: ");
+//                switch (newState){
+//                    case RecyclerView.SCROLL_STATE_IDLE:
+//                        Log.i(TAG, " SCROLL_STATE_IDLE");
+//                        break;
+//                    case RecyclerView.SCROLL_STATE_DRAGGING:
+//                        Log.i(TAG, "SCROLL_STATE_DRAGGING: ");
+//                        break;
+//                    case RecyclerView.SCROLL_STATE_SETTLING:
+//                        Log.i(TAG, "SCROLL_STATE_SETTLING: ");
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                Log.i(TAG, "onScrolled: ");
+//                Log.i(TAG, "dy==  " + dy);
+//                Log.i(TAG, "dx ==: " + dx);
+//               int status = recyclerView.getScrollState();
+//
+//                    if (dy > 0){
+//                        flb.show();
+////                        ((MainActivity) getActivity()).getFloatingActionBar().setVisibility(View.VISIBLE);
+////                    Log.i(TAG, "onScrollChange: 往上滑动");
+////                        ObjectAnimator.ofFloat(flb, "translationY", 300).start();//默认时间内让mView在Y轴上平移100个像素
+//                    }
+//                    else {
+////                        ((MainActivity) getActivity()).getFloatingActionBar().setVisibility(View.INVISIBLE);
+//                        flb.hide();
+////                    Log.i(TAG, "onScrollChange: 往下滑动");
+////                        ObjectAnimator.ofFloat(flb, "translationY", -300).start();
+//                    }
+//                }
+//
+//
+//        });
 
         initData();
         return view;
@@ -210,13 +258,8 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         myAdapter.notifyDataSetChanged();
         Log.i(TAG, "installedPackages: " + installedPackages.size());
 
-
     }
 
-    @OnClick(R.id.recyclerView)
-    public void onClick() {
-
-    }
 
     @Override
     public void onItemClick(View v, int position) {

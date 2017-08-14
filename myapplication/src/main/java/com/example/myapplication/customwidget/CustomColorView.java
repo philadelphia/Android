@@ -16,10 +16,9 @@ import com.example.myapplication.R;
  * TODO: document your custom view class.
  */
 public class CustomColorView extends View {
-    private Paint paint;
     public CustomColorView(Context context) {
         super(context);
-        paint = new Paint();
+
     }
 
     public CustomColorView(Context context, AttributeSet attrs) {
@@ -33,8 +32,6 @@ public class CustomColorView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        paint.setAntiAlias(true);
-        paint.setColor(Color.YELLOW);
-        canvas.drawRect(100, 100, 500, 500, paint);
+        canvas.drawColor(Color.YELLOW);
     }
 }
