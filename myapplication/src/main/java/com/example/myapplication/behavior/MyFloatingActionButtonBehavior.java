@@ -1,19 +1,19 @@
 package com.example.myapplication.behavior;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-
-import static android.R.attr.scrollY;
+import android.view.ViewPropertyAnimator;
 
 /**
  * Created by Tao.ZT.Zhang on 2017/8/10.
@@ -41,7 +41,6 @@ public class MyFloatingActionButtonBehavior extends CoordinatorLayout.Behavior {
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
         Log.i(TAG, "onDependentViewChanged: ");
-        int scrollY = dependency.getTop();
 
 
         return super.onDependentViewChanged(parent, child, dependency);
@@ -51,111 +50,24 @@ public class MyFloatingActionButtonBehavior extends CoordinatorLayout.Behavior {
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed) {
 
-        super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
         Log.i(TAG, "onNestedPreScroll: ");
-//        int scrollY = ((RecyclerView) target).getx
-//        Log.i(TAG, "scrollY: " + scrollY);
+        super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
 
-//        ObjectAnimator.ofFloat(child, "translationY", dy).setDuration(100).start();//默认时间内让mView在Y轴上平移100个像素
-//       ObjectAnimator.ofFloat().addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//           @Override
-//           public void onAnimationUpdate(ValueAnimator animation) {
-//
-//           }
-//       });
-//        ViewCompat.offsetTopAndBottom(child,-scrollY);
-//        if(height1>=0){
-//            ViewCompat.offsetTopAndBottom(child,50);
-//        }else {
-//            ViewCompat.offsetTopAndBottom(child,-50);
-//        }
-//        if (Math.abs(height1) <=height){
-//
-//        }
-//        ObjectAnimator.ofFloat().addListener(new Animator.AnimatorListener() {
-//            @Override
-//            public void onAnimationStart(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationCancel(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animator animation) {
-//
-//            }
-//        });
-//
-//        ObjectAnimator.ofFloat().addPauseListener(new Animator.AnimatorPauseListener() {
-//            @Override
-//            public void onAnimationPause(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationResume(Animator animation) {
-//
-//            }
-//        });
-
-
-
-        ValueAnimator.ofInt().addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
-        ValueAnimator.ofInt().addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-
-            }
-        });
-        ValueAnimator.ofInt().addPauseListener(new Animator.AnimatorPauseListener() {
-            @Override
-            public void onAnimationPause(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationResume(Animator animation) {
-
-            }
-        });
     }
 
 
 
-
+    @Override
+    public void onNestedScrollAccepted(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
+        Log.i(TAG, "onNestedScrollAccepted: ");
+        super.onNestedScrollAccepted(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
+    }
+    
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
         Log.e(TAG, "onStartNestedScroll: ");
         if (child.getVisibility() == View.VISIBLE && height == 0) {
-            height = child.getBottom();
+            height = coordinatorLayout.getHeight() - child.getTop();
         }
         Log.i(TAG, "height== : " + height);
         return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
@@ -163,36 +75,26 @@ public class MyFloatingActionButtonBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public boolean onNestedPreFling(CoordinatorLayout coordinatorLayout, View child, View target, float velocityX, float velocityY) {
-        Log.e(TAG, "onNestedPreFling: ");
+        Log.i(TAG, "onNestedPreFling: ");
         return super.onNestedPreFling(coordinatorLayout, child, target, velocityX, velocityY);
     }
 
     @Override
+    public boolean onNestedFling(CoordinatorLayout coordinatorLayout, View child, View target, float velocityX, float velocityY, boolean consumed) {
+        Log.i(TAG, "onNestedFling: ");
+        return super.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
+    }
+    @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-        Log.e(TAG, "onNestedScroll: ");
-        Log.e(TAG, "dyConsumed: === " + dyConsumed);
-        Log.e(TAG, "dyUnconsumed: ===  " + dyUnconsumed);
+        Log.i(TAG, "onNestedScroll: ");
+//        Log.e(TAG, "dyConsumed: === " + dyConsumed);
+//        Log.e(TAG, "dyUnconsumed: ===  " + dyUnconsumed);
+        //上滑，隐藏fab
+        if (dyConsumed > 0 && child.getVisibility() == View.VISIBLE) {
+            hideView(child);
 
-        if (dyConsumed > 0) {
-            float min = Math.min(dyConsumed, height);
-            ViewCompat.offsetTopAndBottom(child, (int) min);
-            Log.i(TAG, "onNestedScroll: 上滑动");
-            Log.i(TAG, "child.getBottom(): " + child.getBottom());
-            Log.i(TAG, "child.getVisibility: " + child.getVisibility());
-            Log.i(TAG, "child.isAccessibilityFocused: " + child.isAccessibilityFocused());
-            Log.i(TAG, "child.isActivated: " + child.isActivated());
-            Log.i(TAG, "child.isShown: " + child.isShown());
-
-        } else {
-            float min = Math.min(Math.abs(dyConsumed), height);
-            ViewCompat.offsetTopAndBottom(child, -(int) min);
-            Log.i(TAG, "onNestedScroll: 下滑动");
-            Log.i(TAG, "child.getVisibility: " + child.getVisibility());
-            Log.i(TAG, "child.isAccessibilityFocused: " + child.isAccessibilityFocused());
-            Log.i(TAG, "child.isActivated: " + child.isActivated());
-            Log.i(TAG, "child.isShown: " + child.isShown());
-
-            Log.i(TAG, "child.getBottom(): " + child.getBottom());
+        } else if (dyConsumed < 0 && child.getVisibility() == View.GONE) {
+           showView(child);
         }
 
 
@@ -204,4 +106,56 @@ public class MyFloatingActionButtonBehavior extends CoordinatorLayout.Behavior {
         Log.e(TAG, "onStopNestedScroll: ");
         super.onStopNestedScroll(coordinatorLayout, child, target);
     }
+
+    public void showView(final View view){
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(view, "translationY", 0).setDuration(300);
+        translationY.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                view.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        translationY.start();
+
+    }
+    public void hideView(final View view){
+        ObjectAnimator translation = ObjectAnimator.ofFloat(view, "translationY", height).setDuration(200);
+        translation.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                Log.i(TAG, "onAnimationStart: " + System.currentTimeMillis());
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                view.setVisibility(View.GONE);
+                Log.i(TAG, "onAnimationEnd: " + System.currentTimeMillis());
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+
+        translation.start();
+
+    }
+
 }

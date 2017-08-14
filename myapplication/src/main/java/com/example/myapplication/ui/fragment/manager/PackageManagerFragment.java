@@ -130,6 +130,17 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unregisterForContextMenu(recyclerView);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
 
     protected  class MyOnItemTouchHelperCallBack extends Callback{
         private RecyclerViewAdapter adapter;
@@ -342,18 +353,6 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 
 
     private void signAsImportant() {
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unregisterForContextMenu(recyclerView);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
 
