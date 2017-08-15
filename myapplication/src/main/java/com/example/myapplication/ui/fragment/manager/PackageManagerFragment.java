@@ -18,6 +18,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +28,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,11 +64,12 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     RecyclerView recyclerView;
     @BindView(R.id.flab)
     FloatingActionButton flb;
-    @BindView(R.id.coorlayout)
-    CoordinatorLayout coorlayout;
+//    @BindView(R.id.coorlayout)
+//    CoordinatorLayout coorlayout;
 
 
     private static final String TAG = "PackageManagerFragment";
+    private ActionMode actionMode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,6 +91,35 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         recyclerView.setAdapter(myAdapter);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         new ItemTouchHelper(new MyOnItemTouchHelperCallBack(myAdapter)).attachToRecyclerView(recyclerView);
+        flb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (actionMode == null) {
+                    actionMode = ((MainActivity) getActivity()).startSupportActionMode(new ActionMode.Callback() {
+                        @Override
+                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                            mode.getMenuInflater().inflate(R.menu.menu_action_mode, menu);
+                            return true;
+                        }
+
+                        @Override
+                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                            return false;
+                        }
+
+                        @Override
+                        public void onDestroyActionMode(ActionMode mode) {
+
+                        }
+                    });
+                }
+            }
+        });
 //        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            private final int HIDE_THRESHOLD = 5;
 //            private int scrolledDistance = 0;
