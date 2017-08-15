@@ -13,9 +13,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +31,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.example.myapplication.MainActivity;
@@ -57,7 +62,8 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     RecyclerView recyclerView;
     @BindView(R.id.flab)
     FloatingActionButton flb;
-
+    @BindView(R.id.coorlayout)
+    CoordinatorLayout coorlayout;
 
 
     private static final String TAG = "PackageManagerFragment";
@@ -66,7 +72,7 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: ");
-        final View view = inflater.inflate(R.layout.fragment_package_manager, container,false);
+        final View view = inflater.inflate(R.layout.fragment_package_manager, container, false);
         packageManager = getContext().getPackageManager();
         ButterKnife.bind(this, view);
         ((MainActivity) getActivity()).getFloatingActionBar().setVisibility(View.GONE);
@@ -83,6 +89,11 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         new ItemTouchHelper(new MyOnItemTouchHelperCallBack(myAdapter)).attachToRecyclerView(recyclerView);
 //        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            private final int HIDE_THRESHOLD = 5;
+//            private int scrolledDistance = 0;
+//            private boolean controlsVisible = true;
+//            int distance = coorlayout.getHeight() - flb.getTop();
+//
 //            @Override
 //            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 //                super.onScrollStateChanged(recyclerView, newState);
@@ -105,23 +116,19 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 //                super.onScrolled(recyclerView, dx, dy);
 //                Log.i(TAG, "onScrolled: ");
 //                Log.i(TAG, "dy==  " + dy);
-//                Log.i(TAG, "dx ==: " + dx);
-//               int status = recyclerView.getScrollState();
+//                Log.i(TAG, "onScrolled: distance " + distance);
 //
-//                    if (dy > 0){
-//                        flb.show();
-////                        ((MainActivity) getActivity()).getFloatingActionBar().setVisibility(View.VISIBLE);
-////                    Log.i(TAG, "onScrollChange: 往上滑动");
-////                        ObjectAnimator.ofFloat(flb, "translationY", 300).start();//默认时间内让mView在Y轴上平移100个像素
-//                    }
-//                    else {
-////                        ((MainActivity) getActivity()).getFloatingActionBar().setVisibility(View.INVISIBLE);
-//                        flb.hide();
-////                    Log.i(TAG, "onScrollChange: 往下滑动");
-////                        ObjectAnimator.ofFloat(flb, "translationY", -300).start();
-//                    }
+//                //上滑隐藏
+//               if (dy > HIDE_THRESHOLD && controlsVisible) {
+//                    Log.i(TAG, "onScrollChange: 往上滑动");
+//                   flb.animate().translationY(400).setInterpolator(new LinearOutSlowInInterpolator()).setDuration(200).start();
+//                   controlsVisible = false;
+//                } else if (dy < -HIDE_THRESHOLD && !controlsVisible) {
+//                    Log.i(TAG, "onScrollChange: 往下滑动");
+//                   flb.animate().translationY(0).setInterpolator(new AccelerateInterpolator(2)).start();
+//                   controlsVisible = true;
 //                }
-//
+//            }
 //
 //        });
 
@@ -142,28 +149,30 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     }
 
 
-    protected  class MyOnItemTouchHelperCallBack extends Callback{
+    protected class MyOnItemTouchHelperCallBack extends Callback {
         private RecyclerViewAdapter adapter;
-        public MyOnItemTouchHelperCallBack(RecyclerViewAdapter adapter){
+
+        public MyOnItemTouchHelperCallBack(RecyclerViewAdapter adapter) {
             this.adapter = adapter;
         }
+
         @Override
         public boolean isItemViewSwipeEnabled() {
-            return  true;
+            return true;
         }
 
         @Override
         public boolean isLongPressDragEnabled() {
-            return  true;
+            return true;
         }
 
         @Override
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
 //                int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-            int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN ;
+            int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
 
 
-            int swipFlags = ItemTouchHelper.START ;
+            int swipFlags = ItemTouchHelper.START;
 
             return makeMovementFlags(dragFlags, swipFlags);
         }
@@ -177,7 +186,7 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         @Override
         public void onMoved(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int fromPos, RecyclerView.ViewHolder target, int toPos, int x, int y) {
             super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
-            recyclerView.getAdapter().notifyItemMoved(viewHolder.getAdapterPosition(),target.getAdapterPosition());
+            recyclerView.getAdapter().notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         }
 
         @Override
@@ -190,13 +199,12 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         @Override
         public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
             super.onSelectedChanged(viewHolder, actionState);
-            if (viewHolder instanceof  RecyclerViewAdapter.MyViewHolder){
+            if (viewHolder instanceof RecyclerViewAdapter.MyViewHolder) {
 
                 viewHolder.itemView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             }
 
         }
-
 
 
         @Override
@@ -315,7 +323,7 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         }
         int position = -1;
         position = myAdapter.getPosition();
-        Log.i(TAG, "position == :"+ position);
+        Log.i(TAG, "position == :" + position);
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         if (menuInfo == null) {
             Log.i(TAG, "menuInfo: null");
@@ -324,14 +332,14 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         switch (item.getItemId()) {
             case 0:
                 addOneItems(position, new PackageInfo());
-                return  true;
+                return true;
             case 1:
                 signAsImportant();
-                return  true;
+                return true;
             case 2:
                 deleteItem(position);
                 Log.i(TAG, "deleting......: ");
-                return  true;
+                return true;
             default:
                 return super.onContextItemSelected(item);
         }

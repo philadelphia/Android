@@ -4,11 +4,11 @@ import android.animation.Animator;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.Interpolator;
 
 /**
@@ -16,7 +16,8 @@ import android.view.animation.Interpolator;
  */
 
 public class MyBehavior extends CoordinatorLayout.Behavior<View> {
-    private static final Interpolator INTERPOLATOR = new FastOutSlowInInterpolator();
+//    private static final Interpolator INTERPOLATOR = new BounceInterpolator();
+    private static final Interpolator INTERPOLATOR = new AnticipateOvershootInterpolator();
     private float viewY;//控件距离coordinatorLayout底部距离
     private boolean isAnimate;//动画是否在进行
     private static final String TAG = "MyBehavior";

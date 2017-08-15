@@ -19,6 +19,8 @@ import android.view.ViewPropertyAnimator;
  * Created by Tao.ZT.Zhang on 2017/8/10.
  */
 
+
+
 public class MyFloatingActionButtonBehavior extends CoordinatorLayout.Behavior {
     private static final String TAG = "MyFloatingActionButtonB";
     private float height;
