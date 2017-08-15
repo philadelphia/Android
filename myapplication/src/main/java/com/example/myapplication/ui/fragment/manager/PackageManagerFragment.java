@@ -38,6 +38,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
@@ -109,12 +110,16 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 
                         @Override
                         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                            switch (item.getItemId()){
+                                case R.id.action_delete:
+                                    Toast.makeText(getActivity(), "delete", Toast.LENGTH_SHORT).show();
+                            }
                             return false;
                         }
 
                         @Override
                         public void onDestroyActionMode(ActionMode mode) {
-
+                            actionMode = null;
                         }
                     });
                 }
@@ -171,6 +176,7 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 
     @Override
     public void onDestroyView() {
+        Log.i(TAG, "onDestroyView: ");
         super.onDestroyView();
         unregisterForContextMenu(recyclerView);
     }
@@ -178,6 +184,9 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.i(TAG, "onDestroy: ");
+        actionMode.finish();
+        actionMode = null;
     }
 
 
@@ -394,6 +403,5 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 
     private void signAsImportant() {
     }
-
 
 }
