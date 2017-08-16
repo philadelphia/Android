@@ -87,7 +87,7 @@ public class PackageManagerFragment extends Fragment {
         pool.setMaxRecycledViews(0, 16);
         recyclerView.setRecycledViewPool(pool);
 
-        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyOnItemTouchHelperCallBack(myAdapter));
+        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyOnItemTouchHelperCallBack());
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         recyclerView.addOnItemTouchListener(new OnRecyclerViewItemClickListener(recyclerView) {
@@ -212,10 +212,10 @@ public class PackageManagerFragment extends Fragment {
 
 
     protected class MyOnItemTouchHelperCallBack extends Callback {
-        private RecyclerViewAdapter adapter;
 
-        public MyOnItemTouchHelperCallBack(RecyclerViewAdapter adapter) {
-            this.adapter = adapter;
+
+        public MyOnItemTouchHelperCallBack() {
+
         }
 
         @Override
