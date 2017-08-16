@@ -1,49 +1,45 @@
 package com.example.myapplication.ui.fragment.manager;
 
 
-import android.animation.ObjectAnimator;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.support.v7.widget.helper.ItemTouchHelper.Callback;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
-import com.example.myapplication.utils.CustomItemClickListener;
+import com.example.myapplication.utils.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,12 +47,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PackageManagerFragment extends Fragment implements CustomItemClickListener {
+public class PackageManagerFragment extends Fragment {
     private PackageManager packageManager;
     private List<PackageInfo> installedPackages = new ArrayList<>();
     private List<String> pkgNameList;
@@ -68,30 +63,52 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 //    @BindView(R.id.coorlayout)
 //    CoordinatorLayout coorlayout;
 
-
     private static final String TAG = "PackageManagerFragment";
     private ActionMode actionMode;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: ");
         final View view = inflater.inflate(R.layout.fragment_package_manager, container, false);
         packageManager = getContext().getPackageManager();
         ButterKnife.bind(this, view);
         ((MainActivity) getActivity()).getFloatingActionBar().setVisibility(View.GONE);
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
         myAdapter = new RecyclerViewAdapter(installedPackages);
-        myAdapter.setOnCustomeItemClickListener(this);
+        recyclerView.setAdapter(myAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayout.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        registerForContextMenu(recyclerView);
-        recyclerView.setAdapter(myAdapter);
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
-        new ItemTouchHelper(new MyOnItemTouchHelperCallBack(myAdapter)).attachToRecyclerView(recyclerView);
+        RecyclerView.RecycledViewPool pool = new RecyclerView.RecycledViewPool();
+        pool.setMaxRecycledViews(0, 16);
+        recyclerView.setRecycledViewPool(pool);
+
+        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyOnItemTouchHelperCallBack(myAdapter));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+        recyclerView.addOnItemTouchListener(new OnRecyclerViewItemClickListener(recyclerView) {
+            @Override
+            public void onItemClick(RecyclerView.ViewHolder viewHolder) {
+                Snackbar.make(recyclerView, "ddd", Snackbar.LENGTH_SHORT).show();
+                Log.i(TAG, "onItemClick: " + viewHolder.getLayoutPosition());
+                Log.i(TAG, "onItemClick: " + viewHolder.hashCode());
+
+            }
+
+            @Override
+            public void onItemLongPress(RecyclerView.ViewHolder viewHolder) {
+//                第一条数据不支持长按拖拽，其他的都可以
+                if (viewHolder.getLayoutPosition() != 0) {
+                    itemTouchHelper.startDrag(viewHolder);
+                }
+            }
+        });
+//        registerForContextMenu(recyclerView);
+
         flb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +127,7 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 
                         @Override
                         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                            switch (item.getItemId()){
+                            switch (item.getItemId()) {
                                 case R.id.action_delete:
                                     Toast.makeText(getActivity(), "delete", Toast.LENGTH_SHORT).show();
                             }
@@ -125,6 +142,14 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
                 }
             }
         });
+//        setOnSrollListener();
+
+        initData();
+        return view;
+
+    }
+
+//    private void setOnSrollListener() {
 //        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            private final int HIDE_THRESHOLD = 5;
 //            private int scrolledDistance = 0;
@@ -168,11 +193,7 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 //            }
 //
 //        });
-
-        initData();
-        return view;
-
-    }
+//    }
 
     @Override
     public void onDestroyView() {
@@ -204,28 +225,36 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 
         @Override
         public boolean isLongPressDragEnabled() {
-            return true;
+            //默认都不能被长安拖拽，然后再ItemTouchListener 中处理
+            return false;
         }
 
         @Override
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-//                int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+//
             int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+            if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
+                dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+            } else if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+                dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+            }
 
-
-            int swipFlags = ItemTouchHelper.START;
-
-            return makeMovementFlags(dragFlags, swipFlags);
+            int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+            return makeMovementFlags(dragFlags, swipeFlags);
         }
 
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            Log.i(TAG, "onMove: ");
+            //第一条数据不能被别的数据挤走
+            if (target.getLayoutPosition() == 0) return false;
             Collections.swap(installedPackages, viewHolder.getAdapterPosition(), target.getAdapterPosition());
             return true;
         }
 
         @Override
         public void onMoved(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int fromPos, RecyclerView.ViewHolder target, int toPos, int x, int y) {
+            Log.i(TAG, "onMoved: ");
             super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
             recyclerView.getAdapter().notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         }
@@ -240,6 +269,7 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
         @Override
         public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
             super.onSelectedChanged(viewHolder, actionState);
+            Log.i(TAG, "onSelectedChanged: actionState ==" + actionState);
             if (viewHolder instanceof RecyclerViewAdapter.MyViewHolder) {
 
                 viewHolder.itemView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
@@ -320,32 +350,6 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
 
     }
 
-
-    @Override
-    public void onItemClick(View v, int position) {
-        Snackbar.make(recyclerView, "ddd", Snackbar.LENGTH_SHORT).show();
-//        Log.i(TAG, "onItemClick: " + position);
-//        PopupMenu menu = new PopupMenu(getContext(), v,Gravity.CENTER);
-//        menu.inflate(R.menu.popup_menu);
-//        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                return true;
-//            }
-//        });
-////
-////
-//////        menu.setGravity(Gravity.CENTER);
-//        menu.show();
-
-
-    }
-
-    @Override
-    public void onItemLongClick(View v, int position) {
-
-    }
-
     @Override
     public void registerForContextMenu(View view) {
         Log.i(TAG, "registerForContextMenu: ");
@@ -358,28 +362,41 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.add(0, v.getId(), 0, "Add");//groupId, itemId, order, title
+        menu.add(0, v.getId(), 1, "Delete");
+        menu.add(0, v.getId(), 2, "Mark");
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item == null) {
             Log.i(TAG, "onContextItemSelected: item == null");
         }
-        int position = -1;
-        position = myAdapter.getPosition();
+        int position = myAdapter.getPosition();
         Log.i(TAG, "position == :" + position);
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         if (menuInfo == null) {
             Log.i(TAG, "menuInfo: null");
 
         }
-        switch (item.getItemId()) {
+        switch (item.getOrder()) {
             case 0:
                 addOneItems(position, new PackageInfo());
                 return true;
+
             case 1:
-                signAsImportant();
-                return true;
-            case 2:
                 deleteItem(position);
                 Log.i(TAG, "deleting......: ");
+                return true;
+            case 2:
+                signAsImportant(position);
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -401,7 +418,8 @@ public class PackageManagerFragment extends Fragment implements CustomItemClickL
     }
 
 
-    private void signAsImportant() {
+    private void signAsImportant(int position) {
+
     }
 
 }

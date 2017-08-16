@@ -4,6 +4,7 @@ import android.content.pm.PackageInfo;
 import android.graphics.Color;
 import android.support.annotation.ColorRes;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.List;
 public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
     private  List<PackageInfo> dataList;
     private CustomItemClickListener customItemClickListener;
+    private static final String TAG = "RecyclerViewAdapter";
 
     private int position;
     public RecyclerViewAdapter(List<PackageInfo> dataList) {
@@ -43,32 +45,20 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+    public  MyViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_packages,parent,false);
         final MyViewHolder viewHolder = new MyViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                customItemClickListener.onItemClick(view,viewHolder.getAdapterPosition() );
-            }
-        });
-
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                customItemClickListener.onItemLongClick(view,viewHolder.getAdapterPosition() );
-                return true;
-            }
-        });
         return viewHolder ;
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        Log.i(TAG, "position: " + position);
+        Log.i(TAG, "holder.hashCode(): " + holder.hashCode());
         holder.tv_pkgName.setText(dataList.get(position).packageName);
         holder.tv_pkgVersionCode.setText(String.valueOf(dataList.get(position).versionCode));
         holder.tv_pkgVersionName.setText(dataList.get(position).versionName);
-
+//
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -91,7 +81,7 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
     }
 
 
-    public class MyViewHolder extends  RecyclerView.ViewHolder implements AdapterView.OnItemSelectedListener{
+    public static class MyViewHolder extends  RecyclerView.ViewHolder implements AdapterView.OnItemSelectedListener{
         public TextView tv_pkgName;
         public TextView tv_pkgVersionCode;
         public TextView tv_pkgVersionName;
@@ -113,6 +103,7 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
         public void onNothingSelected(AdapterView<?> parent) {
 
         }
+
 
 //        @Override
 //        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
