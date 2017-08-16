@@ -206,8 +206,10 @@ public class PackageManagerFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         Log.i(TAG, "onDestroy: ");
-        actionMode.finish();
-        actionMode = null;
+        if (actionMode != null) {
+            actionMode.finish();
+            actionMode = null;
+        }
     }
 
 
