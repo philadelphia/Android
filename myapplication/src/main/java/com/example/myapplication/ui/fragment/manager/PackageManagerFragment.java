@@ -39,7 +39,11 @@ import android.widget.Toast;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
+import com.example.myapplication.utils.MyItemDecoration;
+import com.example.myapplication.utils.MyItemDecoration1;
+import com.example.myapplication.utils.MyItemDecoration2;
 import com.example.myapplication.utils.OnRecyclerViewItemClickListener;
+import com.example.myapplication.utils.TimeLineItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,14 +82,15 @@ public class PackageManagerFragment extends Fragment {
 
         myAdapter = new RecyclerViewAdapter(installedPackages);
         recyclerView.setAdapter(myAdapter);
+//        recyclerView.addItemDecoration(new MyItemDecoration(getActivity(),LinearLayoutManager.VERTICAL, R.drawable.itemdecoration));
+//        recyclerView.addItemDecoration(new MyItemDecoration1(LinearLayoutManager.VERTICAL));
+//        recyclerView.addItemDecoration(new MyItemDecoration2(LinearLayoutManager.VERTICAL));
+        recyclerView.addItemDecoration(new TimeLineItemDecoration());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayout.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        RecyclerView.RecycledViewPool pool = new RecyclerView.RecycledViewPool();
-        pool.setMaxRecycledViews(0, 16);
-        recyclerView.setRecycledViewPool(pool);
 
         final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyOnItemTouchHelperCallBack());
         itemTouchHelper.attachToRecyclerView(recyclerView);

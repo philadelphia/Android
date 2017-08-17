@@ -46,7 +46,7 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
 
     @Override
     public  MyViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_packages,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_packages1,parent,false);
         final MyViewHolder viewHolder = new MyViewHolder(view);
         return viewHolder ;
     }
@@ -74,6 +74,7 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
         holder.itemView.setOnLongClickListener(null);
         super.onViewRecycled(holder);
     }
+
 
     @Override
     public int getItemCount() {
