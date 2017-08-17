@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -18,13 +17,12 @@ import com.example.myapplication.R;
 public class TimeLineItemDecoration extends RecyclerView.ItemDecoration {
 
     private Paint paint;
-    private int height;
 //    距离左边的距离
     private int mOffsetLeft;
     //距离上部的距离
     private float mOffsetTop;
 
-
+    private static final String TAG = "TimeLineItemDecoration";
 //    圆半径
     private float mRadius;
 
@@ -84,7 +82,7 @@ public class TimeLineItemDecoration extends RecyclerView.ItemDecoration {
             float downLineTopX = centralX;
             float downLineTopY= centralY + mRadius;
             float downLineBottomX = centralX;
-            float downLineBottomY = dividerBottom + parent.getPaddingBottom() ;
+            float downLineBottomY = dividerBottom ;
             c.drawLine(downLineTopX, downLineTopY, downLineBottomX, downLineBottomY, paint);
 
         }
