@@ -3,28 +3,20 @@ package com.example.myapplication.ui.fragment.manager;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.support.v7.widget.helper.ItemTouchHelper.Callback;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,11 +31,10 @@ import android.widget.Toast;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
-import com.example.myapplication.utils.MyItemDecoration;
-import com.example.myapplication.utils.MyItemDecoration1;
-import com.example.myapplication.utils.MyItemDecoration2;
+import com.example.myapplication.utils.ItemTouchCallBack;
+import com.example.myapplication.utils.ItemTouchHelperAdapterCallBack;
 import com.example.myapplication.utils.OnRecyclerViewItemClickListener;
-import com.example.myapplication.utils.TimeLineItemDecoration;
+import com.example.myapplication.utils.OnStartDragListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,7 +46,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PackageManagerFragment extends Fragment {
+public class PackageManagerFragment extends Fragment implements OnStartDragListener {
     private PackageManager packageManager;
     private List<PackageInfo> installedPackages = new ArrayList<>();
     private List<String> pkgNameList;
@@ -69,6 +60,7 @@ public class PackageManagerFragment extends Fragment {
 
     private static final String TAG = "PackageManagerFragment";
     private ActionMode actionMode;
+    private ItemTouchHelper itemTouchHelper;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -80,19 +72,20 @@ public class PackageManagerFragment extends Fragment {
         ((MainActivity) getActivity()).getFloatingActionBar().setVisibility(View.GONE);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
-        myAdapter = new RecyclerViewAdapter(installedPackages);
+        myAdapter = new RecyclerViewAdapter(installedPackages, this);
         recyclerView.setAdapter(myAdapter);
 //        recyclerView.addItemDecoration(new MyItemDecoration(getActivity(),LinearLayoutManager.VERTICAL, R.drawable.itemdecoration));
 //        recyclerView.addItemDecoration(new MyItemDecoration1(LinearLayoutManager.VERTICAL));
 //        recyclerView.addItemDecoration(new MyItemDecoration2(LinearLayoutManager.VERTICAL));
-        recyclerView.addItemDecoration(new TimeLineItemDecoration());
+//        recyclerView.addItemDecoration(new TimeLineItemDecoration());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayout.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyOnItemTouchHelperCallBack());
+        itemTouchHelper = new ItemTouchHelper(new ItemTouchCallBack(getActivity(), myAdapter));
+//        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyOnItemTouchHelperCallBack());
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         recyclerView.addOnItemTouchListener(new OnRecyclerViewItemClickListener(recyclerView) {
@@ -246,8 +239,8 @@ public class PackageManagerFragment extends Fragment {
                 dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
             }
 
-            int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
-            return makeMovementFlags(dragFlags, swipeFlags);
+            int swipeFlags = ItemTouchHelper.END;
+            return makeMovementFlags(0, swipeFlags);
         }
 
         @Override
@@ -268,6 +261,7 @@ public class PackageManagerFragment extends Fragment {
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            Log.i(TAG, "onSwiped: ");
             installedPackages.remove(viewHolder.getAdapterPosition());
             myAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
@@ -298,39 +292,39 @@ public class PackageManagerFragment extends Fragment {
 
                 //dX大于0时向右滑动，小于0向左滑动
                 View itemView = viewHolder.itemView;//获取滑动的view
-                Resources resources = getContext().getResources();
-                Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_launcher);//获取删除指示的背景图片
-                int padding = 10;//图片绘制的padding
-                int maxDrawWidth = 2 * padding + bitmap.getWidth();//最大的绘制宽度
-                Paint paint = new Paint();
-//                    paint.setColor(resources.getColor(R.color.btninvalid));
-                int x = Math.round(Math.abs(dX));
-                int drawWidth = Math.min(x, maxDrawWidth);//实际的绘制宽度，取实时滑动距离x和最大绘制距离maxDrawWidth最小值
-                int itemTop = itemView.getBottom() - itemView.getHeight();//绘制的top位置
-                //向右滑动
-                if (dX < 0) {
+//                Resources resources = getContext().getResources();
+//                Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_launcher);//获取删除指示的背景图片
+//                int padding = 10;//图片绘制的padding
+//                int maxDrawWidth = 2 * padding + bitmap.getWidth();//最大的绘制宽度
+//                Paint paint = new Paint();
+////                    paint.setColor(resources.getColor(R.color.btninvalid));
+//                int x = Math.round(Math.abs(dX));
+//                int drawWidth = Math.min(x, maxDrawWidth);//实际的绘制宽度，取实时滑动距离x和最大绘制距离maxDrawWidth最小值
+//                int itemTop = itemView.getBottom() - itemView.getHeight();//绘制的top位置
+//                //向右滑动
+                if (dX > 0) {
                     //根据滑动实时绘制一个背景
-                    c.drawRect(itemView.getLeft(), itemTop, drawWidth, itemView.getBottom(), paint);
-                    //在背景上面绘制图片
-                    if (x > padding) {//滑动距离大于padding时开始绘制图片
-                        //指定图片绘制的位置
-                        Rect rect = new Rect();//画图的位置
-                        rect.left = itemView.getLeft() + padding;
-                        rect.top = itemTop + (itemView.getBottom() - itemTop - bitmap.getHeight()) / 2;//图片居中
-                        int maxRight = rect.left + bitmap.getWidth();
-                        rect.right = Math.min(x, maxRight);
-                        rect.bottom = rect.top + bitmap.getHeight();
-                        //指定图片的绘制区域
-                        Rect rect1 = null;
-                        if (x < maxRight) {
-                            rect1 = new Rect();//不能再外面初始化，否则dx大于画图区域时，删除图片不显示
-                            rect1.left = 0;
-                            rect1.top = 0;
-                            rect1.bottom = bitmap.getHeight();
-                            rect1.right = x - padding;
-                        }
-                        c.drawBitmap(bitmap, rect1, rect, paint);
-                    }
+//                    c.drawRect(itemView.getLeft(), itemTop, drawWidth, itemView.getBottom(), paint);
+//                    在背景上面绘制图片
+//                    if (x > padding) {//滑动距离大于padding时开始绘制图片
+//                        //指定图片绘制的位置
+//                        Rect rect = new Rect();//画图的位置
+//                        rect.left = itemView.getLeft() + padding;
+//                        rect.top = itemTop + (itemView.getBottom() - itemTop - bitmap.getHeight()) / 2;//图片居中
+//                        int maxRight = rect.left + bitmap.getWidth();
+//                        rect.right = Math.min(x, maxRight);
+//                        rect.bottom = rect.top + bitmap.getHeight();
+//                        //指定图片的绘制区域
+//                        Rect rect1 = null;
+//                        if (x < maxRight) {
+//                            rect1 = new Rect();//不能再外面初始化，否则dx大于画图区域时，删除图片不显示
+//                            rect1.left = 0;
+//                            rect1.top = 0;
+//                            rect1.bottom = bitmap.getHeight();
+//                            rect1.right = x - padding;
+//                        }
+//                        c.drawBitmap(bitmap, rect1, rect, paint);
+//                    }
                     float alpha = 1.0f - Math.abs(dX) / (float) itemView.getWidth();
                     itemView.setAlpha(alpha);
                     //绘制时需调用平移动画，否则滑动看不到反馈
@@ -352,6 +346,11 @@ public class PackageManagerFragment extends Fragment {
         Log.i(TAG, "initData: ");
         installedPackages.clear();
         installedPackages.addAll(packageManager.getInstalledPackages(0));
+        for (int i = 0; i < installedPackages.size(); i++) {
+            PackageInfo packageInfo = installedPackages.get(i);
+            Log.i(TAG, "packageName ===: " + packageInfo.packageName);
+            Log.i(TAG, "icon=== : " + packageInfo.applicationInfo.icon);
+        }
         myAdapter.notifyDataSetChanged();
         Log.i(TAG, "installedPackages: " + installedPackages.size());
 
@@ -386,8 +385,9 @@ public class PackageManagerFragment extends Fragment {
         if (item == null) {
             Log.i(TAG, "onContextItemSelected: item == null");
         }
-        int position = myAdapter.getPosition();
-        Log.i(TAG, "position == :" + position);
+        int position = 34;
+//        int position = recyclerView.getAdapter().get
+//        Log.i(TAG, "position == :" + position);
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         if (menuInfo == null) {
             Log.i(TAG, "menuInfo: null");
@@ -429,4 +429,8 @@ public class PackageManagerFragment extends Fragment {
 
     }
 
+    @Override
+    public void startDrag(RecyclerView.ViewHolder viewHolder) {
+        itemTouchHelper.startDrag(viewHolder);
+    }
 }

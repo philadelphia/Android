@@ -2,53 +2,43 @@ package com.example.myapplication.adapter;
 
 import android.content.pm.PackageInfo;
 import android.graphics.Color;
-import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.utils.CustomItemClickListener;
+import com.example.myapplication.utils.ItemTouchHelperAdapterCallBack;
+import com.example.myapplication.utils.OnStartDragListener;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Tao.ZT.Zhang on 2016/7/27.
  */
-public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
-    private  List<PackageInfo> dataList;
-    private CustomItemClickListener customItemClickListener;
+@SuppressWarnings("ALL")
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements ItemTouchHelperAdapterCallBack {
+    private final List<PackageInfo> dataList;
+    private final OnStartDragListener onStartDragListener;
     private static final String TAG = "RecyclerViewAdapter";
 
-    private int position;
-    public RecyclerViewAdapter(List<PackageInfo> dataList) {
-
+    public RecyclerViewAdapter(List<PackageInfo> dataList, OnStartDragListener onStartDragListener) {
         this.dataList = dataList;
-    }
-
-
-    public void setOnCustomeItemClickListener(CustomItemClickListener customItemClickListener){
-        this.customItemClickListener = customItemClickListener;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
+        this.onStartDragListener = onStartDragListener;
     }
 
     @Override
-    public  MyViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_packages1,parent,false);
-        final MyViewHolder viewHolder = new MyViewHolder(view);
-        return viewHolder ;
+    public MyViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_packages1, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
@@ -58,14 +48,22 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
         holder.tv_pkgName.setText(dataList.get(position).packageName);
         holder.tv_pkgVersionCode.setText(String.valueOf(dataList.get(position).versionCode));
         holder.tv_pkgVersionName.setText(dataList.get(position).versionName);
+//        PackageInfo packageInfo = dataList.get(position);
+//        if(packageInfo.applicationInfo.icon != 0){
+//            holder.img_Icon.setImageResource(packageInfo.applicationInfo.icon);
 //
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+
+        holder.img_Icon.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onLongClick(View view) {
-                setPosition(holder.getPosition());
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    onStartDragListener.startDrag(holder);
+                }
+
                 return false;
             }
         });
+
     }
 
 
@@ -81,18 +79,41 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
         return dataList.size();
     }
 
+    @Override
+    public boolean onMove(RecyclerView recyclerView, int source, int dest) {
+        Collections.swap(dataList, source, dest);
+        return true;
+    }
 
-    public static class MyViewHolder extends  RecyclerView.ViewHolder implements AdapterView.OnItemSelectedListener{
-        public TextView tv_pkgName;
-        public TextView tv_pkgVersionCode;
-        public TextView tv_pkgVersionName;
+    @Override
+    public void onMoved(RecyclerView recyclerView, int source, int dest) {
+        notifyItemMoved(source, dest);
+    }
+
+    @Override
+    public void onSwipe(int position) {
+        dataList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    @Override
+    public RecyclerView.ViewHolder getViewHolder() {
+        return getViewHolder();
+    }
+
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements AdapterView.OnItemSelectedListener {
+        public final TextView tv_pkgName;
+        public final TextView tv_pkgVersionCode;
+        public final TextView tv_pkgVersionName;
+        private final ImageView img_Icon;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tv_pkgName = (TextView) itemView.findViewById(R.id.tv_pkgName);
             tv_pkgVersionCode = (TextView) itemView.findViewById(R.id.tv_VersionCode);
             tv_pkgVersionName = (TextView) itemView.findViewById(R.id.tv_VersionName);
-//            itemView.setOnCreateContextMenuListener(this);
+            img_Icon = ((ImageView) itemView.findViewById(R.id.icon));
         }
 
         @Override
@@ -105,13 +126,6 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
 
         }
 
-
-//        @Override
-//        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-//            contextMenu.setHeaderTitle("操作");
-//            contextMenu.add(0, 0, 0, "添加");
-//            contextMenu.add(0, 1, 1, "标记为重要");
-//            contextMenu.add(0, 2, 2, "删除");
-//        }
     }
+
 }
