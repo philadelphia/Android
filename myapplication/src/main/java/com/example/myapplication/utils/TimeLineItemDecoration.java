@@ -88,4 +88,23 @@ public class TimeLineItemDecoration extends RecyclerView.ItemDecoration {
         }
 
     }
+
+    /**
+     * 该方法在item之上进行绘制，会遮挡ItemView。
+     * @param c
+     * @param parent
+     * @param state
+     */
+//    @Override
+//    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+//        super.onDrawOver(c, parent, state);
+//        int childCount = parent.getChildCount();
+//        for (int i = 0; i < childCount; i++) {
+//            View child = parent.getChildAt(i);
+//            int width = parent.getChildAt(i).getWidth();
+//            int heigth = parent.getChildAt(i).getHeight();
+//            c.drawRect(child.getWidth() / 2,child.getTop() + child.getHeight() /2, child.getRight() ,child.getBottom(),paint );
+//        }
+//
+//    }
 }
