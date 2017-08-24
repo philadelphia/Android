@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.fragment.manager;
 
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
+import com.example.myapplication.ui.activity.ThirdActivity;
 import com.example.myapplication.utils.ItemTouchCallBack;
 import com.example.myapplication.utils.ItemTouchHelperAdapterCallBack;
 import com.example.myapplication.utils.OnRecyclerViewItemClickListener;
@@ -108,39 +110,55 @@ public class PackageManagerFragment extends Fragment implements OnStartDragListe
         });
 //        registerForContextMenu(recyclerView);
 
+//        flb.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (actionMode == null) {
+//                    actionMode = ((MainActivity) getActivity()).startSupportActionMode(new ActionMode.Callback() {
+//                        @Override
+//                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+//                            mode.getMenuInflater().inflate(R.menu.menu_action_mode, menu);
+//                            return true;
+//                        }
+//
+//                        @Override
+//                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+//                            return false;
+//                        }
+//
+//                        @Override
+//                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+//                            switch (item.getItemId()) {
+//                                case R.id.action_delete:
+//                                    Toast.makeText(getActivity(), "delete", Toast.LENGTH_SHORT).show();
+//                            }
+//                            return false;
+//                        }
+//
+//                        @Override
+//                        public void onDestroyActionMode(ActionMode mode) {
+//                            actionMode = null;
+//                        }
+//                    });
+//                }
+//            }
+//        });
         flb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (actionMode == null) {
-                    actionMode = ((MainActivity) getActivity()).startSupportActionMode(new ActionMode.Callback() {
-                        @Override
-                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                            mode.getMenuInflater().inflate(R.menu.menu_action_mode, menu);
-                            return true;
-                        }
+                Intent intent = new Intent(getActivity(), ThirdActivity.class);
+                int[] location = new int[2];
+                //获取FloatingActionButton的位置
+                v.getLocationOnScreen(location);
 
-                        @Override
-                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                            return false;
-                        }
+//                location[0] += location[0] + flb.getWidth() / 2;
+                intent.putExtra("location", location);
+                startActivity(intent);
+                getActivity().overridePendingTransition(0,0);
 
-                        @Override
-                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                            switch (item.getItemId()) {
-                                case R.id.action_delete:
-                                    Toast.makeText(getActivity(), "delete", Toast.LENGTH_SHORT).show();
-                            }
-                            return false;
-                        }
-
-                        @Override
-                        public void onDestroyActionMode(ActionMode mode) {
-                            actionMode = null;
-                        }
-                    });
-                }
             }
         });
+
 //        setOnSrollListener();
 
         initData();

@@ -53,16 +53,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //            holder.img_Icon.setImageResource(packageInfo.applicationInfo.icon);
 //
 
-        holder.img_Icon.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    onStartDragListener.startDrag(holder);
-                }
-
-                return false;
-            }
-        });
+//        holder.img_Icon.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                    onStartDragListener.startDrag(holder);
+//                }
+//
+//                return false;
+//            }
+//        });
 
     }
 
