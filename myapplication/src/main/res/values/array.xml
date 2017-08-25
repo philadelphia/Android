@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="letters">
+
+
+    <item name="A">A</item>
+    <item name="B">B</item>
+    <item name="C">C</item>
+    <item name="D">D</item>
+    <item name="E">E</item>
+    <item name="F">F</item>
+    <item name="G">G</item>
+    <item name="H">H</item>
+    <item name="I">I</item>
+    <item name="J">J</item>
+    <item name="K">K</item>
+    <item name="L">L</item>
+    <item name="M">M</item>
+    <item name="N">N</item>
+    <item name="O">O</item>
+    <item name="P">P</item>
+    <item name="Q">Q</item>
+    <item name="R">R</item>
+    <item name="S">S</item>
+    <item name="T">T</item>
+    <item name="U">U</item>
+    <item name="V">V</item>
+    <item name="W">W</item>
+    <item name="X">X</item>
+    <item name="Y">Y</item>
+    <item name="Z">Z</item>
+    </array>
+</resources>

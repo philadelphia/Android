@@ -1,12 +1,13 @@
 package com.example.myapplication.ui.activity;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,18 +15,18 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
-import com.example.myapplication.behavior.ScaleDownShowBehavior;
 import com.example.myapplication.customwidget.RevealBackGround;
+import com.example.myapplication.utils.MyItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class ThirdActivity extends AppCompatActivity implements RevealBackGround.OnStateChangedListener {
@@ -38,6 +39,8 @@ public class ThirdActivity extends AppCompatActivity implements RevealBackGround
     RecyclerView recyclerView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     private PackageManager packageManager;
     private final List<PackageInfo> dataList = new ArrayList<>();
@@ -82,6 +85,7 @@ public class ThirdActivity extends AppCompatActivity implements RevealBackGround
 
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -95,10 +99,11 @@ public class ThirdActivity extends AppCompatActivity implements RevealBackGround
             toolbar.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
             adapter = new RecyclerViewAdapter(dataList, null);
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+            recyclerView.addItemDecoration(new MyItemDecoration(this, MyItemDecoration.VERTICAL_LIST));
+            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             recyclerView.setAdapter(adapter);
             animatorOtherView();
-        } else{
+        } else {
             //水波纹动画没有结束。其他view不能显示
             appLayout.setVisibility(View.INVISIBLE);
             toolbar.setVisibility(View.INVISIBLE);
@@ -110,8 +115,13 @@ public class ThirdActivity extends AppCompatActivity implements RevealBackGround
         toolbar.setTranslationY(-toolbar.getHeight());
         toolbar.animate().translationY(0).setDuration(300).setStartDelay(300).setInterpolator(INTERPOLATOR).start();
         appLayout.setTranslationY(-appLayout.getHeight());
-        appLayout.animate().translationY(0).setDuration(300).setStartDelay(300).setInterpolator(INTERPOLATOR).start();
+        appLayout.animate().translationY(0).setDuration(200).setStartDelay(300).setInterpolator(INTERPOLATOR).start();
         recyclerView.setTranslationY(-recyclerView.getHeight());
         recyclerView.animate().translationY(0).setDuration(300).setStartDelay(300).setInterpolator(INTERPOLATOR).start();
+    }
+
+    @OnClick(R.id.fab)
+    public void onViewClicked() {
+        startActivity(new Intent(this, FifthActivity.class));
     }
 }
