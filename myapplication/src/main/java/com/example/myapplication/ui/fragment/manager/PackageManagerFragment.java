@@ -14,7 +14,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import com.example.myapplication.utils.ItemTouchHelper;
 import android.support.v7.widget.helper.ItemTouchHelper.Callback;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -31,11 +30,10 @@ import android.widget.LinearLayout;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
-import com.example.myapplication.adapter.RecyclerViewItemTouchAdapter;
 import com.example.myapplication.ui.activity.ThirdActivity;
-import com.example.myapplication.utils.ItemTouchCallBack;
-import com.example.myapplication.utils.ItemTouchHelperAdapterCallBack;
-import com.example.myapplication.utils.MessageItemTouchCallBack;
+import com.example.myapplication.utils.ItemMoveCallBack;
+import com.example.myapplication.utils.ItemSwipeCallBack;
+import com.example.myapplication.utils.ItemTouchHelper;
 import com.example.myapplication.utils.OnRecyclerViewItemClickListener;
 import com.example.myapplication.utils.OnStartDragListener;
 
@@ -53,8 +51,8 @@ public class PackageManagerFragment extends Fragment implements OnStartDragListe
     private PackageManager packageManager;
     private List<PackageInfo> installedPackages = new ArrayList<>();
     private List<String> pkgNameList;
-//    private RecyclerViewAdapter myAdapter;
-    private RecyclerViewItemTouchAdapter myAdapter;
+    private RecyclerViewAdapter myAdapter;
+//    private RecyclerViewItemTouchAdapter myAdapter;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.flab)
@@ -76,7 +74,8 @@ public class PackageManagerFragment extends Fragment implements OnStartDragListe
         ((MainActivity) getActivity()).getFloatingActionBar().setVisibility(View.GONE);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
-        myAdapter = new RecyclerViewItemTouchAdapter(installedPackages);
+//        myAdapter = new RecyclerViewItemTouchAdapter(installedPackages);
+        myAdapter = new RecyclerViewAdapter(installedPackages,this);
         recyclerView.setAdapter(myAdapter);
 //        recyclerView.addItemDecoration(new MyItemDecoration(getActivity(),LinearLayoutManager.VERTICAL, R.drawable.itemdecoration));
 //        recyclerView.addItemDecoration(new MyItemDecoration1(LinearLayoutManager.VERTICAL));
@@ -89,8 +88,10 @@ public class PackageManagerFragment extends Fragment implements OnStartDragListe
 
 
 //        itemTouchHelper = new ItemTouchHelper(new ItemTouchCallBack(getActivity(), myAdapter));
-        MessageItemTouchCallBack itemTouchCallBack = new MessageItemTouchCallBack(myAdapter);
-        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchCallBack);
+//        MessageItemTouchCallBack itemTouchCallBack = new MessageItemTouchCallBack(myAdapter);
+//        ItemSwipeCallBack itemTouchCallBack = new ItemSwipeCallBack(getContext(),myAdapter);
+        ItemMoveCallBack itemTouchCallBack = new ItemMoveCallBack(getContext(),myAdapter);
+        itemTouchHelper = new ItemTouchHelper(itemTouchCallBack);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         recyclerView.addOnItemTouchListener(new OnRecyclerViewItemClickListener(recyclerView) {

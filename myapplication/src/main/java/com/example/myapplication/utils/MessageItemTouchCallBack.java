@@ -53,6 +53,9 @@ public class MessageItemTouchCallBack<T> extends ItemTouchHelper.Callback {
                 viewContent.setTranslationX(dX);
             }
 
+            if (viewContent.getTranslationX() == width){
+                viewContent.setTranslationX(0);
+            }
             if (dY != 0 && dX == 0) {
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }

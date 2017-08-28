@@ -335,8 +335,8 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
                 mActivePointerId = ACTIVE_POINTER_ID_NONE;
                 if (action == MotionEvent.ACTION_UP && mItemSingleClicked == true) {
                     itemClickEvent(event);
-                    mItemSingleClicked = false;
                 }
+                mItemSingleClicked = false;
                 select(null, ACTION_STATE_IDLE);
             } else if (mActivePointerId != ACTIVE_POINTER_ID_NONE) {
                 // in a non scroll orientation, if distance change is above threshold, we
@@ -401,6 +401,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
                     if (action == MotionEvent.ACTION_UP && mItemSingleClicked == true) {
                         itemClickEvent(event);
                     }
+                    mItemSingleClicked = false;
                     select(null, ACTION_STATE_IDLE);
                     mActivePointerId = ACTIVE_POINTER_ID_NONE;
                     break;
