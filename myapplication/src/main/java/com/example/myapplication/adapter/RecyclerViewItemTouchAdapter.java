@@ -9,46 +9,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.utils.CustomItemClickListener;
+import com.example.myapplication.utils.ItemTouchHelperAdapterCallBack;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Tao.ZT.Zhang on 2016/7/27.
  */
-public class RecyclerViewItemTouchAdapter extends RecyclerView.Adapter<RecyclerViewItemTouchAdapter.SwipeViewHolder>{
+public class RecyclerViewItemTouchAdapter extends RecyclerView.Adapter<RecyclerViewItemTouchAdapter.SwipeViewHolder> implements ItemTouchHelperAdapterCallBack{
     private  List<PackageInfo> dataList;
     private CustomItemClickListener customItemClickListener;
     private static final String TAG = "RecyclerViewAdapter";
 
-    private int position;
     public RecyclerViewItemTouchAdapter(List<PackageInfo> dataList) {
 
         this.dataList = dataList;
     }
 
-
-    public void setOnCustomeItemClickListener(CustomItemClickListener customItemClickListener){
-        this.customItemClickListener = customItemClickListener;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
     @Override
     public  SwipeViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_packages1,parent,false);
-//        final MyViewHolder viewHolder = new MyViewHolder(view);
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layotu_swipe_item,parent,false);
         SwipeViewHolder viewHolder = new SwipeViewHolder(view);
         return viewHolder ;
@@ -58,31 +44,8 @@ public class RecyclerViewItemTouchAdapter extends RecyclerView.Adapter<RecyclerV
     public void onBindViewHolder(final SwipeViewHolder holder, final int position) {
         Log.i(TAG, "position: " + position);
         Log.i(TAG, "holder.hashCode(): " + holder.hashCode());
-        holder.tv_pkgName.setText(dataList.get(position).packageName);
-        holder.tv_pkgVersionCode.setText(String.valueOf(dataList.get(position).versionCode));
-        holder.tv_pkgVersionName.setText(dataList.get(position).versionName);
-//
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                setPosition(holder.getPosition());
-                return false;
-            }
-        });
-
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dataList.remove(holder.getAdapterPosition());
-            }
-        });
-
-        holder.btnRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "第" + (holder.getAdapterPosition() + 1) + "个元素正在被刷新!",Toast.LENGTH_SHORT).show();
-            }
-        });
+        PackageInfo packageInfo = dataList.get(position);
+        holder.bind(packageInfo);
     }
 
 
@@ -98,18 +61,36 @@ public class RecyclerViewItemTouchAdapter extends RecyclerView.Adapter<RecyclerV
         return dataList.size();
     }
 
+    @Override
+    public boolean onMove(RecyclerView recyclerView, int source, int dest) {
+        Collections.swap(dataList, source, dest);
+        notifyItemMoved(source, dest);
+        return false;
+    }
+
+    @Override
+    public void onSwipe(int position) {
+        dataList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    @Override
+    public RecyclerView.ViewHolder getViewHolder() {
+        return null;
+    }
 
     public static class MyViewHolder extends  RecyclerView.ViewHolder implements AdapterView.OnItemSelectedListener{
         public TextView tv_pkgName;
         public TextView tv_pkgVersionCode;
         public TextView tv_pkgVersionName;
+        public RelativeLayout viewContent;
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            viewContent = ((RelativeLayout) itemView.findViewById(R.id.itemContent));
             tv_pkgName = (TextView) itemView.findViewById(R.id.tv_pkgName);
             tv_pkgVersionCode = (TextView) itemView.findViewById(R.id.tv_VersionCode);
             tv_pkgVersionName = (TextView) itemView.findViewById(R.id.tv_VersionName);
-//            itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
@@ -119,19 +100,51 @@ public class RecyclerViewItemTouchAdapter extends RecyclerView.Adapter<RecyclerV
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
-
         }
 
+        public void bind(PackageInfo packageInfo) {
+            tv_pkgName.setText(packageInfo.packageName);
+            tv_pkgVersionCode.setText(String.valueOf(packageInfo.versionCode));
+            tv_pkgVersionName.setText(packageInfo.versionName);
+        }
     }
 
-    public static class SwipeViewHolder extends  MyViewHolder{
+    public  class SwipeViewHolder extends  MyViewHolder{
         private Button btnDelete;
         private Button btnRefresh;
-        private View itemContent;
+        public View itemBackGround;
+
+
         private SwipeViewHolder(View itemView){
             super(itemView);
+            itemBackGround = itemView.findViewById(R.id.item_background);
             this.btnDelete = (Button) itemView.findViewById(R.id.btn_delete);
             this.btnRefresh = (Button) itemView.findViewById(R.id.btn_refresh);
+        }
+
+        @Override
+        public void bind(PackageInfo packageInfo) {
+            super.bind(packageInfo);
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    doDelete(getAdapterPosition());
+                }
+
+
+            });
+
+            btnRefresh.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(v.getContext(), "第" + (getAdapterPosition() + 1) + "个元素正在被刷新!",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        private void doDelete(int position) {
+            dataList.remove(position);
+            notifyItemRemoved(position);
         }
 
     }

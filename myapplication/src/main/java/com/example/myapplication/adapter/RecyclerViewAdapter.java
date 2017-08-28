@@ -85,10 +85,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return true;
     }
 
-    @Override
-    public void onMoved(RecyclerView recyclerView, int source, int dest) {
-        notifyItemMoved(source, dest);
-    }
 
     @Override
     public void onSwipe(int position) {

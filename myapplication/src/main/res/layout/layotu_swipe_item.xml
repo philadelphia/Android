@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="left|center">
+        android:layout_gravity="right|center">
 
         <Button
             android:id="@+id/btn_delete"
@@ -29,5 +29,5 @@
     </LinearLayout>
 
 
-   <include layout="@layout/layout_packages1"></include>
+    <include layout="@layout/layout_packages1"></include>
 </FrameLayout>
