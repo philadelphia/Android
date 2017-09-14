@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -17,7 +19,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.design.widget.TabLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ShareActionProvider;
+import android.widget.Toast;
 
 import com.example.myapplication.ui.AndroidBaseFragment;
 import com.example.myapplication.ui.DatabaseFragment;
@@ -34,12 +39,12 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FragmentManager fragmentManager;
-    private  Toolbar toolbar;
-    private  FloatingActionButton fab;
-    private  TabLayout mTabLayout;
-    private  DrawerLayout drawer;
-    private  ActionBarDrawerToggle toggle;
-    private  NavigationView navigationView;
+    private Toolbar toolbar;
+    private FloatingActionButton fab;
+    private TabLayout mTabLayout;
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
+    private NavigationView navigationView;
     private ShareActionProvider mShareActionProvider;
     private Menu menu;
     private static final String TAG = "MainActivity";
@@ -62,7 +67,44 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.beginTransaction().replace(R.id.container, managerFragment).commit();
 
 
+    }
 
+    @Override
+    protected void onRestart() {
+        Log.e(TAG, "onRestart: ");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStart() {
+        Log.e(TAG, "onStart: ");
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onResume() {
+        Log.e(TAG, "onResume: ");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.e(TAG, "onPause: ");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.e(TAG, "onStop: ");
+        super.onStop();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.e(TAG, "onDestroy: ");
+        super.onDestroy();
     }
 
     public void initView() {
@@ -107,9 +149,58 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        this.menu = menu;
-        MenuItem item = menu.findItem(R.id.action_share);
-//        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+        MenuItem itemSearch = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(itemSearch);
+
+        //设置Search View一开始就是展开的
+//        searchView.setIconified(false);
+        //设置Search View一开始就是展开的,并且不能被隐藏
+//        actionView.setIconifiedByDefault(false);
+        ImageView goButton = (ImageView) searchView.findViewById(R.id.search_go_btn);
+        final ImageView voiceButton = (ImageView) searchView.findViewById(R.id.search_voice_btn);
+        searchView.setSubmitButtonEnabled(true);
+        voiceButton.setVisibility(View.VISIBLE);
+        voiceButton.setImageResource(R.mipmap.ic_settings_voice_white_24dp);
+        voiceButton.setEnabled(true);
+        //修改提交按钮的背景图片
+//        goButton.setImageResource(R.mipmap.ic_settings_voice_white_24dp);
+        goButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Test", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "onClick: " + searchView.getQuery());
+            }
+        });
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Searching....", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                Toast.makeText(MainActivity.this, "Closing....", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i(TAG, "onQueryTextSubmit: " + query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.i(TAG, "onQueryTextChange: " + newText);
+                return false;
+            }
+        });
+        searchView.setQueryHint("请输入商品名或者首字母，祝您购物愉快");
         return true;
     }
 
@@ -120,7 +211,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_settings:
                 Log.i(TAG, "add a new item: ");
 //              手动添加一项MenuItem.
-                menu.add("SD");
+
                 Log.i(TAG, "onOptionsItemSelected: action_settings");
                 return true;
 
@@ -193,60 +284,21 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public  TabLayout getmTabLayout() {
+    public TabLayout getmTabLayout() {
         return mTabLayout;
     }
 
-    public  Toolbar getToolbar() {
+    public Toolbar getToolbar() {
         return toolbar;
     }
 
-    public FloatingActionButton getFloatingActionBar(){
-        return  fab;
-    }
-
-    @Override
-    protected void onStart() {
-        Log.e(TAG, "onStart: ");
-        super.onStart();
-
-    }
-
-    @Override
-    protected void onRestart() {
-        Log.e(TAG, "onRestart: ");
-        super.onRestart();
+    public FloatingActionButton getFloatingActionBar() {
+        return fab;
     }
 
 
-    @Override
-    protected void onResume() {
-        Log.e(TAG, "onResume: ");
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        Log.e(TAG, "onPause: ");
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        Log.e(TAG, "onStop: ");
-        super.onStop();
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.e(TAG, "onDestroy: ");
-        super.onDestroy();
-    }
-
-
-    public boolean onClick(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onClick(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.action_settings:
                 Log.i(TAG, "onClick: action_settings");
                 return true;
