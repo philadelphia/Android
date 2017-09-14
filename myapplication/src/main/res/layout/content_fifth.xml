@@ -4,9 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.myapplication.ui.activity.FifthActivity"
     tools:showIn="@layout/activity_fifth">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:title="@string/net_ease"
+        app:navigationIcon="@mipmap/ic_arrow_back_white_24dp"
+        android:fitsSystemWindows="true"
+        app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
+        app:theme="@style/Base.ThemeOverlay.AppCompat.Dark">
+
+
+        <!--ToolBar实际上是一个View Group，可以在里面放置View，Text View居中显示-->
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/recommend" />
+
+    </android.support.v7.widget.Toolbar>
 
     <com.example.myapplication.customwidget.SlideView
         android:layout_width="wrap_content"
