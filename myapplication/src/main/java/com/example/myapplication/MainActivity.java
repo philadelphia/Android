@@ -214,10 +214,19 @@ public class MainActivity extends AppCompatActivity
 
                 Log.i(TAG, "onOptionsItemSelected: action_settings");
                 return true;
-
+            case R.id.action_share:
+                share();
+                return  true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void share() {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Share Test");
+        startActivity(Intent.createChooser(sharingIntent, "share"));
     }
 
 

@@ -10,8 +10,12 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private DrawerLayout mDrawerLayout;
 
@@ -39,14 +43,41 @@ public class MainActivity extends AppCompatActivity  {
         //开启计数功能
         textInputLayout.setCounterEnabled(true);
         textInputLayout.setCounterMaxLength(10);
-//        textInputLayout.getEditText().addTextChangedListener(new MinLengthTextWatcher(textInputLayout, "长度应低于6位数"));
+        textInputLayout.getEditText().addTextChangedListener(new MinLengthTextWatcher(textInputLayout, "长度应低于6位数"));
+
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        linearLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.i(TAG, "linearLayout------onTouch: " + event.getAction());
+                return false;
+            }
+        });
+        Button button = (Button) findViewById(R.id.click);
+        button.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.i(TAG, "button------onTouch: " + event.getAction());
+                return false;
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "button --- onClick: ");
+            }
+        });
+
+
+
     }
 
-    static class MinLengthTextWatcher implements TextWatcher{
+    static class MinLengthTextWatcher implements TextWatcher {
         private TextInputLayout textInputLayout;
         private String errorString;
 
-        public MinLengthTextWatcher( TextInputLayout textInputLayout,  String errorString) {
+        public MinLengthTextWatcher(TextInputLayout textInputLayout, String errorString) {
             this.textInputLayout = textInputLayout;
             this.errorString = errorString;
         }
@@ -65,10 +96,10 @@ public class MainActivity extends AppCompatActivity  {
         public void afterTextChanged(Editable s) {
             Log.i(TAG, "afterTextChanged: ");
 
-            if (textInputLayout.getEditText().getText().toString().trim().length() <= 6){
+            if (textInputLayout.getEditText().getText().toString().trim().length() <= 6) {
                 textInputLayout.setErrorEnabled(false);
 //                textInputLayout.getEditText().setFilters((new InputFilter[]{new InputFilter.LengthFilter(6)}));
-            }else {
+            } else {
                 textInputLayout.setErrorEnabled(true);
                 textInputLayout.setError(errorString);
             }

@@ -40,5 +40,5 @@ captures/
 /gradle/*
 # Keystore files
 *.jks
-*.iml
+*/*.iml
 .Android.iml
