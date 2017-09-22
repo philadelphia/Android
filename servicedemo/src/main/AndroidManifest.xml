@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".SecondActivity"></activity>
         <service
             android:name=".MyService"
             android:enabled="true"

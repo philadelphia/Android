@@ -29,7 +29,10 @@ public class MainActivity extends AppCompatActivity {
     Button btnStopService;
     @BindView(R.id.btn_unbindService)
     Button btnUnbindService;
+    @BindView(R.id.btn_secondActivity)
+    Button btnSecondActivity;
     private MyServiceConnection myServiceConnection = new MyServiceConnection();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +41,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    @OnClick({R.id.btn_startService1, R.id.btn_startService2, R.id.btn_bindService1, R.id.btn_bindService2, R.id.btn_stopService, R.id.btn_unbindService})
+    //    如果一个service已经被创建了。那再次调用Start Service不会调用Service的onCreate方法。只会调用onStartCommand方法。
+// 如果一个服务同时被start Service启动和Bind Service绑定，那么调用stop Service或者unBind都不会导致service销毁。只有当StopService和unBudnService()同时调用才会销毁服务。
+//
+    @OnClick({R.id.btn_secondActivity, R.id.btn_startService1, R.id.btn_startService2, R.id.btn_bindService1, R.id.btn_bindService2, R.id.btn_stopService, R.id.btn_unbindService})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.btn_secondActivity:
+                startActivity(new Intent(MainActivity.this, SecondActivity.class));
+                break;
             case R.id.btn_startService1:
                 startService(new Intent(MainActivity.this, MyService.class));
                 break;
@@ -64,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class MyServiceConnection implements ServiceConnection{
+
+
+    private static class MyServiceConnection implements ServiceConnection {
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {

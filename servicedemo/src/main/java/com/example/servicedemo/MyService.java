@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.Messenger;
 import android.support.annotation.IntDef;
 import android.util.Log;
 
@@ -21,8 +22,9 @@ public class MyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStartCommand: ");
-        if (startId ==2)
-            stopSelf();
+//        if (startId ==2)
+//            stopSelf();
+        Messenger
         return super.onStartCommand(intent, flags, startId);
     }
 
