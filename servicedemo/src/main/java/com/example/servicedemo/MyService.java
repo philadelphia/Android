@@ -24,7 +24,6 @@ public class MyService extends Service {
         Log.i(TAG, "onStartCommand: ");
 //        if (startId ==2)
 //            stopSelf();
-        Messenger
         return super.onStartCommand(intent, flags, startId);
     }
 
