@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,12 @@ public class BroadCastReceiverFragment extends Fragment {
     private static final String TAG = "BroadReceiverFragment";
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Log.i(TAG, "onAttach: ");
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -48,6 +55,7 @@ public class BroadCastReceiverFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView: ");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_broad_cast_receiver, container, false);
         ButterKnife.bind(this, view);
@@ -56,9 +64,40 @@ public class BroadCastReceiverFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.i(TAG, "onActivityCreated: ");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i(TAG, "onStart: ");
+    }
+
+    @Override
     public void onResume() {
+        Log.i(TAG, "onResume: ");
         super.onResume();
         getActivity().registerReceiver(myNetworkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause: ");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i(TAG, "onStop: ");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i(TAG, "onDestroyView: ");
     }
 
     @Override
@@ -66,6 +105,25 @@ public class BroadCastReceiverFragment extends Fragment {
         getActivity().unregisterReceiver(myNetworkChangeReceiver);
         Log.i(TAG, "onDestroy: ");
         super.onDestroy();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Log.i(TAG, "setUserVisibleHint: " + isVisibleToUser);
+    }
+
+    @Override
+    public boolean getUserVisibleHint() {
+        Log.i(TAG, "getUserVisibleHint: " + super.getUserVisibleHint());
+        return super.getUserVisibleHint();
+
     }
 
 

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,13 +47,15 @@ public class ServiceFragment extends Fragment {
         }
     };
 
-    public ServiceFragment() {
-
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Log.i(TAG, "onAttach: ");
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "onCreate: ");
         intent = new Intent(getContext(), MyService.class);
         super.onCreate(savedInstanceState);
     }
@@ -60,22 +63,76 @@ public class ServiceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_service, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.i(TAG, "onActivityCreated: ");
+    }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onStart() {
+        super.onStart();
+        Log.i(TAG, "onStart: ");
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: ");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause: ");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i(TAG, "onStop: ");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i(TAG, "onDestroyView: ");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "onDestroy: ");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Log.i(TAG, "setUserVisibleHint: " + isVisibleToUser);
+    }
+
+    @Override
+    public boolean getUserVisibleHint() {
+        Log.i(TAG, "getUserVisibleHint: " + super.getUserVisibleHint());
+        return super.getUserVisibleHint();
+
+    }
+
+    public ServiceFragment() {
+
+    }
+
 
     @OnClick({R.id.btn_startService, R.id.btn_stopService, R.id.btn_bindService, R.id.btn_unbindService})
     public void onClick(View view) {
@@ -98,16 +155,6 @@ public class ServiceFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.i(TAG, "onStop: ");
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG, "onDestroy: ");
-    }
 }
 

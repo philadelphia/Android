@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.fragment.manager;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,13 +22,38 @@ public class ActivityManagerFragment extends Fragment implements View.OnClickLis
     private Button btn_ScrollTo;
 
 
+    @Override
+    public void onAttach(Context context) {
+        Log.i(TAG, "onAttach: ");
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onCreate: ");
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       View view =  inflater.inflate(R.layout.fragment_activity_manager, null);
+        View view = inflater.inflate(R.layout.fragment_activity_manager, null);
         initView(view);
         return view;
 
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onActivityCreated: ");
+        super.onActivityCreated(savedInstanceState);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: ");
     }
 
     private void initView(View view) {
@@ -38,10 +64,9 @@ public class ActivityManagerFragment extends Fragment implements View.OnClickLis
     }
 
 
-
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_testBy:
                 testScrollBy();
                 break;
@@ -52,7 +77,6 @@ public class ActivityManagerFragment extends Fragment implements View.OnClickLis
                 break;
         }
     }
-
 
 
     private void testScrollBy() {
@@ -70,7 +94,7 @@ public class ActivityManagerFragment extends Fragment implements View.OnClickLis
         btn_ScrollTo.getLocationOnScreen(locations);
         Log.i(TAG, "testScroll: locations x--- " + locations[0] + "\t" + "y--- " + locations[1]);
         Log.i(TAG, "testScroll: rawx" + btn_ScrollTo.getRight());
-        btn_ScrollTo.scrollTo(-10,-10);
+        btn_ScrollTo.scrollTo(-10, -10);
         Log.i(TAG, "testScroll: margin left " + btn_ScrollTo.getLeft());
 
     }

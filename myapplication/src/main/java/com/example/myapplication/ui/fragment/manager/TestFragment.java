@@ -1,9 +1,11 @@
 package com.example.myapplication.ui.fragment.manager;
 
 
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.test.LoaderTestCase;
 import android.text.LoginFilter;
@@ -40,6 +42,18 @@ public class TestFragment extends Fragment implements View.OnTouchListener,AbsLi
     private int lastVisibleItem;
 
     @Override
+    public void onAttach(Context context) {
+        Log.i(TAG, "onAttach: ");
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onCreate: ");
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -53,6 +67,19 @@ public class TestFragment extends Fragment implements View.OnTouchListener,AbsLi
         registerForContextMenu(listView);
         initDatas();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: ");
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unregisterForContextMenu(listView);
     }
 
     private void initView(View view) {
@@ -76,12 +103,6 @@ public class TestFragment extends Fragment implements View.OnTouchListener,AbsLi
 //    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 //        Toast.makeText(getContext(), "第" + position + "item was clicked", Toast.LENGTH_SHORT).show();
 //    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -113,12 +134,6 @@ public class TestFragment extends Fragment implements View.OnTouchListener,AbsLi
         myAdapter.notifyDataSetChanged();
     }
 
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unregisterForContextMenu(listView);
-    }
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {

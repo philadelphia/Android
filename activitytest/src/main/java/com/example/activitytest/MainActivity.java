@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,6 +18,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btn_secondActivity)
     Button btnSecondActivity;
     private static final String TAG = "MainActivity";
+    @BindView(R.id.img)
+    ImageView img;
+    @BindView(R.id.tv_scaleType)
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +29,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+//       img.setScaleType(ImageView.ScaleType.CENTER);
+//       img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//       img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+//       img.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//       img.setScaleType(ImageView.ScaleType.FIT_START);
+//       img.setScaleType(ImageView.ScaleType.FIT_END);
+//       img.setScaleType(ImageView.ScaleType.FIT_XY);
+       img.setScaleType(ImageView.ScaleType.MATRIX);
+
+        textView.setText("Scale Type==" + img.getScaleType());
     }
 
     @Override
@@ -41,6 +57,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         Log.i(TAG, "onResume: ");
         super.onResume();
+        int heightPixels = getResources().getDisplayMetrics().heightPixels;
+        int widthPixels = getResources().getDisplayMetrics().widthPixels;
+        float xdpi = getResources().getDisplayMetrics().xdpi;
+        float ydpi = getResources().getDisplayMetrics().ydpi;
+        Log.i(TAG, "onResume:heightPixels== " + heightPixels);
+        Log.i(TAG, "onResume:widthPixels== " + widthPixels);
+        Log.i(TAG, "onResume:xdpi== " + xdpi);
+        Log.i(TAG, "onResume:ydpi== " + ydpi);
+
+        int inTargetDensity = getResources().getDisplayMetrics().densityDpi;
+        Log.i(TAG, "onResume:inTargetDensity ==  " + inTargetDensity);
+
+
+        float density = getResources().getDisplayMetrics().density;
+        Log.i(TAG, "onResume:density ==  " + density);
     }
 
     @Override
