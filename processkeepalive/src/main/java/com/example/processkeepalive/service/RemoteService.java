@@ -56,6 +56,11 @@ public class RemoteService extends Service {
         public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
 
         }
+
+        @Override
+        public String getName() throws RemoteException {
+            return    "i am remote Service";
+        }
     }
 
     class  RemoteServiceConnection implements ServiceConnection{

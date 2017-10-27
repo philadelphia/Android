@@ -55,13 +55,25 @@ public class LocalService extends Service {
         public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
 
         }
+
+        @Override
+        public String getName() throws RemoteException {
+            return "i am localService";
+        }
     }
 
     class MyServiceConnection implements ServiceConnection{
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            Log.i(TAG, "onServiceConnected: 远程服务连接上了");
+            String serviceName = null;
+            try {
+                serviceName =   IMyAidlInterface.Stub.asInterface(iBinder).getName();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+//            IMyAidlInterface.Stub.asInterface(iBinder);
+            Log.i(TAG, serviceName + ":----onServiceConneted: 远程服务连接上了");
 
         }
 

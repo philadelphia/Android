@@ -24,11 +24,15 @@
         <service
             android:name=".service.LocalService"
             android:enabled="true"
+            android:label="Local"
+            android:icon="@android:drawable/ic_delete"
             android:exported="true" />
         <service
             android:name=".service.RemoteService"
             android:process=":remote"
             android:enabled="true"
+            android:icon="@android:drawable/ic_dialog_map"
+            android:label="Remote"
             android:exported="true"></service>
     </application>
 
