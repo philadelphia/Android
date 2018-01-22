@@ -1,5 +1,6 @@
 package com.example.androidtoucheventdispatchdemo.widget;
 
+<<<<<<< HEAD
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -8,11 +9,14 @@ import android.widget.LinearLayout;
 
 import com.example.androidtoucheventdispatchdemo.LogUtils;
 
+=======
+>>>>>>> test
 /**
  * Author:  ZhangTao
  * Date: 2018/1/12.
  */
 
+<<<<<<< HEAD
 public class MyViewGroup  extends LinearLayout{
     private static final String TAG = "MyViewGroup";
     public MyViewGroup(Context context) {
@@ -55,4 +59,7 @@ public class MyViewGroup  extends LinearLayout{
         LogUtils.i(TAG, "onTouchEvent: " + MotionEvent.actionToString(event.getAction()));
         return super.onTouchEvent(event);
     }
+=======
+public class MyViewGroup {
+>>>>>>> test
 }

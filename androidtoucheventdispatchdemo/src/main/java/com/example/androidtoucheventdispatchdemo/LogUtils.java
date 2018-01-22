@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package com.example.androidtoucheventdispatchdemo;
+=======
+package com.eallcn.rentcustomer.util;
+>>>>>>> test
 
 import android.util.Log;
 

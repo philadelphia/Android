@@ -1,5 +1,6 @@
 package com.example.androidtoucheventdispatchdemo.widget;
 
+<<<<<<< HEAD
 import android.content.Context;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
@@ -8,11 +9,14 @@ import android.widget.Button;
 
 import com.example.androidtoucheventdispatchdemo.LogUtils;
 
+=======
+>>>>>>> test
 /**
  * Author:  ZhangTao
  * Date: 2018/1/12.
  */
 
+<<<<<<< HEAD
 public class MyButton extends AppCompatButton {
     private static final String TAG = "MyButton";
     public MyButton(Context context) {
@@ -38,4 +42,7 @@ public class MyButton extends AppCompatButton {
         LogUtils.i(TAG, "onTouchEvent: " + MotionEvent.actionToString(event.getAction()));
         return super.onTouchEvent(event);
     }
+=======
+public class MyButton {
+>>>>>>> test
 }
