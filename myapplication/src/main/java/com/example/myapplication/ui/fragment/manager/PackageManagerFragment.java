@@ -34,6 +34,7 @@ import com.example.myapplication.ui.activity.ThirdActivity;
 import com.example.myapplication.utils.ItemMoveCallBack;
 import com.example.myapplication.utils.ItemSwipeCallBack;
 import com.example.myapplication.utils.ItemTouchHelper;
+import com.example.myapplication.utils.MessageItemTouchCallBack;
 import com.example.myapplication.utils.OnRecyclerViewItemClickListener;
 import com.example.myapplication.utils.OnStartDragListener;
 
