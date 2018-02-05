@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -41,7 +42,7 @@ public class RevealBackGround extends View {
     private void init() {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(context.getColor(R.color.colorPrimary));
+        paint.setColor(ContextCompat.getColor(context, R.color.colorPrimary));
 //        paint.setColor(Color.GREEN);
     }
 

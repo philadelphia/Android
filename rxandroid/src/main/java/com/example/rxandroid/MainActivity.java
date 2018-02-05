@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.observables.GroupedObservable;
 
@@ -98,31 +99,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void testMap() {
         Integer[] integers = new Integer[]{1, 3, 5, 7, 8, 9, 2, 4, 6};
         Observable.from(integers)
+                .map(new Func1<Integer, Integer>() {
+                    @Override
+                    public Integer call(Integer integer) {
+                        Log.i(TAG, integer.intValue() + "hashCode is ==" + integer.hashCode());
+                        return integer;
+                    }
+                })
                 .map(new Func1<Integer, Boolean>() {
                     @Override
                     public Boolean call(Integer integers) {
                         Log.i(TAG, "call: " + integers);
                         return integers % 2 != 0; //奇数位true，偶数位false。
                     }
-                }).subscribe(new Subscriber<Boolean>() {
-            @Override
-            public void onCompleted() {
-                Log.i(TAG, "onCompleted: ");
-            }
+                })
+                .subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.i(TAG, "onCompleted: ");
+                    }
 
-            @Override
-            public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
 
-            }
+                    }
 
-            @Override
-            public void onNext(Boolean aBoolean) {
-                Log.i(TAG, "onNext: " + aBoolean);
-            }
-        });
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        Log.i(TAG, "onNext: " + aBoolean);
+                    }
+                });
     }
 
-    public void testFlatMap(){
+    public void testFlatMap() {
         List<Course> courses = new ArrayList<>();
         courses.add(new Course("Chinese", 88));
         courses.add(new Course("English", 88));
@@ -130,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         List<Student> students = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            Student student = new Student(i+1,courses,"xiaoming");
+            Student student = new Student(i + 1, courses, "xiaoming");
             students.add(student);
         }
 
@@ -142,29 +151,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.i(TAG, "call: " + student.getName());
                 return Observable.from(student.getCourseList());
             }
-        }).subscribe(new Subscriber<Course>() {
-            @Override
-            public void onCompleted() {
-                Log.i(TAG, "onCompleted: ");
-            }
+        })
+                .doOnNext(new Action1<Course>() {
+                    @Override
+                    public void call(Course course) {
+                        Log.i(TAG, "call: " + course.toString());
 
-            @Override
-            public void onError(Throwable e) {
+                    }
+                })
+                .subscribe(new Subscriber<Course>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.i(TAG, "onCompleted: ");
+                    }
 
-            }
+                    @Override
+                    public void onError(Throwable e) {
 
-            @Override
-            public void onNext(Course course) {
-                Log.i(TAG, "onNext: " + course.toString());
-            }
-        });
+                    }
+
+                    @Override
+                    public void onNext(Course course) {
+                        Log.i(TAG, "onNext: " + course.toString());
+                    }
+                });
 
 
     }
 
-    
-    public void testGroupBy(){
-        Observable.range(1,10).groupBy(new Func1<Integer, Boolean>() {
+
+    public void testGroupBy() {
+        Observable.range(1, 10).groupBy(new Func1<Integer, Boolean>() {
             @Override
             public Boolean call(Integer integer) {
                 return integer % 2 == 0;
@@ -203,8 +220,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    public void testFilter(){
-        Observable.range(1,10).filter(new Func1<Integer, Boolean>() {
+    public void testFilter() {
+        Observable.range(1, 10).filter(new Func1<Integer, Boolean>() {
             @Override
             public Boolean call(Integer integer) {
                 return integer % 2 == 0;
@@ -227,33 +244,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    public  <T> void testOFType(Class<T> t){
-            Observable.just(0,1,"xf","df",3,4,6,"xu","tao",34.03f)
-                    .ofType(t)
-                    .subscribe(new Subscriber<T>() {
-                        @Override
-                        public void onCompleted() {
+    public <T> void testOFType(Class<T> t) {
+        Observable.just(0, 1, "xf", "df", 3, 4, 6, "xu", "tao", 34.03f)
+                .ofType(t)
+                .subscribe(new Subscriber<T>() {
+                    @Override
+                    public void onCompleted() {
 
-                        }
+                    }
 
-                        @Override
-                        public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onNext(T t) {
-                            Log.i(TAG, "onNext: " + t);
-                        }
-                    });
-
-
+                    @Override
+                    public void onNext(T t) {
+                        Log.i(TAG, "onNext: " + t);
+                    }
+                });
 
 
     }
 
 
-    @OnClick({R.id.btn_test, R.id.btn_testMap, R.id.btn_testFlatMap, R.id.btn_testFilter,R.id.btn_testGroupBy,R.id.btn_testOFType})
+    @OnClick({R.id.btn_test, R.id.btn_testMap, R.id.btn_testFlatMap, R.id.btn_testFilter, R.id.btn_testGroupBy, R.id.btn_testOFType})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_test:

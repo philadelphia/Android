@@ -57,7 +57,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    onStartDragListener.startDrag(holder);
+                    if (onStartDragListener != null) {
+                        onStartDragListener.startDrag(holder);
+                    }
                 }
 
                 return false;
