@@ -20,6 +20,9 @@ import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
 import com.example.myapplication.customwidget.RevealBackGround;
 import com.example.myapplication.utils.MyItemDecoration;
+import com.example.myapplication.utils.MyItemDecoration1;
+import com.example.myapplication.utils.MyItemDecoration2;
+import com.example.myapplication.utils.TimeLineItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +103,7 @@ public class ThirdActivity extends AppCompatActivity implements RevealBackGround
             recyclerView.setVisibility(View.VISIBLE);
             adapter = new RecyclerViewAdapter(dataList, null);
             recyclerView.addItemDecoration(new MyItemDecoration(this, MyItemDecoration.VERTICAL_LIST));
+//            recyclerView.addItemDecoration(new TimeLineItemDecoration());
             recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             recyclerView.setAdapter(adapter);
             animatorOtherView();
