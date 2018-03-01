@@ -103,18 +103,13 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".ui.activity.FifthActivity"
-<<<<<<< Updated upstream
             android:label="@string/title_activity_fifth"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
-        <activity android:name=".ui.activity.NetworkActivity">
+        <activity android:name=".ui.activity.NetworkActivity"/>
 
-        </activity>
-=======
-            android:theme="@style/AppTheme"></activity>
->>>>>>> Stashed changes
     </application>
 
 </manifest>
