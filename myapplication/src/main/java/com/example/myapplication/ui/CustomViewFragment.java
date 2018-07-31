@@ -23,6 +23,7 @@ import com.example.myapplication.ui.fragment.customeview.PathFragment;
 import com.example.myapplication.ui.fragment.customeview.PieChartViewFragment;
 import com.example.myapplication.ui.fragment.customeview.PointFragment;
 import com.example.myapplication.ui.fragment.customeview.RectFragment;
+import com.example.myapplication.ui.fragment.customeview.ShapeFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,8 @@ public class CustomViewFragment extends Fragment {
 
     private static final String TAG = "CustomViewFragment";
     private ViewPager mViewPager;
-    private final String[] mTabTitles = {"Color", "Circle", "Rect", "Point", "Line", "Oval", "Arc", "Histogram", "PeiChart", "Path"};
+//    private final String[] mTabTitles = {"Color", "Circle", "Rect", "Point", "Line", "Oval", "Arc", "Histogram", "PeiChart", "Path"};
+    private final String[] mTabTitles = {"Color", "Circle", "Rect", "Shape"};
     private List<Fragment> mTabFragments ;
     private MyViewPagerAdapter mPagerAdapter;
     private TabLayout mTablayout;
@@ -64,13 +66,14 @@ public class CustomViewFragment extends Fragment {
         mTabFragments.add(new ColorFragment());
         mTabFragments.add(new CircleFragment());
         mTabFragments.add(new RectFragment());
-        mTabFragments.add(new PointFragment());
-        mTabFragments.add(new LineFragment());
-        mTabFragments.add(new OvalFragment());
-        mTabFragments.add(new ArcFragment());
-        mTabFragments.add(new HistoGramFragment());
-        mTabFragments.add(new PieChartViewFragment());
-        mTabFragments.add(new PathFragment());
+        mTabFragments.add(new ShapeFragment());
+//        mTabFragments.add(new PointFragment());
+//        mTabFragments.add(new LineFragment());
+//        mTabFragments.add(new OvalFragment());
+//        mTabFragments.add(new ArcFragment());
+//        mTabFragments.add(new HistoGramFragment());
+//        mTabFragments.add(new PieChartViewFragment());
+//        mTabFragments.add(new PathFragment());
         mPagerAdapter = new MyViewPagerAdapter(this.getChildFragmentManager(), mTabFragments, mTabTitles);
         mViewPager.setAdapter (mPagerAdapter);
         mTablayout.setupWithViewPager (mViewPager);

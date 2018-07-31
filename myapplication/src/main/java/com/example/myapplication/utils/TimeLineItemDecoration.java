@@ -68,7 +68,9 @@ public class TimeLineItemDecoration extends RecyclerView.ItemDecoration {
             float upLineTopY= deiverTop;
             float upLineBottomX = centralX;
             float upLineBottomY = centralY - mRadius;
-            c.drawLine(upLineTopX, upLineTopY, upLineBottomX, upLineBottomY, paint);
+            if (index != 0){
+                c.drawLine(upLineTopX, upLineTopY, upLineBottomX, upLineBottomY, paint);
+            }
 
             paint.reset();
             paint.setAntiAlias(true);

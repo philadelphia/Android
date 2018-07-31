@@ -100,7 +100,7 @@
         <!-- LoginActivity -->
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:label="@string/title_activity_login" />T
         <activity
             android:name=".ui.activity.FifthActivity"
             android:label="@string/title_activity_fifth"

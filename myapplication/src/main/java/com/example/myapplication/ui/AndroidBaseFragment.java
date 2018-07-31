@@ -54,6 +54,7 @@ public class AndroidBaseFragment extends android.support.v4.app.Fragment {
         mTablayout = ((MainActivity) getActivity()).getmTabLayout();
         mTablayout.setVisibility(View.VISIBLE);
         mTablayout.setTabMode (TabLayout.MODE_FIXED);
+//        mTablayout.addTab(new TabLayout.Tab());
     }
 
     private void setUpViewPagerAndTabs (){

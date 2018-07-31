@@ -27,11 +27,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-<<<<<<< HEAD
     <string name="title_activity_fifth">fifth Activity</string>
     <string name="net_ease">网易严选</string>
     <string name="recommend">今日推荐</string>
-=======
-    <string name="title_activity_fifth">fifthActivity</string>
->>>>>>> test
 </resources>

@@ -102,8 +102,8 @@ public class ThirdActivity extends AppCompatActivity implements RevealBackGround
             toolbar.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
             adapter = new RecyclerViewAdapter(dataList, null);
-            recyclerView.addItemDecoration(new MyItemDecoration(this, MyItemDecoration.VERTICAL_LIST));
-//            recyclerView.addItemDecoration(new TimeLineItemDecoration());
+//            recyclerView.addItemDecoration(new MyItemDecoration(this, MyItemDecoration.VERTICAL_LIST));
+            recyclerView.addItemDecoration(new TimeLineItemDecoration());
             recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             recyclerView.setAdapter(adapter);
             animatorOtherView();
