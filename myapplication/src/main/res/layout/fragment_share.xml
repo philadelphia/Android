@@ -25,4 +25,12 @@
         android:gravity="center"
         android:text="hahkgkhahgakhg"
         android:textSize="29sp" />
+    <Button
+        android:id="@+id/btn_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="test"
+        android:textSize="29sp" />
+
 </LinearLayout>
