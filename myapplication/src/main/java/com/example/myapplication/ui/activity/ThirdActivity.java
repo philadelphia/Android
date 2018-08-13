@@ -19,9 +19,6 @@ import android.view.animation.Interpolator;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
 import com.example.myapplication.customwidget.RevealBackGround;
-import com.example.myapplication.utils.MyItemDecoration;
-import com.example.myapplication.utils.MyItemDecoration1;
-import com.example.myapplication.utils.MyItemDecoration2;
 import com.example.myapplication.utils.TimeLineItemDecoration;
 
 import java.util.ArrayList;
@@ -76,7 +73,7 @@ public class ThirdActivity extends AppCompatActivity implements RevealBackGround
             @Override
             public boolean onPreDraw() {
                 revealBackground.getViewTreeObserver().removeOnPreDrawListener(this);
-                revealBackground.startbackGroundAnimation(location);
+                revealBackground.startBackgroundAnimation(location);
                 return true;
             }
         });

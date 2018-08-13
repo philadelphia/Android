@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -56,7 +55,7 @@ public class RevealBackGround extends View {
     }
 
     //开启动画
-    public void startbackGroundAnimation(int[] location) {
+    public void startBackgroundAnimation(int[] location) {
         onStateChangedListener.onStateChange(STATE_NOT_STARTED);
         startLocationX = location[0];
         startLocationY = location[1];
