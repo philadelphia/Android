@@ -1,8 +1,9 @@
 package com.example.myapplication.ui.fragment.widget;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,28 +18,64 @@ import android.widget.Toast;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.base.BaseFragment;
+import com.example.myapplication.ui.activity.DialogActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * @author Tao.ZT.Zhang
  */
 
-public class AndroidBaseViewFragment extends Fragment implements View.OnClickListener {
+public class AndroidBaseViewFragment extends BaseFragment {
     private static final String TAG = "AndroidBaseViewFragment";
+    @BindView(R.id.edt1)
+    EditText edt1;
+    @BindView(R.id.edt2)
+    EditText edt2;
+    @BindView(R.id.btn_showKeyBoard)
+    Button btnShowKeyBoard;
+    @BindView(R.id.btn_showDialog)
+    Button btnShowDialog;
+    @BindView(R.id.btn_showDialogFragment)
+    Button btnShowDialogFragment;
+    @BindView(R.id.btn_showDialogActivity)
+    Button btnShowDialogActivity;
+    @BindView(R.id.btn_popupWindow)
+    Button btnPopupWindow;
+    @BindView(R.id.btn_share)
+    Button btnShare;
+    @BindView(R.id.btn_setAlpha)
+    Button btnSetAlpha;
+//    @BindView(R.id.tv_cancel)
+//    Button btnCancel;
+    @BindView(R.id.img_beauty)
+    ImageView imgBeauty;
+    @BindView(R.id.img_beauty1)
+    ImageView imgBeauty1;
+    @BindView(R.id.img_beauty2)
+    ImageView imgBeauty2;
+    @BindView(R.id.img_beauty3)
+    ImageView imgBeauty3;
+    @BindView(R.id.img_beauty5)
+    ImageView imgBeauty5;
+    @BindView(R.id.img_beauty6)
+    ImageView imgBeauty6;
+    @BindView(R.id.img_beauty7)
+    ImageView imgBeauty7;
+    @BindView(R.id.img_beauty8)
+    ImageView imgBeauty8;
     private PopupWindow popupWindow;
     private TextView tvExit, tvSet, tvCancel;
     private View rootView;
     TextView tv1;
     TextView tv2;
-    EditText edt1;
-    EditText edt2;
-    Button btnShowDialog;
-    Button btnPopupWindow;
+
     private ImageView img;
-    private Button btnSetAlpha;
+
 
     private long mExitTime = 0;
     private View view;
@@ -46,13 +83,18 @@ public class AndroidBaseViewFragment extends Fragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView: ");
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         ((MainActivity) getActivity()).getmTabLayout().setVisibility(View.GONE);
-        view = inflater.inflate(R.layout.fragment_android_base_view, container, false);
-//        view = inflater.inflate(R.layout.fragment_android_base_view, null);
-        Log.i(TAG, "onCreateView: view " + view.getClass().getSimpleName());
-        initView(view);
-        return view;
+    }
+
+    @Override
+    protected int getLayoutID() {
+        return R.layout.fragment_android_base_view;
     }
 
 
@@ -62,42 +104,6 @@ public class AndroidBaseViewFragment extends Fragment implements View.OnClickLis
         super.onResume();
     }
 
-    private void initView(View view) {
-        tv1  = (TextView) view.findViewById(R.id.edt1);
-        btnPopupWindow = (Button) view.findViewById(R.id.btn_popupWindow);
-        btnPopupWindow.setOnClickListener(this);
-        img = (ImageView) view.findViewById(R.id.img_beauty);
-        btnSetAlpha = (Button) view.findViewById(R.id.btn_setAlpha);
-        btnSetAlpha.setOnClickListener(this);
-    }
-
-    public void onClick(View view) {
-        switch (view.getId()) {
-
-            case R.id.btn_showDialog:
-                break;
-
-            case R.id.btn_popupWindow:
-                showPopUpWindow();
-                break;
-
-            case R.id.tv_cancel:
-                popupWindow.dismiss();//关闭PopupWindow
-                break;
-
-            case R.id.tv_set:
-                Toast.makeText(getContext(), "设置", Toast.LENGTH_SHORT).show();
-                popupWindow.dismiss();
-                break;
-
-            case R.id.tv_exit:
-                getActivity().finish();
-                break;
-            case R.id.btn_setAlpha:
-                setAlpha();
-                break;
-        }
-    }
 
     private void setAlpha() {
         img.setAlpha(Float.parseFloat(tv1.getText().toString()));
@@ -122,9 +128,7 @@ public class AndroidBaseViewFragment extends Fragment implements View.OnClickLis
         tvSet = (TextView) view.findViewById(R.id.tv_set);
         tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
         tvExit = (TextView) view.findViewById(R.id.tv_exit);//在view对象中通过findViewById找到TextView控件
-        tvSet.setOnClickListener(this);//注册点击监听
-        tvCancel.setOnClickListener(this);//注册点击监听
-        tvExit.setOnClickListener(this);//注册点击监听
+
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -141,5 +145,46 @@ public class AndroidBaseViewFragment extends Fragment implements View.OnClickLis
         }
     }
 
+    private void showDialog() {
+        Intent intent = new Intent(mActivity, DialogActivity.class);
+        startActivity(intent);
+    }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+    }
+
+    @OnClick({R.id.btn_showKeyBoard, R.id.btn_showDialog, R.id.btn_showDialogFragment, R.id.btn_showDialogActivity, R.id.btn_popupWindow, R.id.btn_share, R.id.btn_setAlpha})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_showKeyBoard:
+                break;
+            case R.id.btn_showDialog:
+                showDialog();
+                break;
+            case R.id.btn_showDialogFragment:
+                break;
+            case R.id.btn_showDialogActivity:
+                break;
+            case R.id.btn_popupWindow:
+                showPopUpWindow();
+                break;
+            case R.id.btn_share:
+                break;
+
+            case R.id.tv_exit:
+                getActivity().finish();
+                break;
+            case R.id.btn_setAlpha:
+                setAlpha();
+                break;
+
+//            case R.id.tv_cancel:
+//                popupWindow.dismiss();//关闭PopupWindow
+//                break;
+        }
+    }
 }
