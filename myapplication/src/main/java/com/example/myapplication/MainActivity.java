@@ -135,7 +135,12 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
+                int[] location = new int[2];
+                fab.getLocationInWindow(location);
+
+//                location[0] += location[0] + flb.getWidth() / 2;
                 Intent intent = new Intent(MainActivity.this, ThirdActivity.class);
+                intent.putExtra("location", location);
                 startActivity(intent);
             }
         });
