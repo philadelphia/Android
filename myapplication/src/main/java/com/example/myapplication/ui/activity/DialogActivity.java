@@ -46,9 +46,7 @@ public class DialogActivity extends BaseActivity {
         progressDialog.setTitle("标题"); // 设置标题
         progressDialog.setMessage("加载中..."); // 设置消息
         progressDialog.setIndeterminate(true);
-        progressDialog.setIndeterminateDrawable(getDrawable(R.drawable.ic_launcher));
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.show(); // 显示进度条
-
     }
 }

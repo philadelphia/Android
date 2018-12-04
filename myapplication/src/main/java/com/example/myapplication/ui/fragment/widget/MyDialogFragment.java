@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 
@@ -28,17 +29,16 @@ public class MyDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view);
         builder.setTitle("Title")
-                .setPositiveButton("fire", new DialogInterface.OnClickListener() {
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // FIRE ZE MISSILES!
+                        Toast.makeText(MyDialogFragment.this.getContext(), "你选择了确定", Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
+                        Toast.makeText(MyDialogFragment.this.getContext(), "你选择了NO", Toast.LENGTH_SHORT).show();
                     }
                 });
-        // Create the AlertDialog object and return it
         return builder.create();
 
     }
@@ -50,4 +50,11 @@ public class MyDialogFragment extends DialogFragment {
         return inflater.inflate(R.layout.fragment_dialog, container);
     }
 
+
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        Toast.makeText(this.getActivity(), "dismissing", Toast.LENGTH_SHORT);
+    }
 }

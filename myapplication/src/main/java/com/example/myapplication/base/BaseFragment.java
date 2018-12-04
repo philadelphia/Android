@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,11 @@ public abstract class BaseFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -76,6 +82,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected abstract int getLayoutID();
+    protected abstract void initView();
 
     @Override
     public void onDestroyView() {

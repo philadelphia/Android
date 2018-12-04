@@ -17,6 +17,7 @@ import com.example.myapplication.ui.fragment.other.CameraFragment;
 import com.example.myapplication.ui.fragment.other.CustomViewFragment;
 import com.example.myapplication.ui.fragment.other.MultiMediaFragment;
 import com.example.myapplication.ui.fragment.other.NotificationFragment;
+import com.example.myapplication.ui.fragment.other.RxJavaFragment;
 import com.example.myapplication.ui.fragment.other.WebViewFragment;
 import com.example.myapplication.ui.fragment.other.WindowFragment;
 
@@ -28,7 +29,7 @@ public class OtherFragment extends Fragment  {
     private final String TAG = OtherFragment.class.getSimpleName();
     private ViewPager mViewPager;
     private final String[] mTabTitles = {"Window", "Notification", "Animation", "WebView" ,
-            "CustomView",
+            "RxJava",
 //            "Media"
 };
     private List<Fragment> mTabFragments ;
@@ -65,8 +66,9 @@ public class OtherFragment extends Fragment  {
         mTabFragments.add(new NotificationFragment());
         mTabFragments.add(new AnimationFragment());
         mTabFragments.add(new WebViewFragment());
+        mTabFragments.add(new RxJavaFragment());
 //        mTabFragments.add(new CameraFragment());
-        mTabFragments.add(new CustomViewFragment());
+//        mTabFragments.add(new CustomViewFragment());
 //        mTabFragments.add(new MultiMediaFragment());
         mPagerAdapter = new MyViewPagerAdapter (this.getChildFragmentManager(), mTabFragments, mTabTitles);
         mViewPager.setAdapter (mPagerAdapter);

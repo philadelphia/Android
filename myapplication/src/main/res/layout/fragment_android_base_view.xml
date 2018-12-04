@@ -1,7 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:cursorVisible="true"
             android:drawableBottom="#00ff00"
             android:hint="please input something"
-            android:imeOptions="actionDone"/>
+            android:imeOptions="actionDone" />
 
         <EditText
             android:id="@+id/edt2"
@@ -27,7 +27,7 @@
             android:drawablePadding="@dimen/activity_horizontal_margin"
             android:hint="please input something  "
             android:imeOptions="actionDone"
-            android:inputType="textCapSentences"/>
+            android:inputType="textCapSentences" />
 
         <Button
             android:id="@+id/btn_showKeyBoard"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="show KeyBoard"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_showDialog"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="show Dialog"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_showDialogFragment"
@@ -51,7 +51,31 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Dialog Fragment"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_showBottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="BottomSheet"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_showBottomSheetDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="BottomSheetDialog"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_showBottomSheetDialogFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="BottomSheetDialogFragment"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_showDialogActivity"
@@ -59,7 +83,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Dialog Activity"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_popupWindow"
@@ -67,7 +91,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="popupWindow Test"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_share"
@@ -75,7 +99,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="shareTest"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_setAlpha"
@@ -83,35 +107,44 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="setting Alpha"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
+
+        <Switch
+            android:id="@+id/bt_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:thumb="@drawable/ic_menu_camera"
+            android:track="@drawable/bg_rectangle"/>
+
 
         <ImageView
             android:id="@+id/img_beauty"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:scaleType="center"
-            android:src="@mipmap/ic_beauty"/>
+            android:src="@mipmap/ic_beauty" />
 
         <ImageView
             android:id="@+id/img_beauty1"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_beauty"/>
+            android:src="@mipmap/ic_beauty" />
 
         <ImageView
             android:id="@+id/img_beauty2"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_beauty"/>
+            android:src="@mipmap/ic_beauty" />
 
         <ImageView
             android:id="@+id/img_beauty3"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:scaleType="fitCenter"
-            android:src="@mipmap/ic_beauty"/>
+            android:src="@mipmap/ic_beauty" />
 
 
         <ImageView
@@ -119,14 +152,14 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:scaleType="fitStart"
-            android:src="@mipmap/ic_beauty"/>
+            android:src="@mipmap/ic_beauty" />
 
         <ImageView
             android:id="@+id/img_beauty6"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:scaleType="fitEnd"
-            android:src="@mipmap/ic_beauty"/>
+            android:src="@mipmap/ic_beauty" />
 
 
         <ImageView
@@ -134,14 +167,14 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:scaleType="fitXY"
-            android:src="@mipmap/ic_beauty"/>
+            android:src="@mipmap/ic_beauty" />
 
         <ImageView
             android:id="@+id/img_beauty8"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:scaleType="matrix"
-            android:src="@mipmap/ic_beauty"/>
+            android:src="@mipmap/ic_beauty" />
 
     </LinearLayout>
 </ScrollView>

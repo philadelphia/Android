@@ -29,7 +29,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|screenSize|locale|layoutDirection"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -48,7 +47,6 @@
         <!-- Dialog Activity -->
         <activity
             android:name=".ui.activity.DialogActivity"
-            android:configChanges="orientation|screenSize|locale"
             android:excludeFromRecents="true"
             android:label="DialogActivity"
             android:launchMode="singleTask"
@@ -100,10 +98,7 @@
             android:label="@string/title_activity_fifth"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ui.activity.NetworkActivity" />
-        <activity
-            android:name=".base.BaseActivity"
-            android:label="@string/title_activity_base"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>

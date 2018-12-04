@@ -4,15 +4,18 @@ package com.example.myapplication.ui.fragment.widget;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,8 +53,10 @@ public class AndroidBaseViewFragment extends BaseFragment {
     Button btnShare;
     @BindView(R.id.btn_setAlpha)
     Button btnSetAlpha;
-//    @BindView(R.id.tv_cancel)
+    //    @BindView(R.id.tv_cancel)
 //    Button btnCancel;
+    @BindView(R.id.bt_switch)
+    Switch btnSwitch;
     @BindView(R.id.img_beauty)
     ImageView imgBeauty;
     @BindView(R.id.img_beauty1)
@@ -68,6 +73,13 @@ public class AndroidBaseViewFragment extends BaseFragment {
     ImageView imgBeauty7;
     @BindView(R.id.img_beauty8)
     ImageView imgBeauty8;
+    @BindView(R.id.btn_showBottomSheet)
+    Button btnShowBottomSheet;
+    @BindView(R.id.btn_showBottomSheetDialog)
+    Button btnShowBottomSheetDialog;
+    @BindView(R.id.btn_showBottomSheetDialogFragment)
+    Button btnShowBottomSheetDialogFragment;
+    Unbinder unbinder;
     private PopupWindow popupWindow;
     private TextView tvExit, tvSet, tvCancel;
     private View rootView;
@@ -83,7 +95,13 @@ public class AndroidBaseViewFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        unbinder = ButterKnife.bind(this, super.onCreateView(inflater, container, savedInstanceState));
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -98,6 +116,18 @@ public class AndroidBaseViewFragment extends BaseFragment {
     }
 
 
+    public void initView(){
+        btnSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(mActivity, "unChecked", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
     @Override
     public void onResume() {
         Log.i(TAG, "onResume: ");
@@ -154,10 +184,11 @@ public class AndroidBaseViewFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        unbinder.unbind();
 
     }
 
-    @OnClick({R.id.btn_showKeyBoard, R.id.btn_showDialog, R.id.btn_showDialogFragment, R.id.btn_showDialogActivity, R.id.btn_popupWindow, R.id.btn_share, R.id.btn_setAlpha})
+    @OnClick({R.id.btn_showKeyBoard, R.id.btn_showDialog, R.id.btn_showDialogFragment, R.id.btn_showBottomSheet, R.id.btn_showBottomSheetDialog, R.id.btn_showBottomSheetDialogFragment, R.id.btn_showDialogActivity, R.id.btn_popupWindow, R.id.btn_share, R.id.btn_setAlpha})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_showKeyBoard:
@@ -166,8 +197,17 @@ public class AndroidBaseViewFragment extends BaseFragment {
                 showDialog();
                 break;
             case R.id.btn_showDialogFragment:
+                showDialogFragment();
                 break;
             case R.id.btn_showDialogActivity:
+                break;
+            case R.id.btn_showBottomSheet:
+                break;
+            case R.id.btn_showBottomSheetDialog:
+                showBottomSheetDialog();
+                break;
+            case R.id.btn_showBottomSheetDialogFragment:
+
                 break;
             case R.id.btn_popupWindow:
                 showPopUpWindow();
@@ -186,5 +226,17 @@ public class AndroidBaseViewFragment extends BaseFragment {
 //                popupWindow.dismiss();//关闭PopupWindow
 //                break;
         }
+    }
+
+    private void showDialogFragment() {
+        MyDialogFragment myDialogFragment = new MyDialogFragment();
+        myDialogFragment.show(getChildFragmentManager(), "tag");
+    }
+
+    private void showBottomSheetDialog(){
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this.getActivity());
+        bottomSheetDialog.setContentView(R.layout.fragment_android_base_view);
+        bottomSheetDialog.show();
+
     }
 }
