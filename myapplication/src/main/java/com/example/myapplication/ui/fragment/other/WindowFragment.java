@@ -7,20 +7,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class WindowFragment extends Fragment {
     private static final String TAG = "WindowFragment";
+    @BindView(R.id.tv1)
+    TextView tv1;
+    @BindView(R.id.tv2)
+    TextView tv2;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +53,7 @@ public class WindowFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.i(TAG, "onResume: ");
+
     }
 
     @Override

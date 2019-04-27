@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.entity.Result;
 import com.example.myapplication.ui.activity.SecondActivity;
 
 import butterknife.BindView;
@@ -232,13 +234,13 @@ public class ActivityFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setStatusBarVisiable(boolean flag) {
-        if (flag){
-            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-
-        }else{
             getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-            getActivity().getActionBar().hide();
-        }
+//        if (flag){
+//            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+//
+//        }else{
+//            getActivity().getActionBar().hide();
+//        }
 
     }
 

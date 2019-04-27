@@ -5,35 +5,32 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
-
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.design.widget.TabLayout;
-import android.widget.ImageButton;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import com.example.myapplication.ui.AndroidBaseFragment;
+import com.example.myapplication.ui.CustomViewFragment;
 import com.example.myapplication.ui.DatabaseFragment;
 import com.example.myapplication.ui.ManagerFragment;
 import com.example.myapplication.ui.MaterialDesginFragment;
 import com.example.myapplication.ui.OtherFragment;
 import com.example.myapplication.ui.SendFragment;
 import com.example.myapplication.ui.ShareFragment;
-import com.example.myapplication.ui.activity.ThirdActivity;
-import com.example.myapplication.ui.CustomViewFragment;
 import com.example.myapplication.ui.fragment.widget.AndroidBaseViewFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -59,14 +56,14 @@ public class MainActivity extends AppCompatActivity
         initView();
 
         //default show android Base Fragment
-//        AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
+        AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
         ManagerFragment managerFragment = new ManagerFragment();
-//        OtherFragment otherFragment = new OtherFragment();
+        OtherFragment otherFragment = new OtherFragment();
         AndroidBaseViewFragment androidBaseViewFragment = new AndroidBaseViewFragment();
 //        DatabaseFragment databaseFragment = new DatabaseFragment();
         CustomViewFragment customViewFragment = new CustomViewFragment();
 
-        fragmentManager.beginTransaction().replace(R.id.container, androidBaseViewFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.container, androidBaseFragment).commit();
 
 
     }
@@ -135,13 +132,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                int[] location = new int[2];
-                fab.getLocationInWindow(location);
-
-//                location[0] += location[0] + flb.getWidth() / 2;
-                Intent intent = new Intent(MainActivity.this, ThirdActivity.class);
-                intent.putExtra("location", location);
-                startActivity(intent);
+                onFloatingActionButtonClick();
             }
         });
 
@@ -155,6 +146,27 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+    }
+
+    private void onFloatingActionButtonClick() {
+//        int[] location = new int[2];
+//        fab.getLocationInWindow(location);
+//
+////                location[0] += location[0] + flb.getWidth() / 2;
+//        Intent intent = new Intent(MainActivity.this, ThirdActivity.class);
+//        intent.putExtra("location", location);
+//        startActivity(intent);
+//        int systemUiVisibility = fab.getSystemUiVisibility();
+//        fab.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+//        if ((systemUiVisibility & View.SYSTEM_UI_FLAG_LOW_PROFILE) == View.SYSTEM_UI_FLAG_LOW_PROFILE){
+//            fab.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+//        }else {
+//            fab.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+//        }
+//
+//        fab.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        Intent intent = new Intent(this, TestActivity.class);
+        startActivity(intent);
     }
 
 
@@ -239,7 +251,7 @@ public class MainActivity extends AppCompatActivity
                 return true;
             case R.id.action_share:
                 share();
-                return  true;
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

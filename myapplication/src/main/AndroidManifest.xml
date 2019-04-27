@@ -92,13 +92,16 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-        T
+
         <activity
             android:name=".ui.activity.FifthActivity"
             android:label="@string/title_activity_fifth"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ui.activity.NetworkActivity" />
 
+        <activity
+            android:name=".TestActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
