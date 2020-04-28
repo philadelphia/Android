@@ -72,4 +72,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="截屏到系统图库并通知" />
+
+    <Button
+        android:id="@+id/btn_take_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拍摄照片" />
+
+
+    <Button
+        android:id="@+id/btn_take_photo_uri"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拍摄照片并返回原图" />
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

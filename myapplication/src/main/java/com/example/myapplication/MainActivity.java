@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
 //        DatabaseFragment databaseFragment = new DatabaseFragment();
         CustomViewFragment customViewFragment = new CustomViewFragment();
 
-        fragmentManager.beginTransaction().replace(R.id.container, androidBaseFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
 
 
     }

@@ -62,8 +62,8 @@ public class OtherFragment extends Fragment  {
 
     private void setUpViewPagerAndTabs (){
         mTabFragments = new ArrayList<>();
-        mTabFragments.add(new WindowFragment());
         mTabFragments.add(new NotificationFragment());
+        mTabFragments.add(new WindowFragment());
         mTabFragments.add(new AnimationFragment());
         mTabFragments.add(new WebViewFragment());
         mTabFragments.add(new RxJavaFragment());
