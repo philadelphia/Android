@@ -12,12 +12,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,6 +51,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.os.Environment.DIRECTORY_DCIM;
+
 public class NotificationFragment extends Fragment implements View.OnClickListener {
     private final String TAG = NotificationFragment.class.getSimpleName();
     @BindView(R.id.btn_send)
@@ -78,6 +82,7 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
     private Context context;
 
     private File file;
+    public static String fileName;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -446,7 +451,24 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         Intent intent = new Intent();
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-        startActivityForResult(intent, 100);
+//        fileName = getActivity().getCacheDir().toString() + "/" + System.currentTimeMillis()+".jpg";
+//        fileName = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + "/" + System.currentTimeMillis()+".jpg";
+        fileName = getActivity().getEx().toString() + "/" + System.currentTimeMillis()+".jpg";
+        File file = new File(fileName);
+        if (file.exists()) {
+            file.delete();
+        }
+        Uri uri;
+        //在Android7.0(Android N)及以上版本
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            uri = FileProvider.getUriForFile(getActivity(), context.getApplicationContext().getPackageName() + ".provider", file);//通过FileProvider创建一个content类型的Uri
+        } else {
+            uri = Uri.fromFile(file);
+        }
+        Log.i(TAG, "takePhotoWithSpecialUri: " + uri.toString());
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        startActivityForResult(intent, 200);
     }
 
     @Override
@@ -460,8 +482,8 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
                         imageView.setImageBitmap(bitmap);
                         int byteCount = bitmap.getByteCount();
                         Log.i(TAG, "onActivityResult: bytecount ==" + byteCount / 1024 + "K");
-                       //第二种方式取图片，从URI里面取，部分手机取不到URI需要从Content Provider里面取，
-                        Uri uri ;
+                        //第二种方式取图片，从URI里面取，部分手机取不到URI需要从Content Provider里面取，
+                        Uri uri;
                         if (data.getData() != null) {
                             uri = data.getData();
                         } else {
@@ -470,17 +492,32 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
                         Bitmap bitmap1 = null;
                         try {
                             bitmap1 = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                            imageView.setImageBitmap(bitmap1);
                             int byteCount1 = bitmap1.getByteCount();
                             Log.i(TAG, "onActivityResult: bytecount1 ==" + byteCount1 / 1024 + "K");
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
-                        imageView.setImageURI(uri);
                         Log.i(TAG, "onActivityResult: uri==\t" + uri.toString());
                     }
                 }
                 break;
+            case 200:
+                if (resultCode == Activity.RESULT_OK) {
+//                    Uri uri = data.getData();
+                    File file = new File(fileName);
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inPurgeable = true;
+                    options.inSampleSize = 2;
+                    Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(),options);
+                    Log.i(TAG, "onActivityResult: bytecount1 ==" + bitmap.getByteCount() / 1024 / 1024 + "M");
+                    imageView.setImageBitmap(bitmap);
+                    Log.i(TAG, "onActivityResult: width =  " + imageView.getWidth());
+                    Log.i(TAG, "onActivityResult: height=" + imageView.getHeight());
+                }
+                break;
+            default:
+
         }
     }
 }

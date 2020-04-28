@@ -1,93 +1,100 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     tools:context=".ui.fragment.other.NotificationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <Button
-    android:id="@+id/btn_send"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:gravity="center"
-    android:text="发送普通通知"
-    android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/btn_sendBigViewNotification"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:text="发送BigView通知"
-        android:textSize="20sp" />
+        android:orientation="vertical">
+        <!-- TODO: Update blank fragment layout -->
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="发送普通通知"
+            android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/btn_sendcollapse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:text="发送折叠式通知"
-        android:textSize="20sp" />
+        <Button
+            android:id="@+id/btn_sendBigViewNotification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="发送BigView通知"
+            android:textSize="20sp" />
 
-
-    <Button
-        android:id="@+id/btn_sendhang"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="发送悬挂式通知"
-        android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/btn_bigTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="发送BigStyle通知"
-        android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/btn_InboxStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="发送InBoxStyle通知"
-        android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/btn_cancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="取消通知 "
-        android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/btn_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="截屏到系统图库并通知" />
-
-    <Button
-        android:id="@+id/btn_take_photo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="拍摄照片" />
+        <Button
+            android:id="@+id/btn_sendcollapse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="发送折叠式通知"
+            android:textSize="20sp" />
 
 
-    <Button
-        android:id="@+id/btn_take_photo_uri"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="拍摄照片并返回原图" />
+        <Button
+            android:id="@+id/btn_sendhang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="发送悬挂式通知"
+            android:textSize="20sp" />
 
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_bigTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="发送BigStyle通知"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn_InboxStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="发送InBoxStyle通知"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="取消通知 "
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="截屏到系统图库并通知" />
+
+        <Button
+            android:id="@+id/btn_take_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="拍摄照片" />
+
+
+        <Button
+            android:id="@+id/btn_take_photo_uri"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="拍摄照片并返回原图" />
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="80dp" />
+    </LinearLayout>
+
+</ScrollView>
+
