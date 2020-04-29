@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -38,11 +40,10 @@ import com.example.myapplication.ui.activity.DialogActivity;
 import com.example.myapplication.ui.activity.SecondActivity;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -50,8 +51,6 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.os.Environment.DIRECTORY_DCIM;
 
 public class NotificationFragment extends Fragment implements View.OnClickListener {
     private final String TAG = NotificationFragment.class.getSimpleName();
@@ -453,7 +452,7 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         intent.addCategory(Intent.CATEGORY_DEFAULT);
 //        fileName = getActivity().getCacheDir().toString() + "/" + System.currentTimeMillis()+".jpg";
 //        fileName = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + "/" + System.currentTimeMillis()+".jpg";
-        fileName = getActivity().getEx().toString() + "/" + System.currentTimeMillis()+".jpg";
+        fileName = getActivity().getExternalCacheDir().toString() + "/" + System.currentTimeMillis() + ".jpg";
         File file = new File(fileName);
         if (file.exists()) {
             file.delete();
@@ -489,35 +488,55 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
                         } else {
                             uri = Uri.parse(MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bitmap, null, null));
                         }
-                        Bitmap bitmap1 = null;
-                        try {
-                            bitmap1 = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-                            imageView.setImageBitmap(bitmap1);
-                            int byteCount1 = bitmap1.getByteCount();
-                            Log.i(TAG, "onActivityResult: bytecount1 ==" + byteCount1 / 1024 + "K");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        //直接使用MediaStore也可以获取Bitmap对象
+                        showImage(uri);
+                        //第二种方法展示Image View
+                        showImage(uri, imageView);
                         Log.i(TAG, "onActivityResult: uri==\t" + uri.toString());
                     }
                 }
                 break;
             case 200:
                 if (resultCode == Activity.RESULT_OK) {
-//                    Uri uri = data.getData();
                     File file = new File(fileName);
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inPurgeable = true;
-                    options.inSampleSize = 2;
-                    Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(),options);
-                    Log.i(TAG, "onActivityResult: bytecount1 ==" + bitmap.getByteCount() / 1024 / 1024 + "M");
+//                    options.inSampleSize = 2;2
+                    Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+                    Log.i(TAG, "onActivityResult: byteCount ==" + bitmap.getByteCount() / 1024 / 1024 + "M");
                     imageView.setImageBitmap(bitmap);
-                    Log.i(TAG, "onActivityResult: width =  " + imageView.getWidth());
-                    Log.i(TAG, "onActivityResult: height=" + imageView.getHeight());
+                    Log.i(TAG, "bitmap: width =  " + bitmap.getWidth());
+                    Log.i(TAG, "bitmap: height =  " + bitmap.getHeight());
+                    Log.i(TAG, "imageView: width =  " + imageView.getWidth());
+                    Log.i(TAG, "imageView: height=" + imageView.getHeight());
                 }
                 break;
             default:
+        }
+    }
 
+    private void showImage(Uri uri) {
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+            imageView.setImageBitmap(bitmap);
+            int byteCount = bitmap.getByteCount();
+            Log.i(TAG, "showImage: byteCount ==" + byteCount / 1024 + "K");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showImage(Uri uri, ImageView imageView){
+        try {
+            ParcelFileDescriptor parcelFileDescriptor = getActivity().getContentResolver().openFileDescriptor(uri,"r");
+            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+            Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+            imageView.setImageBitmap(bitmap);
+            int byteCount = bitmap.getByteCount();
+            Log.i(TAG, "showImage: byteCount ==" + byteCount / 1024 + "K");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
