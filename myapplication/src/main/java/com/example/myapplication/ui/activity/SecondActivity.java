@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.Window;
 import android.widget.Button;
 
+import com.example.myapplication.HandlerActivity;
 import com.example.myapplication.R;
 
 import butterknife.BindView;
@@ -51,63 +52,30 @@ public class SecondActivity extends AppCompatActivity {
         Log.e(TAG, "onCreate");
     }
 
-    @Override
-    protected void onStart() {
-        Log.e(TAG, "onStart: ");
-        super.onStart();
-    }
-
-    @Override
-    protected void onRestart() {
-        Log.e(TAG, "onRestart: ");
-        super.onRestart();
-    }
-
-
-    @Override
-    protected void onResume() {
-        Log.e(TAG, "onResume: ");
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        Log.e(TAG, "onPause: ");
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        Log.e(TAG, "onStop: ");
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.e(TAG, "onDestroy: ");
-        super.onDestroy();
-    }
 
     @OnClick(R.id.btn_click)
     public void onClick() {
-        Intent intent = new Intent(this, SecondActivity.class);
+        Intent intent = new Intent(this, HandlerActivity.class);
+        startActivity(intent);
 
-        if (flag.equalsIgnoreCase("singleTop")) {
-            intent.putExtra("Flag", "singleTop");
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   // 等同于在secondActivity的lauchMode设置singleTop
-            startActivity(intent);
-        } else if (flag.equalsIgnoreCase("singleTask")) {
-            intent.putExtra("Flag", "singleTask");
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 等同于在secondActivity的lauchMode设置singleTask
-            startActivity(intent);
-        } else if (flag.equalsIgnoreCase("singleInstance")) {
-            intent.putExtra("Flag", "singleInstance");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 等同于在secondActivity的lauchMode设置singleInstance
-            startActivity(intent);
-        } else if (flag.equalsIgnoreCase("normal")) {
-            intent.putExtra("Flag", "normal");
-            startActivity(intent);
-        }
+//        if (flag.equalsIgnoreCase("singleTop")) {
+//            intent.putExtra("Flag", "singleTop");
+//            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   // 等同于在secondActivity的lauchMode设置singleTop
+//            startActivity(intent);
+//        } else if (flag.equalsIgnoreCase("singleTask")) {
+//            intent.putExtra("Flag", "singleTask");
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 等同于在secondActivity的lauchMode设置singleTask
+//            startActivity(intent);
+//        } else if (flag.equalsIgnoreCase("singleInstance")) {
+//            intent.putExtra("Flag", "singleInstance");
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 等同于在secondActivity的lauchMode设置singleInstance
+//            startActivity(intent);
+//        } else if (flag.equalsIgnoreCase("normal")) {
+//            intent.putExtra("Flag", "normal");
+//            startActivity(intent);
+//        }
+
+
 
     }
 

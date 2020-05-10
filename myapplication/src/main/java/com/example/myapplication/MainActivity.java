@@ -32,6 +32,7 @@ import com.example.myapplication.ui.OtherFragment;
 import com.example.myapplication.ui.SendFragment;
 import com.example.myapplication.ui.ShareFragment;
 import com.example.myapplication.ui.fragment.widget.AndroidBaseViewFragment;
+import com.example.myapplication.utils.ToastUtil;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     private ShareActionProvider mShareActionProvider;
     private Menu menu;
     private static final String TAG = "MainActivity";
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +147,7 @@ public class MainActivity extends AppCompatActivity
         mTabLayout.setVisibility(View.INVISIBLE);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        toast = Toast.makeText(this, "toast", Toast.LENGTH_SHORT);
 
     }
 
@@ -165,7 +168,7 @@ public class MainActivity extends AppCompatActivity
 //        }
 //
 //        fab.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        Intent intent = new Intent(this, TestActivity.class);
+        Intent intent = new Intent(this, FirstActivity.class);
         startActivity(intent);
     }
 
@@ -248,6 +251,8 @@ public class MainActivity extends AppCompatActivity
 //              手动添加一项MenuItem.
 
                 Log.i(TAG, "onOptionsItemSelected: action_settings");
+                toast.show();
+
                 return true;
             case R.id.action_share:
                 share();
@@ -344,7 +349,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Log.i(TAG, "onClick: action_settings");
                 return true;
 
             default:
