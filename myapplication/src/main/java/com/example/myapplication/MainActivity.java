@@ -65,42 +65,11 @@ public class MainActivity extends AppCompatActivity
 //        DatabaseFragment databaseFragment = new DatabaseFragment();
         CustomViewFragment customViewFragment = new CustomViewFragment();
 
-        fragmentManager.beginTransaction().replace(R.id.container, androidBaseFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.container, androidBaseViewFragment).commit();
 
 
     }
 
-    @Override
-    protected void onRestart() {
-        Log.e(TAG, "onRestart: ");
-        super.onRestart();
-    }
-
-    @Override
-    protected void onStart() {
-        Log.e(TAG, "onStart: ");
-        super.onStart();
-
-    }
-
-    @Override
-    protected void onResume() {
-        Log.e(TAG, "onResume: ");
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        Log.e(TAG, "onPause: ");
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        Log.e(TAG, "onStop: ");
-        super.onStop();
-
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {

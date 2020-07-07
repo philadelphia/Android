@@ -2,9 +2,17 @@ package com.example.myapplication.ui.fragment.widget;
 
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Switch;
@@ -21,8 +30,13 @@ import android.widget.Toast;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.MyBaseAdapter;
+import com.example.myapplication.adapter.RecyclerViewAdapter;
 import com.example.myapplication.base.BaseFragment;
 import com.example.myapplication.ui.activity.DialogActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,6 +105,7 @@ public class AndroidBaseViewFragment extends BaseFragment {
 
     private long mExitTime = 0;
     private View view;
+    private PopupWindow customPopupWindow;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -116,18 +131,19 @@ public class AndroidBaseViewFragment extends BaseFragment {
     }
 
 
-    public void initView(){
+    public void initView() {
         btnSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Toast.makeText(mActivity, "unChecked", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
     @Override
     public void onResume() {
         Log.i(TAG, "onResume: ");
@@ -167,6 +183,51 @@ public class AndroidBaseViewFragment extends BaseFragment {
         });
     }
 
+    private void showCustomPopupWindow() {
+        if (customPopupWindow == null) {
+            FrameLayout frameLayout = new FrameLayout(getContext());
+            frameLayout.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
+            frameLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent3));
+            customPopupWindow = new PopupWindow(frameLayout,-1,-2);
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 512);
+            frameLayout.addView(createRecyclerview(), layoutParams);
+            customPopupWindow.setContentView(frameLayout);
+            customPopupWindow.setOutsideTouchable(true);
+            frameLayout.setOnClickListener(new View.OnClickListener() {
+                                               @Override
+                                               public void onClick(View v) {
+                                                   if (customPopupWindow.isShowing()){
+                                                       customPopupWindow.dismiss();
+                                                   }
+                                               }
+                                           }
+            );
+        }
+        if (Build.VERSION.SDK_INT >= 24) {
+            Rect visibleFrame = new Rect();
+            edt1.getGlobalVisibleRect(visibleFrame);
+            int height = edt1.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
+            customPopupWindow.setHeight(height);
+            customPopupWindow.showAsDropDown(edt1, 0, 0);
+        } else {
+            customPopupWindow.showAsDropDown(edt1, 0, 0);
+        }
+    }
+
+    private View createRecyclerview() {
+        RecyclerView recyclerView = new RecyclerView(getContext());
+        recyclerView.setBackground(new ColorDrawable(ContextCompat.getColor(getContext(), R.color.white)));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        List<PackageInfo> installedPackages = new ArrayList<>();
+        installedPackages.clear();
+        installedPackages.addAll(getContext().getPackageManager().getInstalledPackages(0));
+        for (int i = 0; i < installedPackages.size(); i++) {
+            PackageInfo packageInfo = installedPackages.get(i);
+        }
+        recyclerView.setAdapter(new RecyclerViewAdapter(installedPackages, null));
+        return recyclerView;
+    }
+
     public void test(View view) {
         if (popupWindow == null) {
             showPopUpWindow();
@@ -192,6 +253,7 @@ public class AndroidBaseViewFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_showKeyBoard:
+                showCustomPopupWindow();
                 break;
             case R.id.btn_showDialog:
                 showDialog();
@@ -233,7 +295,7 @@ public class AndroidBaseViewFragment extends BaseFragment {
         myDialogFragment.show(getChildFragmentManager(), "tag");
     }
 
-    private void showBottomSheetDialog(){
+    private void showBottomSheetDialog() {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this.getActivity());
         bottomSheetDialog.setContentView(R.layout.fragment_android_base_view);
         bottomSheetDialog.show();
