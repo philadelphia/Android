@@ -1,109 +1,211 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
     tools:context="com.example.myapplication.ui.fragment.baseComponent.ActivityFragment">
 
- <Button
-    android:id="@+id/btn_jump"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:text="跳转" />
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
- <Button
-     android:id="@+id/btn_standard"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:gravity="center"
-     android:text="standard" />
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="20dp">
 
- <Button
-     android:id="@+id/btn_singleTop"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:gravity="center"
-     android:text="singleTop" />
+            <Button
+                android:id="@+id/btn_jump"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="跳转" />
 
+            <Button
+                android:id="@+id/btn_standard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="standard" />
 
- <Button
-     android:id="@+id/btn_singleTask"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:gravity="center"
-     android:text="singleTask" />
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@android:drawable/toast_frame" />
 
-
- <Button
-     android:id="@+id/btn_singleInstance"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:gravity="center"
-     android:text="singleInstance" />
-
-
- <Button
-     android:id="@+id/btn_explode"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:gravity="center"
-     android:text="分解"
-     android:onClick=""
-     />
-
- <Button
-     android:id="@+id/btn_slide"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:gravity="center"
-     android:text="滑动"
-     />
+            <Button
+                android:id="@+id/btn_singleTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="singleTop" />
 
 
- <Button
-    android:id="@+id/btn_fade"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:text="淡出"
-    />
-
- <Button
-     android:id="@+id/btn_showStatsBar"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:gravity="center"
-     android:text="显示状态栏"
-     />
- <Button
-     android:id="@+id/btn_hideStatusBar"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:gravity="center"
-     android:text="隐藏状态栏"
-     />
-
- <Button
-     android:id="@+id/btn_showNavigationBar"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:gravity="center"
-     android:text="显示导航栏"
-     />
-
- <Button
-     android:id="@+id/btn_hideNavigationBar"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:gravity="center"
-     android:text="隐藏导航栏"
-     />
+            <Button
+                android:id="@+id/btn_singleTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="singleTask" />
 
 
+            <Button
+                android:id="@+id/btn_singleInstance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="singleInstance" />
 
 
+            <Button
+                android:id="@+id/btn_explode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="分解" />
 
-</LinearLayout>
+            <Button
+                android:id="@+id/btn_slide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="滑动" />
+
+
+            <Button
+                android:id="@+id/btn_fade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="淡出" />
+
+            <ImageButton
+                android:id="@+id/ibnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+
+            <TextSwitcher
+                android:id="@+id/tv_switcher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <CheckedTextView
+                android:id="@+id/tv_checked"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="checked text view"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:checked="false" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:textColorHighlight="#000000"
+                android:selectAllOnFocus="true"
+                android:textSelectHandleRight="@drawable/ic_launcher"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="hao你好" />
+
+            <TextView
+                android:id="@+id/tv_shadow"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="show shadow"
+                android:textSize="14sp"
+                android:elevation="2dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="show shadow"
+                android:background="@drawable/bg_red"
+                android:textSize="14sp"
+                android:elevation="2dp" />
+
+
+            <Button
+                android:id="@+id/btn_showStatsBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="显示状态栏"
+                android:layout_marginTop="20dp" />
+
+            <Button
+                android:id="@+id/btn_hideStatusBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="隐藏状态栏" />
+
+            <Button
+                android:id="@+id/btn_showNavigationBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="显示导航栏" />
+
+            <Button
+                android:id="@+id/btn_hideNavigationBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="隐藏导航栏" />
+
+            <Button
+                android:id="@+id/btn_capture_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="拍照" />
+
+            <Button
+                android:id="@+id/btn_capture_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="录像" />
+
+            <Button
+                android:id="@+id/btn_activity_launch_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="activity 声明周期模式验证" />
+
+            <EditText
+                android:id="@+id/edt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="ddfd" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</FrameLayout>

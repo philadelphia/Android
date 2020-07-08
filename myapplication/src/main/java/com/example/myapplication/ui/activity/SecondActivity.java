@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.transition.Slide;
@@ -26,6 +27,7 @@ public class SecondActivity extends AppCompatActivity {
     Button btnClick;
     private String flag;
     private long mExitTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +76,6 @@ public class SecondActivity extends AppCompatActivity {
 //            intent.putExtra("Flag", "normal");
 //            startActivity(intent);
 //        }
-
 
 
     }

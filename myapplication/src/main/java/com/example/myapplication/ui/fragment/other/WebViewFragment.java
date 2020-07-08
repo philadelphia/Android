@@ -2,8 +2,8 @@ package com.example.myapplication.ui.fragment.other;
 
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -62,17 +63,17 @@ public class WebViewFragment extends Fragment implements View.OnKeyListener {
     private void initWebView() {
         WebSettings webSettings = webView.getSettings();
 
-        webSettings.setJavaScriptEnabled(true);   // 设置WebView是否可以运行JavaScript
-        webSettings.setSupportMultipleWindows(true);  // 设置WebView是否支持多窗口
-        webSettings.setSupportZoom(false);            //设置是否支持缩放。
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT); //设置使用默认的缓存模式
-        webView.setWebViewClient(new WebViewClient());
-        webView.setOnKeyListener(this);
-        webView.loadUrl("http://www.google.com");
-        if (webView.canGoBack())
-            webView.goBack();
-        if (webView.canGoForward())
-            webView.goForward();
+//        webSettings.setJavaScriptEnabled(true);   // 设置WebView是否可以运行JavaScript
+//        webSettings.setSupportMultipleWindows(true);  // 设置WebView是否支持多窗口
+//        webSettings.setSupportZoom(false);            //设置是否支持缩放。
+//        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT); //设置使用默认的缓存模式
+//        webView.setWebViewClient(new WebViewClient());
+//        webView.setOnKeyListener(this);
+//        webView.loadUrl("http://www.google.com");
+//        if (webView.canGoBack())
+//            webView.goBack();
+//        if (webView.canGoForward())
+//            webView.goForward();
     }
 
     @OnClick({R.id.url, R.id.btn_load, R.id.webView})
@@ -94,40 +95,50 @@ public class WebViewFragment extends Fragment implements View.OnKeyListener {
                     }
 
                     //让多个web界面在一个窗口中打开
+//                    @Override
+//                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                        webView.loadUrl(url);
+//                        return true;
+//                    }
+
                     @Override
-                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                        webView.loadUrl(url);
-                        return true;
+                    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                        Uri url = request.getUrl();
+                        if (url.getAuthority().contains("tencent")) {
+                            return true;
+                        }
+                        return  false;
+//                        return super.shouldOverrideUrlLoading(view, request);
                     }
                 });
 
                 // 果说WebViewClient是帮助WebView处理各种通知、请求事件的“内政大臣”的话，那么WebChromeClient就是辅
                 // 助WebView处理Javascript的对话框，网站图标，网站title，加载进度等偏外部事件的“外交大臣”。
-                webView.setWebChromeClient(new WebChromeClient() {
-                    @Override
-                    public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
-                        Log.i(TAG, "onCreateWindow: ");
-                        return super.onCreateWindow(view, isDialog, isUserGesture, resultMsg);
-                    }
-
-                    @Override
-                    public void onProgressChanged(WebView view, int newProgress) {
-                        Log.i(TAG, "onProgressChanged: " + newProgress);
-                        super.onProgressChanged(view, newProgress);
-                    }
-
-                    @Override
-                    public void onReceivedIcon(WebView view, Bitmap icon) {
-                        Log.i(TAG, "onReceivedIcon: ");
-                        super.onReceivedIcon(view, icon);
-                    }
-
-                    @Override
-                    public void onReceivedTitle(WebView view, String title) {
-                        Log.i(TAG, "onReceivedTitle: ");
-                        super.onReceivedTitle(view, title);
-                    }
-                });
+//                webView.setWebChromeClient(new WebChromeClient() {
+//                    @Override
+//                    public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
+//                        Log.i(TAG, "onCreateWindow: ");
+//                        return super.onCreateWindow(view, isDialog, isUserGesture, resultMsg);
+//                    }
+//
+//                    @Override
+//                    public void onProgressChanged(WebView view, int newProgress) {
+//                        Log.i(TAG, "onProgressChanged: " + newProgress);
+//                        super.onProgressChanged(view, newProgress);
+//                    }
+//
+//                    @Override
+//                    public void onReceivedIcon(WebView view, Bitmap icon) {
+//                        Log.i(TAG, "onReceivedIcon: ");
+//                        super.onReceivedIcon(view, icon);
+//                    }
+//
+//                    @Override
+//                    public void onReceivedTitle(WebView view, String title) {
+//                        Log.i(TAG, "onReceivedTitle: ");
+//                        super.onReceivedTitle(view, title);
+//                    }
+//                });
 
                 if (webView.canGoBack())
                     webView.goBack();

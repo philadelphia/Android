@@ -2,24 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -27,6 +9,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.FirstActivity"></activity>
+        <activity
+            android:name=".HandlerActivity"
+            android:label="@string/title_activity_handler"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -36,45 +23,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- SecondActivity -->
+        </activity> <!-- SecondActivity -->
         <activity
             android:name=".ui.activity.SecondActivity"
             android:label="SecondActivity"
-            android:launchMode="singleTop" />
-
-        <!-- Dialog Activity -->
+            android:launchMode="singleTop" /> <!-- Dialog Activity -->
         <activity
             android:name=".ui.activity.DialogActivity"
             android:excludeFromRecents="true"
             android:label="DialogActivity"
             android:launchMode="singleTask"
-            android:taskAffinity=".FLAG_ACTIVITY_NEW_TASK" />
-        <!-- android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" -->
-
-        <service android:name=".service.MyService" />
-
-        <receiver
-            android:name=".recevier.MyNetworkChangeReceiver"
-            android:enabled="true"
-            android:exported="true" />
-
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="E2EGBPHrsreBGIN0l649lqSRbE8tbGae" />
-
-        <receiver android:name=".ui.fragment.manager.PowerFragment$PowerConnectionReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-
-                <!-- 监控电量显著变化 -->
-                <action android:name="android.intent.action.ACTION_BATTERY_LOW" />
-                <action android:name="android.intent.action.ACTION_BATTERY_OKAY" />
-            </intent-filter>
-        </receiver>
-
+            android:taskAffinity=".FLAG_ACTIVITY_NEW_TASK" /> <!-- android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" -->
         <activity
             android:name=".ui.activity.ThirdActivity"
             android:label="ThirdActivity"
@@ -83,22 +42,17 @@
             android:name=".ui.activity.FourActivity"
             android:label="@string/title_activity_four"
             android:theme="@style/AppTheme.NoActionBar" />
-        <!-- Splash Activity -->
         <activity
             android:name=".SplashActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <!-- LoginActivity -->
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-
         <activity
             android:name=".ui.activity.FifthActivity"
             android:label="@string/title_activity_fifth"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ui.activity.NetworkActivity" />
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activity.NetworkActivity" /> <!-- Splash Activity -->
         <activity
             android:name=".TestActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -112,6 +66,53 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths"/>
         </provider>
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- LoginActivity -->
+        <activity
+            android:name=".ui.activity.lauchMode.ActivityA"
+            android:label="Activity A"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.activity.lauchMode.ActivityB"
+            android:label="Activity B"
+            android:theme="@style/AppTheme" />
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="E2EGBPHrsreBGIN0l649lqSRbE8tbGae" />
+
+        <receiver
+            android:name=".recevier.MyNetworkChangeReceiver"
+            android:enabled="true"
+            android:exported="true" />
+        <receiver android:name=".ui.fragment.manager.PowerFragment$PowerConnectionReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+
+                <!-- 监控电量显著变化 -->
+                <action android:name="android.intent.action.ACTION_BATTERY_LOW" />
+                <action android:name="android.intent.action.ACTION_BATTERY_OKAY" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".service.MyService" />
     </application>
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 </manifest>

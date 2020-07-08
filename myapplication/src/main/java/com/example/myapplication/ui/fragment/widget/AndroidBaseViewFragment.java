@@ -33,6 +33,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.adapter.MyBaseAdapter;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
 import com.example.myapplication.base.BaseFragment;
+import com.example.myapplication.base.BaseLazyLoadFragment;
 import com.example.myapplication.ui.activity.DialogActivity;
 
 import java.util.ArrayList;
@@ -108,16 +109,10 @@ public class AndroidBaseViewFragment extends BaseFragment {
     private PopupWindow customPopupWindow;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        unbinder = ButterKnife.bind(this, super.onCreateView(inflater, container, savedInstanceState));
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -131,6 +126,7 @@ public class AndroidBaseViewFragment extends BaseFragment {
     }
 
 
+    @Override
     public void initView() {
         btnSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -245,8 +241,6 @@ public class AndroidBaseViewFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
-
     }
 
     @OnClick({R.id.btn_showKeyBoard, R.id.btn_showDialog, R.id.btn_showDialogFragment, R.id.btn_showBottomSheet, R.id.btn_showBottomSheetDialog, R.id.btn_showBottomSheetDialogFragment, R.id.btn_showDialogActivity, R.id.btn_popupWindow, R.id.btn_share, R.id.btn_setAlpha})
@@ -301,4 +295,5 @@ public class AndroidBaseViewFragment extends BaseFragment {
         bottomSheetDialog.show();
 
     }
+
 }

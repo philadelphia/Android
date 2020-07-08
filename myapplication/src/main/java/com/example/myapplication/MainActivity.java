@@ -31,6 +31,7 @@ import com.example.myapplication.ui.MaterialDesginFragment;
 import com.example.myapplication.ui.OtherFragment;
 import com.example.myapplication.ui.SendFragment;
 import com.example.myapplication.ui.ShareFragment;
+import com.example.myapplication.ui.activity.FirstActivity;
 import com.example.myapplication.ui.fragment.widget.AndroidBaseViewFragment;
 import com.example.myapplication.utils.ToastUtil;
 
