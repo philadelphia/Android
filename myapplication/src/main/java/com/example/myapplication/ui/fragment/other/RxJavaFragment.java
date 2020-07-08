@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseFragment;
+import com.example.myapplication.base.BaseLazyLoadFragment;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import butterknife.BindView;
@@ -17,7 +18,7 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function3;
 
-public class RxJavaFragment extends BaseFragment {
+public class RxJavaFragment extends BaseLazyLoadFragment {
     private static final String TAG = "RxJavaFragment";
     @BindView(R.id.edt_name)
     EditText edtName;
@@ -27,6 +28,21 @@ public class RxJavaFragment extends BaseFragment {
     EditText edtAddress;
     @BindView(R.id.btn_submit)
     Button btnSubmit;
+
+    @Override
+    protected void showProgressBar() {
+
+    }
+
+    @Override
+    protected void dismissProgressBar() {
+
+    }
+
+    @Override
+    protected void onDataLoadSucceed() {
+
+    }
 
     @Override
     protected int getLayoutID() {

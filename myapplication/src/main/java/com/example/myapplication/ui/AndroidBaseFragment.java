@@ -30,7 +30,6 @@ import butterknife.Unbinder;
  * Created by Tao.ZT.Zhang on 2016/7/23.
  */
 public class AndroidBaseFragment extends BaseFragment {
-    private final String TAG = AndroidBaseFragment.class.getSimpleName();
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     Unbinder unbinder;
@@ -39,18 +38,6 @@ public class AndroidBaseFragment extends BaseFragment {
     private MyViewPagerAdapter mPagerAdapter;
     private TabLayout mTablayout;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.i(TAG, "onCreate");
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -59,11 +46,13 @@ public class AndroidBaseFragment extends BaseFragment {
         setUpViewPagerAndTabs();
     }
 
+
     @Override
     protected int getLayoutID() {
         return R.layout.fragment_androidbase;
     }
 
+    @Override
     public void initView() {
         mTablayout = ((MainActivity) getActivity()).getmTabLayout();
         mTablayout.setVisibility(View.VISIBLE);
@@ -80,46 +69,7 @@ public class AndroidBaseFragment extends BaseFragment {
         mPagerAdapter = new MyViewPagerAdapter (this.getChildFragmentManager(), mTabFragments, mTabTitles);
         viewPager.setAdapter (mPagerAdapter);
         mTablayout.setupWithViewPager (viewPager);
+        viewPager.setOffscreenPageLimit(mTabFragments.size());
     }
 
-    @Override
-    public void onStart() {
-        Log.i(TAG, "onStart");
-
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        Log.i(TAG, "onResume");
-
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        Log.i(TAG, "onPause");
-
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        Log.i(TAG, "onStop");
-
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroyView() {
-        Log.i(TAG, "onDestroyView");
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.i(TAG, "onDestroy: ");
-        mTablayout.setVisibility(View.GONE);
-        super.onDestroy();
-    }
 }

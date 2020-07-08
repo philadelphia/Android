@@ -4,6 +4,10 @@ buildscript {
     repositories {
         jcenter()
         google()
+        mavenCentral()
+        maven { url "http://dl.bintray.com/populov/maven" }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public'}
+        maven { url 'https://maven.aliyun.com/repository/google'}
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
@@ -21,6 +25,13 @@ allprojects {
     repositories {
         jcenter()
         google()
+        maven { url "http://dl.bintray.com/populov/maven" }
+        maven { url "http://git.meiliwu.com:38080/artifactory/libs-release-local" }
+        maven { url "https://jitpack.io" }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public'}
+        maven { url 'https://maven.aliyun.com/repository/google'}
+        mavenLocal()
+        mavenCentral()
     }
 }
 
