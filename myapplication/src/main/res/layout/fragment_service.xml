@@ -1,41 +1,56 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
-    tools:context="com.example.myapplication.ui.fragment.ServiceFragment">
+    android:animateLayoutChanges="true">
 
-    <!-- TODO: Update blank fragment layout -->
-    <Button
-        android:id="@+id/btn_startService"
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/ll_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/start_service"
-        android:textSize="14sp" />
+        android:orientation="vertical"
+        android:visibility="gone">
 
 
-    <Button
-        android:id="@+id/btn_stopService"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="stop Service"
-        android:textSize="14sp" />
-
-    <Button
-        android:id="@+id/btn_bindService"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="bind Service"
-        android:textSize="14sp" />
-
-    <Button
-        android:id="@+id/btn_unbindService"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="unbindService"
-        android:textSize="14sp" />
+        <Button
+            android:id="@+id/btn_startService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/start_service"
+            android:textSize="14sp" />
 
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_stopService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="stop Service"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_bindService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="bind Service"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_unbindService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="unbindService"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</FrameLayout>

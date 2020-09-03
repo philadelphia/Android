@@ -22,10 +22,21 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
         android:orientation="vertical"
         android:layout_marginTop="20dp"/>
 
+    <Button
+        android:id="@+id/btn_first_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="launch first activity" />
+
+    <Button
+        android:id="@+id/btn_launch_self"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="launch self" />
 
 </LinearLayout>

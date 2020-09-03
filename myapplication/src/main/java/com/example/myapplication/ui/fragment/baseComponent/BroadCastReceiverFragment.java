@@ -6,22 +6,25 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.base.BaseLazyLoadFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BroadCastReceiverFragment extends Fragment {
+public class BroadCastReceiverFragment extends BaseLazyLoadFragment {
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+    @BindView(R.id.scroll_view)
+    ScrollView scrollView;
+
     @BindView(R.id.btn_openWiFi)
     Button btnOpenWiFi;
     @BindView(R.id.btn_stopWiFi)
@@ -32,78 +35,30 @@ public class BroadCastReceiverFragment extends Fragment {
     private IntentFilter intentFilter;
     private MyNetworkChangeReceiver myNetworkChangeReceiver;
     private WifiManager wifiManager;
-    private static final String TAG = "BroadReceiverFragment";
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Log.i(TAG, "onAttach: ");
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         myNetworkChangeReceiver = new MyNetworkChangeReceiver();
-        Log.i(TAG, "onCreate: registerReceiver");
         getActivity().registerReceiver(myNetworkChangeReceiver, intentFilter);
         wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView: ");
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_broad_cast_receiver, container, false);
-        ButterKnife.bind(this, view);
-//        tvWifiStatus.setText(wifiManager.getWifiState() == 3 ? "open"+wifiManager.getWifiState():"close"+wifiManager.getWifiState());
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.i(TAG, "onActivityCreated: ");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.i(TAG, "onStart: ");
-    }
 
     @Override
     public void onResume() {
-        Log.i(TAG, "onResume: ");
         super.onResume();
         getActivity().registerReceiver(myNetworkChangeReceiver, intentFilter);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.i(TAG, "onPause: ");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.i(TAG, "onStop: ");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.i(TAG, "onDestroyView: ");
-    }
 
     @Override
     public void onDestroy() {
         getActivity().unregisterReceiver(myNetworkChangeReceiver);
-        Log.i(TAG, "onDestroy: ");
         super.onDestroy();
     }
 
@@ -112,11 +67,36 @@ public class BroadCastReceiverFragment extends Fragment {
         super.onDetach();
     }
 
+    @Override
+    protected int getLayoutID() {
+        return R.layout.fragment_broad_cast_receiver;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        Log.i(TAG, "setUserVisibleHint: " + isVisibleToUser);
+    }
+
+    @Override
+    protected void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void dismissProgressBar() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onDataLoadSucceed() {
+        Log.i(TAG, "onDataLoadSucceed: ");
+        scrollView.setVisibility(View.VISIBLE);
     }
 
     @Override

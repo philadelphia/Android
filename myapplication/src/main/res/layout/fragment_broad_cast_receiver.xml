@@ -1,29 +1,56 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.myapplication.ui.fragment.baseComponent.BroadCastReceiverFragment">
 
-    <Button
-        android:id="@+id/btn_openWiFi"
-        android:layout_width="match_parent"
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open WiFi" />
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
 
-    <Button
-        android:id="@+id/btn_stopWiFi"
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stop WiFi" />
+        android:visibility="gone">
 
-    <Button
-        android:id="@+id/btn_wifiStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="#fdd000"
-        android:text="status: unkonwn"
-        android:textSize="20sp"/>
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="20dp">
+
+            <Button
+                android:id="@+id/btn_openWiFi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Open WiFi" />
+
+
+            <Button
+                android:id="@+id/btn_stopWiFi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Stop WiFi" />
+
+            <Button
+                android:id="@+id/btn_wifiStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#fdd000"
+                android:text="status: unkonwn"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -355,6 +354,7 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     @OnClick({R.id.btn_send, R.id.btn_sendBigViewNotification, R.id.btn_sendcollapse,
             R.id.btn_sendhang, R.id.btn_bigTextStyle, R.id.btn_InboxStyle,
             R.id.btn_cancel, R.id.btn_image, R.id.btn_take_photo, R.id.btn_take_photo_uri})
@@ -377,11 +377,11 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
                 break;
 
             case R.id.btn_bigTextStyle:
-                sendBigTextStyleNofitication();
+                sendBigTextStyleNotification();
                 break;
 
             case R.id.btn_InboxStyle:
-                sendInboxStyleNofitication();
+                sendInboxStyleNotification();
                 break;
 
             case R.id.btn_cancel:
@@ -401,22 +401,31 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    private void sendInboxStyleNofitication() {
+    private void sendInboxStyleNotification() {
         Intent intent = new Intent(getContext(), DialogActivity.class);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext());
         builder.setAutoCancel(true);
         builder.setContentTitle("title");
-        builder.setContentText("Content--普通通知");
+        builder.setContentText("Content--这是一条BigTextStyle通知");
         builder.setSubText("subText");
         builder.setTicker("ticker");
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
-        builder.setWhen(System.currentTimeMillis())
-                .setStyle(new NotificationCompat.InboxStyle());
-        Notification notification = builder.build();
-        notificationManager.notify(12, notification);
+        builder.setWhen(System.currentTimeMillis());
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(), 0, intent, 0);
+        builder.addAction(R.drawable.ic_launcher, "Call Back", pendingIntent);
+        builder.addAction(R.drawable.ic_launcher, "Call History", pendingIntent);
+
+        NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle(builder);
+        style.bigText("你好，这是一个BigTextStyle风格的通知测试，\n 花间一壶酒，独酌无相亲。举杯邀明月，对应成三人。醒时同交欢，醉后各自归，永结无情游，相期邈云汉");
+
+        Notification notification = style.build();
+
+        notificationManager.notify((int) System.currentTimeMillis() / 1000, notification);
     }
 
-    private void sendBigTextStyleNofitication() {
+    private void sendBigTextStyleNotification() {
         Intent intent = new Intent(getContext(), DialogActivity.class);
         builder.setAutoCancel(true);
         builder.setContentTitle("title");
@@ -425,10 +434,12 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         builder.setTicker("ticker");
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
-        builder.setWhen(System.currentTimeMillis())
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Android 4.1 supports expandable notifications. In addition to normal notification view it is possible to define a big view which gets shown when notification is expanded. There are three styles to be used with the big view: big picture style, big text style, Inbox style. The following code demonstrates the usage of the BigTextStyle() which allows to use up to 256 dp."));
-        Notification notification = builder.build();
+        builder.setWhen(System.currentTimeMillis());
+        NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle(builder);
+        style.bigText("Android 4.1 supports expandable notifications. In addition to normal notification view it is possible to define a big view which gets shown when notification is expanded. There are three styles to be used with the big view: big picture style, big text style, Inbox style. The following code demonstrates the usage of the BigTextStyle() which allows to use up to 256 dp.");
+        style.setBigContentTitle("big style 通知");
+        style.setSummaryText("消息摘要");
+        Notification notification = style.build();
         notificationManager.notify(12, notification);
     }
 
