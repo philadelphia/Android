@@ -110,4 +110,5 @@ public class ShareFragment extends Fragment {
             return Objects.hash(broadband_id, item_name);
         }
     }
+
 }

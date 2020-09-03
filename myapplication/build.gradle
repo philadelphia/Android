@@ -54,5 +54,7 @@ dependencies {
     //动态权限申请框架
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
-
+    task A{
+        println "task A"
+    }
 }

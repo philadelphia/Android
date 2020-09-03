@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -134,8 +135,14 @@ public class MainActivity extends AppCompatActivity
 //        }
 //
 //        fab.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        Intent intent = new Intent(this, TestActivity.class);
-        startActivity(intent);
+
+        try {
+            Intent intent = new Intent(this, TestActivity.class);
+            startActivity(intent);
+        } catch (ActivityNotFoundException ex){
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "TestActivity not found", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
