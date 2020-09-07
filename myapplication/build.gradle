@@ -5,16 +5,11 @@ android {
 
     defaultConfig {
         applicationId "com.example.myapplication"
-        minSdkVersion 21
+        minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
-
-        packagingOptions {
-            exclude 'META-INF/rxjava.properties'
-        }
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -31,9 +26,7 @@ dependencies {
     implementation 'com.android.support:support-v4:24.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.google.code.gson:gson:2.8.1'
-    implementation 'com.android.volley:volley:1.1.0'
-//    implementation 'android.arch.navigation:navigation-fragment:1.0.0'
-//    implementation 'android.arch.navigation:navigation-ui:1.0.0'
+    implementation 'com.android.volley:volley:1.0.0'
     testImplementation 'junit:junit:4.12'
     implementation 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
@@ -58,11 +51,10 @@ dependencies {
 
 // 支持Gson解析
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
-//    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
-
-    implementation 'io.reactivex:rxjava:1.2.4'
     //动态权限申请框架
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
+    task A{
+        println "task A"
+    }
 }
