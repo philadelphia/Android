@@ -1,10 +1,10 @@
 package com.example.myapplication.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +13,6 @@ import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MyViewPagerAdapter;
 import com.example.myapplication.ui.fragment.other.AnimationFragment;
-import com.example.myapplication.ui.fragment.other.CameraFragment;
-import com.example.myapplication.ui.fragment.other.CustomViewFragment;
-import com.example.myapplication.ui.fragment.other.MultiMediaFragment;
 import com.example.myapplication.ui.fragment.other.NotificationFragment;
 import com.example.myapplication.ui.fragment.other.RxJavaFragment;
 import com.example.myapplication.ui.fragment.other.WebViewFragment;

@@ -1,7 +1,6 @@
 package com.example.myapplication.utils;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by Tao.ZT.Zhang on 2016/7/28.

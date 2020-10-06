@@ -17,47 +17,47 @@
 package com.example.myapplication.utils;
 
 import android.graphics.Canvas;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.*;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.*;
 import android.view.View;
 
 /**
- * Utility class for {@link android.support.v7.widget.helper.ItemTouchHelper} which handles item transformations for different
+ * Utility class for {@link androidx.recyclerview.widget.ItemTouchHelper} which handles item transformations for different
  * API versions.
  * <p/>
- * This class has methods that map to {@link android.support.v7.widget.helper.ItemTouchHelper.Callback}'s drawing methods. Default
- * implementations in {@link android.support.v7.widget.helper.ItemTouchHelper.Callback} call these methods with
+ * This class has methods that map to {@link androidx.recyclerview.widget.ItemTouchHelper.Callback}'s drawing methods. Default
+ * implementations in {@link androidx.recyclerview.widget.ItemTouchHelper.Callback} call these methods with
  * {@link RecyclerView.ViewHolder#itemView} and {@link ItemTouchUIUtil} makes necessary changes
  * on the View depending on the API level. You can access the instance of {@link ItemTouchUIUtil}
- * via {@link android.support.v7.widget.helper.ItemTouchHelper.Callback#getDefaultUIUtil()} and call its methods with the children
+ * via {@link androidx.recyclerview.widget.ItemTouchHelper.Callback#getDefaultUIUtil()} and call its methods with the children
  * of ViewHolder that you want to apply default effects.
  *
- * @see android.support.v7.widget.helper.ItemTouchHelper.Callback#getDefaultUIUtil()
+ * @see androidx.recyclerview.widget.ItemTouchHelper.Callback#getDefaultUIUtil()
  */
 public interface ItemTouchUIUtil {
 
     /**
-     * The default implementation for {@link android.support.v7.widget.helper.ItemTouchHelper.Callback#onChildDraw(Canvas,
+     * The default implementation for {@link androidx.recyclerview.widget.ItemTouchHelper.Callback#onChildDraw(Canvas,
      * RecyclerView, RecyclerView.ViewHolder, float, float, int, boolean)}
      */
     void onDraw(Canvas c, RecyclerView recyclerView, View view,
                 float dX, float dY, int actionState, boolean isCurrentlyActive);
 
     /**
-     * The default implementation for {@link android.support.v7.widget.helper.ItemTouchHelper.Callback#onChildDrawOver(Canvas,
+     * The default implementation for {@link androidx.recyclerview.widget.ItemTouchHelper.Callback#onChildDrawOver(Canvas,
      * RecyclerView, RecyclerView.ViewHolder, float, float, int, boolean)}
      */
     void onDrawOver(Canvas c, RecyclerView recyclerView, View view,
                     float dX, float dY, int actionState, boolean isCurrentlyActive);
 
     /**
-     * The default implementation for {@link android.support.v7.widget.helper.ItemTouchHelper.Callback#clearView(RecyclerView,
+     * The default implementation for {@link androidx.recyclerview.widget.ItemTouchHelper.Callback#clearView(RecyclerView,
      * RecyclerView.ViewHolder)}
      */
     void clearView(View view);
 
     /**
-     * The default implementation for {@link android.support.v7.widget.helper.ItemTouchHelper.Callback#onSelectedChanged(
+     * The default implementation for {@link androidx.recyclerview.widget.ItemTouchHelper.Callback#onSelectedChanged(
      * RecyclerView.ViewHolder, int)}
      */
     void onSelected(View view);

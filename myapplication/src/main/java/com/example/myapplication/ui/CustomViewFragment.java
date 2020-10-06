@@ -2,10 +2,10 @@ package com.example.myapplication.ui;
 
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +13,8 @@ import android.view.ViewGroup;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MyViewPagerAdapter;
-import com.example.myapplication.ui.fragment.customeview.ArcFragment;
 import com.example.myapplication.ui.fragment.customeview.CircleFragment;
 import com.example.myapplication.ui.fragment.customeview.ColorFragment;
-import com.example.myapplication.ui.fragment.customeview.HistoGramFragment;
-import com.example.myapplication.ui.fragment.customeview.LineFragment;
-import com.example.myapplication.ui.fragment.customeview.OvalFragment;
-import com.example.myapplication.ui.fragment.customeview.PathFragment;
-import com.example.myapplication.ui.fragment.customeview.PieChartViewFragment;
-import com.example.myapplication.ui.fragment.customeview.PointFragment;
 import com.example.myapplication.ui.fragment.customeview.RectFragment;
 import com.example.myapplication.ui.fragment.customeview.ShapeFragment;
 

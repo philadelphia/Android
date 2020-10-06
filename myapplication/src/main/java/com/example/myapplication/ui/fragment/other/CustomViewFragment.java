@@ -1,18 +1,15 @@
 package com.example.myapplication.ui.fragment.other;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
-import android.text.LoginFilter;
-import android.util.Log;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
@@ -20,12 +17,6 @@ import com.example.myapplication.adapter.MyViewPagerAdapter;
 import com.example.myapplication.ui.fragment.customeview.CircleFragment;
 import com.example.myapplication.ui.fragment.customeview.ColorFragment;
 import com.example.myapplication.ui.fragment.customeview.RectFragment;
-import com.example.myapplication.ui.fragment.manager.ActivityManagerFragment;
-import com.example.myapplication.ui.fragment.manager.PackageManagerFragment;
-import com.example.myapplication.ui.fragment.manager.PowerFragment;
-import com.example.myapplication.ui.fragment.manager.TestFragment;
-import com.example.myapplication.ui.fragment.manager.WindowManagerFragment;
-import com.example.myapplication.utils.NetworkUtil;
 
 import java.util.ArrayList;
 import java.util.List;

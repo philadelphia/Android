@@ -1,17 +1,11 @@
 package com.example.myapplication.customwidget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
-import android.text.TextPaint;
+
+import androidx.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.view.View;
-
-import com.example.myapplication.R;
 
 /**
  * TODO: document your custom view class.

@@ -17,12 +17,13 @@
 package com.example.myapplication.utils;
 
 import android.graphics.Canvas;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.*;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.*;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.view.View;
-import android.support.v7.recyclerview.R;
+
+import com.example.myapplication.R;
 
 
 /**
@@ -73,7 +74,7 @@ class ItemTouchUIUtilImpl {
         }
     }
 
-    static class Honeycomb implements android.support.v7.widget.helper.ItemTouchUIUtil {
+    static class Honeycomb implements androidx.recyclerview.widget.ItemTouchUIUtil {
 
         @Override
         public void clearView(View view) {
@@ -100,7 +101,7 @@ class ItemTouchUIUtilImpl {
         }
     }
 
-    static class Gingerbread implements android.support.v7.widget.helper.ItemTouchUIUtil {
+    static class Gingerbread implements androidx.recyclerview.widget.ItemTouchUIUtil {
 
         private void draw(Canvas c, RecyclerView parent, View view,
                 float dX, float dY) {
@@ -123,7 +124,7 @@ class ItemTouchUIUtilImpl {
         @Override
         public void onDraw(Canvas c, RecyclerView recyclerView, View view,
                 float dX, float dY, int actionState, boolean isCurrentlyActive) {
-            if (actionState != android.support.v7.widget.helper.ItemTouchHelper.ACTION_STATE_DRAG) {
+            if (actionState != androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_DRAG) {
                 draw(c, recyclerView, view, dX, dY);
             }
         }

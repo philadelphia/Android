@@ -2,9 +2,10 @@ package com.example.myapplication.utils;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
-import com.example.myapplication.utils.ItemTouchHelper;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.View;
 
