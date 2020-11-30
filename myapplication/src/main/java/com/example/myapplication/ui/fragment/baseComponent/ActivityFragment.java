@@ -3,52 +3,28 @@ package com.example.myapplication.ui.fragment.baseComponent;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
+import android.view.ViewGroup;
 
 import com.example.myapplication.R;
+import com.example.myapplication.TestActivity;
 import com.example.myapplication.base.BaseLazyLoadFragment;
+import com.example.myapplication.databinding.FragmentActivityBinding;
 import com.example.myapplication.ui.activity.SecondActivity;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
 public class ActivityFragment extends BaseLazyLoadFragment implements View.OnClickListener {
-
-
+    private FragmentActivityBinding binding;
     private final String TAG = ActivityFragment.class.getSimpleName();
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-    @BindView(R.id.scroll_view)
-    ScrollView scrollView;
-    @BindView(R.id.btn_jump)
-    Button btnJump;
-    @BindView(R.id.btn_standard)
-    Button btnStandard;
-    @BindView(R.id.btn_singleTop)
-    Button btnSingleTop;
-    @BindView(R.id.btn_singleTask)
-    Button btnSingleTask;
-    @BindView(R.id.btn_singleInstance)
-    Button btnSingleInstance;
-    @BindView(R.id.btn_explode)
-    Button btnExplode;
-    @BindView(R.id.btn_slide)
-    Button btnSlide;
-    @BindView(R.id.btn_fade)
-    Button btnFade;
-    @BindView(R.id.btn_showStatsBar)
-    Button btnShowStatsBar;
-    @BindView(R.id.btn_hideStatusBar)
-    Button btnHideStatusBar;
-    @BindView(R.id.btn_showNavigationBar)
-    Button btnShowNavigationBar;
-    @BindView(R.id.btn_hideNavigationBar)
-    Button btnHideNavigationBar;
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentActivityBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
 
     @Override
     protected int getLayoutID() {
@@ -57,7 +33,19 @@ public class ActivityFragment extends BaseLazyLoadFragment implements View.OnCli
 
     @Override
     protected void initView() {
-
+        binding.btnLifeCircle.setOnClickListener(this);
+        binding.btnJump.setOnClickListener(this);
+        binding.btnStandard.setOnClickListener(this);
+        binding.btnSingleTop.setOnClickListener(this);
+        binding.btnSingleTask.setOnClickListener(this);
+        binding.btnSingleInstance.setOnClickListener(this);
+        binding.btnExplode.setOnClickListener(this);
+        binding.btnSlide.setOnClickListener(this);
+        binding.btnFade.setOnClickListener(this);
+        binding.btnShowStatsBar.setOnClickListener(this);
+        binding.btnHideStatusBar.setOnClickListener(this);
+        binding.btnShowNavigationBar.setOnClickListener(this);
+        binding.btnHideNavigationBar.setOnClickListener(this);
     }
 
     @Override
@@ -67,18 +55,18 @@ public class ActivityFragment extends BaseLazyLoadFragment implements View.OnCli
 
     @Override
     protected void showProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
+        binding.progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected void dismissProgressBar() {
-        progressBar.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.GONE);
     }
 
     @Override
     protected void onDataLoadSucceed() {
         Log.i(TAG, "onDataLoadSucceed: ");
-        scrollView.setVisibility(View.VISIBLE);
+        binding.scrollView.setVisibility(View.VISIBLE);
     }
 
 
@@ -93,7 +81,11 @@ public class ActivityFragment extends BaseLazyLoadFragment implements View.OnCli
         Log.i(TAG, "explodeToSecondActivity: ");
         Intent intent = new Intent(getActivity(), SecondActivity.class);
         intent.putExtra("Flag", "explode");
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+        } else {
+            startActivity(intent);
+        }
     }
 
 
@@ -101,7 +93,11 @@ public class ActivityFragment extends BaseLazyLoadFragment implements View.OnCli
         Log.i(TAG, "slideToSecondActivity: ");
         Intent intent = new Intent(getActivity(), SecondActivity.class);
         intent.putExtra("Flag", "slide");
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+        } else {
+            startActivity(intent);
+        }
 
     }
 
@@ -110,24 +106,26 @@ public class ActivityFragment extends BaseLazyLoadFragment implements View.OnCli
         Log.i(TAG, "fadeToSecondActivity: ");
         Intent intent = new Intent(getActivity(), SecondActivity.class);
         intent.putExtra("Flag", "fade");
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+        } else {
+            startActivity(intent);
+        }
     }
 
 
     @Override
-    @OnClick({R.id.btn_jump, R.id.btn_standard, R.id.btn_singleTop, R.id.btn_singleTask, R.id.btn_singleInstance,
-            R.id.btn_explode, R.id.btn_slide, R.id.btn_fade, R.id.btn_showStatsBar, R.id.btn_hideStatusBar, R.id.btn_showNavigationBar, R.id.btn_hideNavigationBar})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_jump:
-                jumpToSecondActivity();
+            case R.id.btn_life_circle:
+                Intent intent = new Intent(this.getContext(), TestActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.btn_standard:
-                Intent intent = new Intent(getActivity(), SecondActivity.class);
-                intent.putExtra("Flag", "normal");
-                startActivity(intent);
+                Intent intentStand = new Intent(getActivity(), SecondActivity.class);
+                intentStand.putExtra("Flag", "normal");
+                startActivity(intentStand);
                 break;
 
             case R.id.btn_singleTop:
@@ -192,11 +190,9 @@ public class ActivityFragment extends BaseLazyLoadFragment implements View.OnCli
 
     private void setNavigationBarVisiable(boolean flag) {
         if (flag) {
-            btnShowNavigationBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-
+            binding.btnShowNavigationBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         } else {
-            btnShowNavigationBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-            getActivity().getActionBar().hide();
+            binding.btnShowNavigationBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     }
 

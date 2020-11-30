@@ -29,6 +29,13 @@
             android:paddingBottom="20dp">
 
             <Button
+                android:id="@+id/btn_life_circle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="生命周期" />
+
+            <Button
                 android:id="@+id/btn_jump"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,11 +49,6 @@
                 android:gravity="center"
                 android:text="standard" />
 
-            <LinearLayout
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@android:drawable/toast_frame" />
 
             <Button
                 android:id="@+id/btn_singleTop"
