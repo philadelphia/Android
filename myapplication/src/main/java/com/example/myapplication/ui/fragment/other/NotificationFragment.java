@@ -3,6 +3,7 @@ package com.example.myapplication.ui.fragment.other;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -17,10 +18,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,12 +26,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+
 import com.example.myapplication.R;
+import com.example.myapplication.databinding.FragmentNotificationBinding;
 import com.example.myapplication.ui.activity.DialogActivity;
 import com.example.myapplication.ui.activity.SecondActivity;
 
@@ -47,40 +50,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class NotificationFragment extends Fragment implements View.OnClickListener {
     private final String TAG = NotificationFragment.class.getSimpleName();
-    @BindView(R.id.btn_send)
-    Button btnSend;
-    @BindView(R.id.btn_sendBigViewNotification)
-    Button btnSendBigViewNotification;
-    @BindView(R.id.btn_sendcollapse)
-    Button btnSendcollapse;
-    @BindView(R.id.btn_sendhang)
-    Button btnSendhang;
-    @BindView(R.id.btn_bigTextStyle)
-    Button btnBigTextStyle;
-    @BindView(R.id.btn_InboxStyle)
-    Button btnInboxStyle;
-    @BindView(R.id.btn_cancel)
-    Button btnCancel;
-    @BindView(R.id.btn_image)
-    Button btnImage;
-    @BindView(R.id.btn_take_photo)
-    Button btnTakePhoto;
-    @BindView(R.id.btn_take_photo_uri)
-    Button btnTakePhotoUri;
-    @BindView(R.id.img)
-    ImageView imageView;
     private NotificationManager notificationManager;
     private NotificationCompat.Builder builder;
     private Context context;
+    public static final String CHANNEL_NORMAL_NOTIFICATION = "normal_notification";
+    public static final String CHANNEL_IMPORTANT_NOTIFICATION = "important_notification";
 
     private File file;
     public static String fileName;
+    private FragmentNotificationBinding viewBinding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,17 +75,42 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView");
         context = getContext();
-        notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        builder = new NotificationCompat.Builder(getContext());
+        notificationManager = (NotificationManager) getActivity().getSystemService(NOTIFICATION_SERVICE);
+        builder = new NotificationCompat.Builder(getContext(), CHANNEL_NORMAL_NOTIFICATION);
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+        viewBinding = FragmentNotificationBinding.inflate(inflater, container, false);
+        return viewBinding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setClickListener();
+    }
+
+    private void setClickListener() {
+        viewBinding.btnCancel.setOnClickListener(this::onClick);
+        viewBinding.btnCreateNotificationChannel.setOnClickListener(this);
+        viewBinding.btnDeleteNotificationChannel.setOnClickListener(this);
+        viewBinding.btnSend.setOnClickListener(this);
+        viewBinding.btnSendMessage.setOnClickListener(this);
+        viewBinding.btnBigTextStyle.setOnClickListener(this);
+        viewBinding.btnInboxStyle.setOnClickListener(this);
+        viewBinding.btnSendBigViewNotification.setOnClickListener(this);
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+            NotificationChannel notificationChannelNormal = new NotificationChannel(CHANNEL_NORMAL_NOTIFICATION, "普通通知", NotificationManager.IMPORTANCE_LOW);
+            NotificationChannel notificationChannelImportant = new NotificationChannel(CHANNEL_IMPORTANT_NOTIFICATION, "重要通知", NotificationManager.IMPORTANCE_LOW);
+            notificationManager.createNotificationChannel(notificationChannelNormal);
+            notificationManager.createNotificationChannel(notificationChannelImportant);
+        }
     }
 
     private void sendNotification() {
-        Log.i(TAG, "sendNotification");
 //        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.baidu.com"));
         Intent intent = new Intent(getContext(), DialogActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -116,9 +125,27 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
         builder.setWhen(System.currentTimeMillis());
         Notification notification = builder.build();
-        notificationManager.notify(12, notification);
+        notificationManager.notify(1, notification);
+
     }
 
+    private void sendImportantNotification(){
+        Intent intent = new Intent(getContext(), DialogActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(), 0, intent, 0);
+        builder.setChannelId(CHANNEL_IMPORTANT_NOTIFICATION);
+        builder.setContentIntent(pendingIntent);
+        builder.setAutoCancel(true);
+        builder.setContentTitle("title");
+        builder.setContentText("这是一条重要通知");
+        builder.setSubText("subText");
+        builder.setTicker("ticker");
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
+        builder.setWhen(System.currentTimeMillis());
+        Notification notification = builder.build();
+        notificationManager.notify(2, notification);
+    }
 
     private void sendBigViewNotification() {
         Intent intent = new Intent(getContext(), DialogActivity.class);
@@ -239,7 +266,7 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
 
     private void sendNotification1() {
         Log.i(TAG, "sendNotification1: ");
-        NotificationManager mManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mManager = (NotificationManager) getContext().getSystemService(NOTIFICATION_SERVICE);
         Notification.Builder builder = new Notification.Builder(getContext());
 
         builder.setTicker("正在截屏...");
@@ -355,15 +382,24 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    @OnClick({R.id.btn_send, R.id.btn_sendBigViewNotification, R.id.btn_sendcollapse,
+    @OnClick({R.id.btn_create_notification_channel,R.id.btn_delete_notification_channel, R.id.btn_send, R.id.btn_sendBigViewNotification, R.id.btn_sendcollapse,
             R.id.btn_sendhang, R.id.btn_bigTextStyle, R.id.btn_InboxStyle,
             R.id.btn_cancel, R.id.btn_image, R.id.btn_take_photo, R.id.btn_take_photo_uri})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btn_create_notification_channel:
+                createNotificationChannel();
+                break;
+            case R.id.btn_delete_notification_channel:
+                NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                manager.deleteNotificationChannel(CHANNEL_NORMAL_NOTIFICATION);
+                break;
             case R.id.btn_send:
                 sendNotification();
                 break;
-
+            case R.id.btn_send_message:
+                sendImportantNotification();
+                break;
             case R.id.btn_sendBigViewNotification:
                 sendBigViewNotification();
                 break;
@@ -489,7 +525,7 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
                     if (data != null && data.getExtras() != null) {
                         //使用这个方式和使用data.getdata()获取Uri方式得到的图片大小是一样的，
                         Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                        imageView.setImageBitmap(bitmap);
+                        viewBinding.img.setImageBitmap(bitmap);
                         int byteCount = bitmap.getByteCount();
                         Log.i(TAG, "onActivityResult: bytecount ==" + byteCount / 1024 + "K");
                         //第二种方式取图片，从URI里面取，部分手机取不到URI需要从Content Provider里面取，
@@ -502,7 +538,7 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
                         //直接使用MediaStore也可以获取Bitmap对象
                         showImage(uri);
                         //第二种方法展示Image View
-                        showImage(uri, imageView);
+                        showImage(uri, viewBinding.img);
                         Log.i(TAG, "onActivityResult: uri==\t" + uri.toString());
                     }
                 }
@@ -515,11 +551,11 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
 //                    options.inSampleSize = 2;2
                     Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
                     Log.i(TAG, "onActivityResult: byteCount ==" + bitmap.getByteCount() / 1024 / 1024 + "M");
-                    imageView.setImageBitmap(bitmap);
+                    viewBinding.img.setImageBitmap(bitmap);
                     Log.i(TAG, "bitmap: width =  " + bitmap.getWidth());
                     Log.i(TAG, "bitmap: height =  " + bitmap.getHeight());
-                    Log.i(TAG, "imageView: width =  " + imageView.getWidth());
-                    Log.i(TAG, "imageView: height=" + imageView.getHeight());
+                    Log.i(TAG, "imageView: width =  " + viewBinding.img.getWidth());
+                    Log.i(TAG, "imageView: height=" + viewBinding.img.getHeight());
                 }
                 break;
             default:
@@ -529,7 +565,7 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
     private void showImage(Uri uri) {
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-            imageView.setImageBitmap(bitmap);
+            viewBinding.img.setImageBitmap(bitmap);
             int byteCount = bitmap.getByteCount();
             Log.i(TAG, "showImage: byteCount ==" + byteCount / 1024 + "K");
         } catch (IOException e) {
@@ -537,9 +573,9 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    private void showImage(Uri uri, ImageView imageView){
+    private void showImage(Uri uri, ImageView imageView) {
         try {
-            ParcelFileDescriptor parcelFileDescriptor = getActivity().getContentResolver().openFileDescriptor(uri,"r");
+            ParcelFileDescriptor parcelFileDescriptor = getActivity().getContentResolver().openFileDescriptor(uri, "r");
             FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
             Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
             imageView.setImageBitmap(bitmap);

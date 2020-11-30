@@ -10,7 +10,26 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical">
-        <!-- TODO: Update blank fragment layout -->
+
+        <Button
+            android:id="@+id/btn_create_notification_channel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="发送通知频道"
+            android:textSize="20sp" />
+
+
+        <Button
+            android:id="@+id/btn_delete_notification_channel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="删除通知频道"
+            android:textSize="20sp" />
+
         <Button
             android:id="@+id/btn_send"
             android:layout_width="match_parent"
@@ -18,6 +37,15 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="发送普通通知"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn_send_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="发送重要通知"
             android:textSize="20sp" />
 
         <Button
