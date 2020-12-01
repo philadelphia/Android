@@ -1,22 +1,18 @@
 package com.example.myapplication.ui.fragment.baseComponent;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
+import android.view.ViewGroup;
 
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseLazyLoadFragment;
-
-import butterknife.BindView;
+import com.example.myapplication.databinding.FragmentContentProviderBinding;
 
 public class ContentProviderFragment extends BaseLazyLoadFragment {
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-    @BindView(R.id.scroll_view)
-    ScrollView scrollView;
-
+    private FragmentContentProviderBinding binding;
 
     @Override
     protected int getLayoutID() {
@@ -28,33 +24,27 @@ public class ContentProviderFragment extends BaseLazyLoadFragment {
 
     }
 
-
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentContentProviderBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+
     }
 
     @Override
     protected void showProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
+        binding.progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected void dismissProgressBar() {
-        progressBar.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.GONE);
     }
 
     @Override
     protected void onDataLoadSucceed() {
         Log.i(TAG, "onDataLoadSucceed: ");
-        scrollView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public boolean getUserVisibleHint() {
-        Log.i(TAG, "getUserVisibleHint: " + super.getUserVisibleHint());
-        return super.getUserVisibleHint();
-
+        binding.scrollView.setVisibility(View.VISIBLE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

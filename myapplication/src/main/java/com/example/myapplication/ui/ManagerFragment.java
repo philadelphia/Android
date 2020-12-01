@@ -3,24 +3,24 @@ package com.example.myapplication.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+
 import com.example.myapplication.MainActivity;
-import com.example.myapplication.R;
-import com.example.myapplication.adapter.MyViewPagerAdapter;
 import com.example.myapplication.ui.fragment.manager.ActivityManagerFragment;
 import com.example.myapplication.ui.fragment.manager.PackageManagerFragment;
 import com.example.myapplication.ui.fragment.manager.PowerFragment;
 import com.example.myapplication.ui.fragment.manager.TestFragment;
 import com.example.myapplication.ui.fragment.manager.WindowManagerFragment;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +30,11 @@ import java.util.List;
  */
 public class ManagerFragment extends Fragment {
     private final String TAG = OtherFragment.class.getSimpleName();
-    private ViewPager mViewPager;
-    private final String[] mTabTitles = {"Package", "Test", "Activity", "Power", "WindowManager"};
-    private List<Fragment> mTabFragments ;
-    private MyViewPagerAdapter mPagerAdapter;
     private TabLayout mTablayout;
     private Toolbar toolbar;
-
+    private FragmentPagerAdapter mPagerAdapter;
+    private final List<FragmentEntity> fragmentEntityList = new ArrayList<>();
+    private com.example.myapplication.databinding.FragmentManagerBinding binding;
 
     @Override
     public void onAttach(Context context) {
@@ -53,11 +51,15 @@ public class ManagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_manager, null);
+        Log.i(TAG, "onCreateView: ");
+        binding = com.example.myapplication.databinding.FragmentManagerBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         initView(view);
         setUpViewPagerAndTabs();
-        return  view;
     }
 
     @Override
@@ -68,23 +70,41 @@ public class ManagerFragment extends Fragment {
 
 
     public void initView(View view) {
-        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         mTablayout = ((MainActivity) getActivity()).getmTabLayout();
         toolbar = ((MainActivity) getActivity()).getToolbar();
         mTablayout.setVisibility(View.VISIBLE);
-        mTablayout.setTabMode (TabLayout.MODE_FIXED);
+        mTablayout.setTabMode(TabLayout.MODE_FIXED);
     }
 
-    private void setUpViewPagerAndTabs (){
-        mTabFragments = new ArrayList<>();
-        mTabFragments.add(new PackageManagerFragment());
-        mTabFragments.add(new TestFragment());
-        mTabFragments.add(new ActivityManagerFragment());
-        mTabFragments.add(new PowerFragment());
-        mTabFragments.add(new WindowManagerFragment());
-        mPagerAdapter = new MyViewPagerAdapter (this.getChildFragmentManager(), mTabFragments, mTabTitles);
-        mViewPager.setAdapter (mPagerAdapter);
-        mTablayout.setupWithViewPager (mViewPager);
+    private void setUpViewPagerAndTabs() {
+        fragmentEntityList.clear();
+        fragmentEntityList.add(new FragmentEntity("Package", new PackageManagerFragment()));
+        fragmentEntityList.add(new FragmentEntity("Test", new TestFragment()));
+        fragmentEntityList.add(new FragmentEntity("Activity", new ActivityManagerFragment()));
+        fragmentEntityList.add(new FragmentEntity("Power", new PowerFragment()));
+        fragmentEntityList.add(new FragmentEntity("PowWindowManager", new WindowManagerFragment()));
+
+
+        mPagerAdapter = new FragmentPagerAdapter(this.getChildFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+            @NonNull
+            @Override
+            public Fragment getItem(int position) {
+                return fragmentEntityList.get(position).getFragment();
+            }
+
+            @Override
+            public int getCount() {
+                return fragmentEntityList.size();
+            }
+
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return fragmentEntityList.get(position).getTitle();
+            }
+        };
+        binding.viewPager.setAdapter(mPagerAdapter);
+        mTablayout.setupWithViewPager(binding.viewPager);
     }
 
 }

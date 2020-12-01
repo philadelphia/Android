@@ -49,11 +49,6 @@ public class ActivityFragment extends BaseLazyLoadFragment implements View.OnCli
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-    }
-
-    @Override
     protected void showProgressBar() {
         binding.progressBar.setVisibility(View.VISIBLE);
     }

@@ -4,15 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +24,6 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment {
     protected Activity mActivity;
     protected OnFragmentInteractionListener mListener;
-    protected Unbinder bind;
     protected String TAG;
 
     public BaseFragment() {
@@ -40,7 +38,7 @@ public abstract class BaseFragment extends Fragment {
         Log.i(TAG, "onAttach: ");
         this.mActivity = ((Activity) context);
     }
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +53,6 @@ public abstract class BaseFragment extends Fragment {
                              Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: ");
         View view = inflater.inflate(getLayoutID(), container, false);
-        bind = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -100,9 +97,6 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         Log.i(TAG, "onDestroyView: ");
-        if (bind != null) {
-            bind.unbind();
-        }
     }
 
     @Override
@@ -137,7 +131,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initView();
 
-  
+
 }
 
 

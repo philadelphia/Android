@@ -3,23 +3,22 @@ package com.example.myapplication.ui.fragment.manager;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.databinding.FragmentActivityManagerBinding;
 
 public class ActivityManagerFragment extends Fragment implements View.OnClickListener {
-
     private static final String TAG = "ActivityManagerFragment";
 
-    private Button btn_ScrollBy;
-    private Button btn_ScrollTo;
-
+    private FragmentActivityManagerBinding binding;
 
     @Override
     public void onAttach(Context context) {
@@ -35,11 +34,15 @@ public class ActivityManagerFragment extends Fragment implements View.OnClickLis
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_activity_manager, null);
-        initView(view);
-        return view;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentActivityManagerBinding.inflate(inflater, container, false);
+        return binding.getRoot();
 
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        initView();
     }
 
     @Override
@@ -55,11 +58,9 @@ public class ActivityManagerFragment extends Fragment implements View.OnClickLis
         Log.i(TAG, "onResume: ");
     }
 
-    private void initView(View view) {
-        btn_ScrollBy = (Button) view.findViewById(R.id.btn_testBy);
-        btn_ScrollTo = (Button) view.findViewById(R.id.btn_testTo);
-        btn_ScrollBy.setOnClickListener(this);
-        btn_ScrollTo.setOnClickListener(this);
+    private void initView() {
+        binding.btnTestBy.setOnClickListener(this);
+        binding.btnTestTo.setOnClickListener(this);
     }
 
 
@@ -80,21 +81,21 @@ public class ActivityManagerFragment extends Fragment implements View.OnClickLis
 
     private void testScrollBy() {
         int[] locations = new int[2];
-        btn_ScrollBy.getLocationOnScreen(locations);
+        binding.btnTestBy.getLocationOnScreen(locations);
         Log.i(TAG, "testScroll: locations x---" + locations[0] + "\t" + "y--- " + locations[1]);
-        Log.i(TAG, "testScroll: rawx" + btn_ScrollBy.getRight());
-        btn_ScrollBy.offsetLeftAndRight(400);
-        Log.i(TAG, "testScroll: margin left" + btn_ScrollBy.getLeft());
+        Log.i(TAG, "testScroll: rawx" + binding.btnTestBy.getRight());
+        binding.btnTestBy.offsetLeftAndRight(400);
+        Log.i(TAG, "testScroll: margin left" + binding.btnTestBy.getLeft());
     }
 
 
     private void testeScrollTo() {
         int[] locations = new int[2];
-        btn_ScrollTo.getLocationOnScreen(locations);
+        binding.btnTestTo.getLocationOnScreen(locations);
         Log.i(TAG, "testScroll: locations x--- " + locations[0] + "\t" + "y--- " + locations[1]);
-        Log.i(TAG, "testScroll: rawx" + btn_ScrollTo.getRight());
-        btn_ScrollTo.scrollTo(-10, -10);
-        Log.i(TAG, "testScroll: margin left " + btn_ScrollTo.getLeft());
+        Log.i(TAG, "testScroll: rawx" + binding.btnTestTo.getRight());
+        binding.btnTestTo.scrollTo(-10, -10);
+        Log.i(TAG, "testScroll: margin left " + binding.btnTestTo.getLeft());
 
     }
 

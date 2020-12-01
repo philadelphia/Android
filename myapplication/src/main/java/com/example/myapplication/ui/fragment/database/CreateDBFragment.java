@@ -2,49 +2,50 @@ package com.example.myapplication.ui.fragment.database;
 
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.myapplication.R;
-import com.example.myapplication.db.MyDBHelper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import com.example.myapplication.R;
+import com.example.myapplication.databinding.FragmentBlank2Binding;
+import com.example.myapplication.db.MyDBHelper;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CreateDBFragment extends Fragment {
-
+public class CreateDBFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "CreateDBFragment";
-    private static final  String TABLE_NAME = "app.db";
-    @BindView(R.id.btn_createDB)
-    Button btnCreateDB;
-    @BindView(R.id.btn_deleteDB)
-    Button btnDeleteDB;
-    @BindView(R.id.btn_modifyDB)
-    Button btnModifyDB;
-    @BindView(R.id.query_DB)
-    Button queryDB;
+    private static final String TABLE_NAME = "app.db";
+
 
     private MyDBHelper dbHelper;
 
+    private FragmentBlank2Binding binding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_blank2, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentBlank2Binding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
-    @OnClick({R.id.btn_createDB, R.id.btn_deleteDB,R.id.btn_modifyDB, R.id.query_DB})
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        initView();
+    }
+
+    private void initView() {
+        binding.btnCreateDB.setOnClickListener(this);
+        binding.btnDeleteDB.setOnClickListener(this);
+        binding.btnModifyDB.setOnClickListener(this);
+        binding.btnQueryDB.setOnClickListener(this);
+    }
+
     public void onClick(View view) {
         dbHelper = MyDBHelper.getInstance(getContext());
         switch (view.getId()) {
@@ -60,7 +61,7 @@ public class CreateDBFragment extends Fragment {
                 Log.i(TAG, "onClick: btn_modifyDB");
                 btnModifyDB();
                 break;
-            case R.id.query_DB:
+            case R.id.btn_queryDB:
                 Log.i(TAG, "onClick: query_DB");
                 queryDB();
                 break;

@@ -6,16 +6,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.view.ActionMode;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.ItemTouchHelper.Callback;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -26,22 +16,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.view.ActionMode;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.ItemTouchHelper.Callback;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
+import com.example.myapplication.databinding.FragmentPackageManagerBinding;
 import com.example.myapplication.ui.activity.ThirdActivity;
 import com.example.myapplication.utils.ItemMoveCallBack;
 import com.example.myapplication.utils.OnRecyclerViewItemClickListener;
 import com.example.myapplication.utils.OnStartDragListener;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,52 +51,57 @@ public class PackageManagerFragment extends Fragment implements OnStartDragListe
     private List<PackageInfo> installedPackages = new ArrayList<>();
     private List<String> pkgNameList;
     private RecyclerViewAdapter myAdapter;
-//    private RecyclerViewItemTouchAdapter myAdapter;
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-    @BindView(R.id.flab)
-    FloatingActionButton flb;
-//    @BindView(R.id.coorlayout)
-//    CoordinatorLayout coorlayout;
+    //    private RecyclerViewItemTouchAdapter myAdapter;
+
 
     private static final String TAG = "PackageManagerFragment";
     private ActionMode actionMode;
     private ItemTouchHelper itemTouchHelper;
+    private FragmentPackageManagerBinding binding;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: ");
-        final View view = inflater.inflate(R.layout.fragment_package_manager, container, false);
+        binding = FragmentPackageManagerBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        initView();
+        initData();
+    }
+
+    private void initView() {
         packageManager = getContext().getPackageManager();
-        ButterKnife.bind(this, view);
         ((MainActivity) getActivity()).getFloatingActionBar().setVisibility(View.GONE);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
 //        myAdapter = new RecyclerViewItemTouchAdapter(installedPackages);
-        myAdapter = new RecyclerViewAdapter(installedPackages,this);
-        recyclerView.setAdapter(myAdapter);
-//        recyclerView.addItemDecoration(new MyItemDecoration(getActivity(),LinearLayoutManager.VERTICAL, R.drawable.itemdecoration));
-//        recyclerView.addItemDecoration(new MyItemDecoration1(LinearLayoutManager.VERTICAL));
-//        recyclerView.addItemDecoration(new MyItemDecoration2(LinearLayoutManager.VERTICAL));
-//        recyclerView.addItemDecoration(new TimeLineItemDecoration());
+        myAdapter = new RecyclerViewAdapter(installedPackages, this);
+        binding.recyclerView.setAdapter(myAdapter);
+//        binding.recyclerView.addItemDecoration(new MyItemDecoration(getActivity(),LinearLayoutManager.VERTICAL, R.drawable.itemdecoration));
+//        binding.recyclerView.addItemDecoration(new MyItemDecoration1(LinearLayoutManager.VERTICAL));
+//        binding.recyclerView.addItemDecoration(new MyItemDecoration2(LinearLayoutManager.VERTICAL));
+//        binding.recyclerView.addItemDecoration(new TimeLineItemDecoration());
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
-                LinearLayout.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        binding.recyclerView.setLayoutManager(linearLayoutManager);
 
 
 //        itemTouchHelper = new ItemTouchHelper(new ItemTouchCallBack(getActivity(), myAdapter));
 //        MessageItemTouchCallBack itemTouchCallBack = new MessageItemTouchCallBack(myAdapter);
 //        ItemSwipeCallBack itemTouchCallBack = new ItemSwipeCallBack(getContext(),myAdapter);
-        ItemMoveCallBack itemTouchCallBack = new ItemMoveCallBack(getContext(),myAdapter);
+        ItemMoveCallBack itemTouchCallBack = new ItemMoveCallBack(getContext(), myAdapter);
         itemTouchHelper = new ItemTouchHelper(itemTouchCallBack);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView);
 
-        recyclerView.addOnItemTouchListener(new OnRecyclerViewItemClickListener(recyclerView) {
+        binding.recyclerView.addOnItemTouchListener(new OnRecyclerViewItemClickListener(binding.recyclerView) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-                Snackbar.make(recyclerView, "ddd", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(binding.recyclerView, "ddd", Snackbar.LENGTH_SHORT).show();
                 Log.i(TAG, "onItemClick: " + viewHolder.getLayoutPosition());
                 Log.i(TAG, "onItemClick: " + viewHolder.hashCode());
 
@@ -110,7 +115,7 @@ public class PackageManagerFragment extends Fragment implements OnStartDragListe
                 }
             }
         });
-//        registerForContextMenu(recyclerView);
+//        registerForContextMenu(binding.recyclerView);
 
 //        flb.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -145,7 +150,7 @@ public class PackageManagerFragment extends Fragment implements OnStartDragListe
 //                }
 //            }
 //        });
-        flb.setOnClickListener(new View.OnClickListener() {
+        binding.flab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ThirdActivity.class);
@@ -156,16 +161,12 @@ public class PackageManagerFragment extends Fragment implements OnStartDragListe
 //                location[0] += location[0] + flb.getWidth() / 2;
                 intent.putExtra("location", location);
                 startActivity(intent);
-                getActivity().overridePendingTransition(0,0);
+                getActivity().overridePendingTransition(0, 0);
 
             }
         });
 
 //        setOnSrollListener();
-
-        initData();
-        return view;
-
     }
 
 //    private void setOnSrollListener() {
@@ -218,7 +219,7 @@ public class PackageManagerFragment extends Fragment implements OnStartDragListe
     public void onDestroyView() {
         Log.i(TAG, "onDestroyView: ");
         super.onDestroyView();
-        unregisterForContextMenu(recyclerView);
+        unregisterForContextMenu(binding.recyclerView);
     }
 
     @Override
@@ -321,9 +322,9 @@ public class PackageManagerFragment extends Fragment implements OnStartDragListe
                     contentView.setAlpha(alpha);
                     //绘制时需调用平移动画，否则滑动看不到反馈
                     contentView.setTranslationX(dX);
-                    if (dX < contentView.getWidth() / 2){
+                    if (dX < contentView.getWidth() / 2) {
                         viewHolder.itemView.setTranslationX(contentView.getWidth() / 2);
-                        View view ;
+                        View view;
 
                     }
                 } else {
@@ -418,7 +419,7 @@ public class PackageManagerFragment extends Fragment implements OnStartDragListe
         Log.i(TAG, "deleteItem: " + position);
         installedPackages.remove(position);
         myAdapter.notifyItemRemoved(position);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
 

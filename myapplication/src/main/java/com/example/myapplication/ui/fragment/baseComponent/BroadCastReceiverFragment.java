@@ -7,35 +7,22 @@ import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseLazyLoadFragment;
+import com.example.myapplication.databinding.FragmentBroadCastReceiverBinding;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 
-public class BroadCastReceiverFragment extends BaseLazyLoadFragment {
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-    @BindView(R.id.scroll_view)
-    ScrollView scrollView;
-
-    @BindView(R.id.btn_openWiFi)
-    Button btnOpenWiFi;
-    @BindView(R.id.btn_stopWiFi)
-    Button btnStopWiFi;
-
-    @BindView(R.id.btn_wifiStatus)
-    Button btnWifiStatus;
+public class BroadCastReceiverFragment extends BaseLazyLoadFragment implements View.OnClickListener {
     private IntentFilter intentFilter;
     private MyNetworkChangeReceiver myNetworkChangeReceiver;
     private WifiManager wifiManager;
-
+    private FragmentBroadCastReceiverBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +35,11 @@ public class BroadCastReceiverFragment extends BaseLazyLoadFragment {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentBroadCastReceiverBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
 
     @Override
     public void onResume() {
@@ -74,40 +66,26 @@ public class BroadCastReceiverFragment extends BaseLazyLoadFragment {
 
     @Override
     protected void initView() {
-
-    }
-
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
+        binding.btnOpenWiFi.setOnClickListener(this);
+        binding.btnStopWiFi.setOnClickListener(this);
     }
 
     @Override
     protected void showProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
+        binding.progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected void dismissProgressBar() {
-        progressBar.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.GONE);
     }
 
     @Override
     protected void onDataLoadSucceed() {
         Log.i(TAG, "onDataLoadSucceed: ");
-        scrollView.setVisibility(View.VISIBLE);
+        binding.scrollView.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public boolean getUserVisibleHint() {
-        Log.i(TAG, "getUserVisibleHint: " + super.getUserVisibleHint());
-        return super.getUserVisibleHint();
-
-    }
-
-
-    @OnClick({R.id.btn_openWiFi, R.id.btn_stopWiFi, R.id.btn_wifiStatus})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_openWiFi:
@@ -122,7 +100,6 @@ public class BroadCastReceiverFragment extends BaseLazyLoadFragment {
     }
 
 
-
     public class MyNetworkChangeReceiver extends BroadcastReceiver {
         public MyNetworkChangeReceiver() {
         }
@@ -130,7 +107,7 @@ public class BroadCastReceiverFragment extends BaseLazyLoadFragment {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Toast.makeText(context, "network status changed"  , Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "network status changed", Toast.LENGTH_SHORT).show();
             String wifiStatus = null;
             switch (wifiManager.getWifiState()) {
                 case 0:
@@ -151,7 +128,7 @@ public class BroadCastReceiverFragment extends BaseLazyLoadFragment {
                     break;
 
             }
-            btnWifiStatus.setText("wifiStatus :" + wifiStatus);
+            binding.btnWifiStatus.setText("wifiStatus :" + wifiStatus);
 
         }
     }

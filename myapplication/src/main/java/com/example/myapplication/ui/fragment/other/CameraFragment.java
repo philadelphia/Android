@@ -14,42 +14,35 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.myapplication.R;
+import com.example.myapplication.databinding.FragmentCameraBinding;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CameraFragment extends Fragment {
+public class CameraFragment extends Fragment implements View.OnClickListener {
 
-
-    @BindView(R.id.btn_takePhoto)
-    Button btnTakePhoto;
-    @BindView(R.id.imgView)
-    ImageView imgView;
-    @BindView(R.id.btn_chosePhotoFromablum)
-    Button btnChosePhotoFromablum;
 
     private Uri imageUri;
     private final static int TAKE_PHOTO = 1;
     private final static int CHOSE_PHOTO = 2;
     private final static int CROP_PHOTO = 3;
 
+    private FragmentCameraBinding binding;
 
     public CameraFragment() {
         // Required empty public constructor
@@ -58,13 +51,24 @@ public class CameraFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_camera, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+        binding = FragmentCameraBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+
     }
 
 
-    @OnClick({R.id.btn_takePhoto, R.id.btn_chosePhotoFromablum})
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        initView();
+    }
+
+    private void initView() {
+        binding.btnTakePhoto.setOnClickListener(this);
+        binding.btnChosePhotoFromablum.setOnClickListener(this);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_takePhoto:
@@ -132,7 +136,7 @@ public class CameraFragment extends Fragment {
 //                       Bitmap  newBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
 //                        bitmap.setWidth(100);
 //                        bitmap.setHeight(100);
-                        imgView.setImageBitmap(bitmap);
+                        binding.imgView.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -190,7 +194,7 @@ public class CameraFragment extends Fragment {
             Toast.makeText(getContext(), "failed to get image", Toast.LENGTH_LONG).show();
         } else {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            imgView.setImageBitmap(bitmap);
+            binding.imgView.setImageBitmap(bitmap);
         }
     }
 }

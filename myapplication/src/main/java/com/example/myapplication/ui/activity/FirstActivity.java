@@ -2,30 +2,33 @@ package com.example.myapplication.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
+import android.view.View;
 
-import com.example.myapplication.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.TestActivity;
+import com.example.myapplication.databinding.ActivityFirstBinding;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class FirstActivity extends AppCompatActivity {
     private static final String TAG = "FirstActivity";
-    @BindView(R.id.btn_second_activity)
-    Button btnSecondActivity;
+    private ActivityFirstBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first);
-        ButterKnife.bind(this);
+        binding = ActivityFirstBinding.inflate(getLayoutInflater());
     }
 
-    @OnClick(R.id.btn_second_activity)
+    @Override
+    protected void onStart() {
+        super.onStart();
+        binding.btnSecondActivity.setOnClickListener((View view) -> {
+            onViewClicked();
+        });
+    }
+
     public void onViewClicked() {
         Intent intent = new Intent(this, TestActivity.class);
         startActivity(intent);

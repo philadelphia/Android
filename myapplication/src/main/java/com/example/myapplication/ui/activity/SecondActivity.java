@@ -3,30 +3,27 @@ package com.example.myapplication.ui.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.transition.Explode;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.Window;
-import android.widget.Button;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.HandlerActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.databinding.ActivitySecondBinding;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class SecondActivity extends AppCompatActivity {
+public class SecondActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = SecondActivity.class.getSimpleName();
-    @BindView(R.id.btn_click)
-    Button btnClick;
     private String flag;
     private long mExitTime = 0;
+    private ActivitySecondBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +45,23 @@ public class SecondActivity extends AppCompatActivity {
             getWindow().setExitTransition(new Fade());
         }
 
-
-        setContentView(R.layout.activity_second);
-        ButterKnife.bind(this);
+        binding = ActivitySecondBinding.inflate(getLayoutInflater());
         Log.e(TAG, "onCreate");
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        binding.btnClick.setOnClickListener(this);
+    }
 
-    @OnClick(R.id.btn_click)
-    public void onClick() {
-        Intent intent = new Intent(this, HandlerActivity.class);
-        startActivity(intent);
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.btn_click) {
+            Intent intent = new Intent(this, HandlerActivity.class);
+            startActivity(intent);
+        }
+
 
 //        if (flag.equalsIgnoreCase("singleTop")) {
 //            intent.putExtra("Flag", "singleTop");

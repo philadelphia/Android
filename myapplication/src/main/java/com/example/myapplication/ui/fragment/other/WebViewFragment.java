@@ -4,8 +4,6 @@ package com.example.myapplication.ui.fragment.other;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,14 +13,13 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import com.example.myapplication.databinding.FragmentWebViewBinding;
 
 /*从Android 4.4（KitKat）开始，原本基于WebKit的WebView开始基于Chromium内核，
  * 这一改动大大提升了WebView组件的性能以及对HTML5,CSS3,JavaScript的支持。
@@ -33,15 +30,9 @@ import butterknife.OnClick;
  *
  */
 
-public class WebViewFragment extends Fragment implements View.OnKeyListener {
-    @BindView(R.id.url)
-    EditText url;
-    @BindView(R.id.webView)
-    WebView webView;
-    @BindView(R.id.btn_load)
-    Button btnLoad;
-
+public class WebViewFragment extends Fragment implements View.OnClickListener, View.OnKeyListener {
     private static final String TAG = "WebViewFragment";
+    private FragmentWebViewBinding binding;
 
     public WebViewFragment() {
         // Required empty public constructor
@@ -50,17 +41,24 @@ public class WebViewFragment extends Fragment implements View.OnKeyListener {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_web_view, container, false);
-        ButterKnife.bind(this, view);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentWebViewBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        initView();
         initWebView();
-        return view;
+    }
+
+    private void initView() {
+        binding.btnLoad.setOnClickListener(this);
+        binding.webView.setOnClickListener(this);
     }
 
     private void initWebView() {
-        WebSettings webSettings = webView.getSettings();
+        WebSettings webSettings = binding.webView.getSettings();
 
 //        webSettings.setJavaScriptEnabled(true);   // 设置WebView是否可以运行JavaScript
 //        webSettings.setSupportMultipleWindows(true);  // 设置WebView是否支持多窗口
@@ -75,12 +73,11 @@ public class WebViewFragment extends Fragment implements View.OnKeyListener {
 //            webView.goForward();
     }
 
-    @OnClick({R.id.url, R.id.btn_load, R.id.webView})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_load:
-                webView.loadUrl(url.getText().toString().trim());
-                webView.setWebViewClient(new WebViewClient() {
+                binding.webView.loadUrl(binding.url.getText().toString().trim());
+                binding.webView.setWebViewClient(new WebViewClient() {
                     @Override
                     public void onPageStarted(WebView view, String url, Bitmap favicon) {
                         Log.i(TAG, "onPageStarted: --started url ==" + url);
@@ -102,11 +99,14 @@ public class WebViewFragment extends Fragment implements View.OnKeyListener {
 
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                        Uri url = request.getUrl();
-                        if (url.getAuthority().contains("tencent")) {
-                            return true;
+                        Uri url = null;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                            url = request.getUrl();
+                            if (url.getAuthority().contains("tencent")) {
+                                return true;
+                            }
                         }
-                        return  false;
+                        return false;
 //                        return super.shouldOverrideUrlLoading(view, request);
                     }
                 });
@@ -139,11 +139,11 @@ public class WebViewFragment extends Fragment implements View.OnKeyListener {
 //                    }
 //                });
 
-                if (webView.canGoBack())
-                    webView.goBack();
-                if (webView.canGoForward())
-                    webView.goForward();
-                Log.i(TAG, "url == : " + url.getText().toString().trim());
+                if (binding.webView.canGoBack())
+                    binding.webView.goBack();
+                if (binding.webView.canGoForward())
+                    binding.webView.goForward();
+                Log.i(TAG, "url == : " + binding.url.getText().toString().trim());
                 break;
 
             case R.id.webView:
@@ -161,8 +161,8 @@ public class WebViewFragment extends Fragment implements View.OnKeyListener {
                 switch (keyCode) {
                     case KeyEvent.KEYCODE_BACK:
                         Log.i(TAG, "onKey: KEYCODE_BACK");
-                        if (webView.canGoBack()) {
-                            webView.goBack();
+                        if (binding.webView.canGoBack()) {
+                            binding.webView.goBack();
                             return true;
                         }
                         break;

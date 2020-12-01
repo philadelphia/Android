@@ -3,25 +3,18 @@ package com.example.myapplication.ui.activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseActivity;
+import com.example.myapplication.databinding.ActivityDialogBinding;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
-public class DialogActivity extends BaseActivity {
-
-
-    @BindView(R.id.btn_Dialog)
-    Button btnDialog;
-    @BindView(R.id.btn_progressDialog)
-    Button btnProgressDialog;
+public class DialogActivity extends BaseActivity implements View.OnClickListener {
+    private ActivityDialogBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityDialogBinding.inflate(getLayoutInflater());
     }
 
     @Override
@@ -29,19 +22,28 @@ public class DialogActivity extends BaseActivity {
         return R.layout.activity_dialog;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        binding.btnDialog.setOnClickListener(this);
+        binding.btnProgressDialog.setOnClickListener(this);
+    }
 
-    @OnClick({R.id.btn_Dialog, R.id.btn_progressDialog})
-    public void onViewClicked(View view) {
+    @Override
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_Dialog:
                 break;
+
             case R.id.btn_progressDialog:
                 showProgressDialog();
                 break;
+
+            default:
         }
     }
 
-    private void showProgressDialog(){
+    private void showProgressDialog() {
         ProgressDialog progressDialog = new ProgressDialog(this);// 创建进度对话框对象
         progressDialog.setTitle("标题"); // 设置标题
         progressDialog.setMessage("加载中..."); // 设置消息

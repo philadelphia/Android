@@ -2,9 +2,10 @@ package com.example.myapplication.base;
 
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 /**
  * @author zhangtao
@@ -14,6 +15,7 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
     protected boolean isViewInitialized;
     protected boolean isDataInitialized;
     protected boolean isVisibleToUser;
+    private boolean isFirstLoad = true;
 
     public BaseLazyLoadFragment() {
         // Required empty public constructor
@@ -24,50 +26,38 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        isViewInitialized = true;
-        prepareLoadData();
         initView();
     }
 
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        Log.i(TAG, "setUserVisibleHint: " + isVisibleToUser);
-        this.isVisibleToUser = isVisibleToUser;
-        if (isVisibleToUser) {
-            prepareLoadData();
+    public void onResume() {
+        super.onResume();
+        if (isFirstLoad) {
+            isFirstLoad = false;
+            loadData();
         }
-    }
-
-    protected void prepareLoadData() {
-        loadData();
     }
 
     protected void loadData() {
-        if (isVisibleToUser && isViewInitialized && !isDataInitialized) {
-            Log.i(TAG, "loadData: ");
-            showProgressBar();
-            new Thread(new Runnable() {
+        Log.i(TAG, "loadData: ");
+        showProgressBar();
+        new Thread(() -> {
+            try {
+                Thread.sleep(300L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        Thread.sleep(1000L);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    isDataInitialized = true;
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            dismissProgressBar();
-                            onDataLoadSucceed();
-                        }
-                    });
-
+                    dismissProgressBar();
+                    onDataLoadSucceed();
                 }
-            }).start();
-        }
+            });
+
+        }).start();
+
     }
 
     protected abstract void showProgressBar();
@@ -75,7 +65,6 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
     protected abstract void dismissProgressBar();
 
     protected abstract void onDataLoadSucceed();
-
 
 
     public interface OnFragmentInteractionListener {

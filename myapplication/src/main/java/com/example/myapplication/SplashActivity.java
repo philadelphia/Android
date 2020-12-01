@@ -3,32 +3,31 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.databinding.ActivitySplashBinding;
 
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-public class SplashActivity extends AppCompatActivity {
-
-    @BindView(R.id.img_backGround)
-    ImageView imgBackGround;
-    @BindView(R.id.btn_timter)
-    Button btnTimter;
+public class SplashActivity extends AppCompatActivity implements View.OnClickListener {
+    private ActivitySplashBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        ButterKnife.bind(this);
+        binding = ActivitySplashBinding.inflate(getLayoutInflater());
         countDownTimer.start();
     }
 
-    @OnClick({R.id.img_backGround, R.id.btn_timter})
+    @Override
+    protected void onStart() {
+        super.onStart();
+        binding.imgBackGround.setOnClickListener(this);
+        binding.btnTimter.setOnClickListener(this);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_backGround:
@@ -42,12 +41,12 @@ public class SplashActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer = new CountDownTimer(3200, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
-            btnTimter.setText("跳过(" + millisUntilFinished / 1000 +"s)");
+            binding.btnTimter.setText("跳过(" + millisUntilFinished / 1000 + "s)");
         }
 
         @Override
         public void onFinish() {
-            btnTimter.setText("跳过( 0 s)");
+            binding.btnTimter.setText("跳过( 0 s)");
             goToLogInOrMainActivity();
         }
     };

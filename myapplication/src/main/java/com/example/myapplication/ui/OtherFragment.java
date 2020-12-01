@@ -1,38 +1,34 @@
 package com.example.myapplication.ui;
 
 import android.os.Bundle;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+
 import com.example.myapplication.MainActivity;
-import com.example.myapplication.R;
-import com.example.myapplication.adapter.MyViewPagerAdapter;
+import com.example.myapplication.databinding.FragmentOtherBinding;
 import com.example.myapplication.ui.fragment.other.AnimationFragment;
 import com.example.myapplication.ui.fragment.other.NotificationFragment;
-import com.example.myapplication.ui.fragment.other.RxJavaFragment;
 import com.example.myapplication.ui.fragment.other.WebViewFragment;
 import com.example.myapplication.ui.fragment.other.WindowFragment;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class OtherFragment extends Fragment  {
+public class OtherFragment extends Fragment {
     private final String TAG = OtherFragment.class.getSimpleName();
-    private ViewPager mViewPager;
-    private final String[] mTabTitles = {"Window", "Notification", "Animation", "WebView" ,
-            "RxJava",
-//            "Media"
-};
-    private List<Fragment> mTabFragments ;
-    private MyViewPagerAdapter mPagerAdapter;
     private TabLayout mTablayout;
-    private Toolbar toolbar;
+    private FragmentPagerAdapter mPagerAdapter;
+    private final List<FragmentEntity> fragmentEntityList = new ArrayList<>();
+    private FragmentOtherBinding binding;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,36 +37,50 @@ public class OtherFragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_other, container, false);
+        binding = FragmentOtherBinding.inflate(getLayoutInflater(), container, false);
+        return binding.getRoot();
 
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initView(view);
         setUpViewPagerAndTabs();
-        return  view;
     }
 
     public void initView(View view) {
-        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        mTablayout =((MainActivity) getActivity()).getmTabLayout();
-        toolbar = ((MainActivity) getActivity()).getToolbar();
+        mTablayout = ((MainActivity) getActivity()).getmTabLayout();
         mTablayout.setVisibility(View.VISIBLE);
+        fragmentEntityList.clear();
+        fragmentEntityList.add(new FragmentEntity("Window", new NotificationFragment()));
+        fragmentEntityList.add(new FragmentEntity("Notification", new WindowFragment()));
+        fragmentEntityList.add(new FragmentEntity("Animation", new AnimationFragment()));
+        fragmentEntityList.add(new FragmentEntity("WebView", new WebViewFragment()));
 
     }
 
-    private void setUpViewPagerAndTabs (){
-        mTabFragments = new ArrayList<>();
-        mTabFragments.add(new NotificationFragment());
-        mTabFragments.add(new WindowFragment());
-        mTabFragments.add(new AnimationFragment());
-        mTabFragments.add(new WebViewFragment());
-        mTabFragments.add(new RxJavaFragment());
-//        mTabFragments.add(new CameraFragment());
-//        mTabFragments.add(new CustomViewFragment());
-//        mTabFragments.add(new MultiMediaFragment());
-        mPagerAdapter = new MyViewPagerAdapter (this.getChildFragmentManager(), mTabFragments, mTabTitles);
-        mViewPager.setAdapter (mPagerAdapter);
-//        mTablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        mTablayout.setupWithViewPager (mViewPager);
+    private void setUpViewPagerAndTabs() {
+        mPagerAdapter = new FragmentPagerAdapter(this.getChildFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+            @NonNull
+            @Override
+            public Fragment getItem(int position) {
+                return fragmentEntityList.get(position).getFragment();
+            }
+
+            @Override
+            public int getCount() {
+                return fragmentEntityList.size();
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return fragmentEntityList.get(position).getTitle();
+            }
+
+        };
+        binding.viewPager.setAdapter(mPagerAdapter);
+        mTablayout.setupWithViewPager(binding.viewPager);
     }
 
     @Override

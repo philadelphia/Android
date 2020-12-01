@@ -17,39 +17,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.ui.activity.FirstActivity;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 /**
  * 此页面是为了验证ViewGroup布局变化时的动画效果
  */
-public class TestActivity extends AppCompatActivity {
+public class TestActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "TestActivity";
-
-    @BindView(R.id.btn_add)
-    Button btnAdd;
-    @BindView(R.id.btn_animator)
-    Button btnAnimation;
-    @BindView(R.id.btn_launch_self)
-    Button btnLaunchSelf;
-    @BindView(R.id.btn_first_activity)
-    Button btnLaunchFirstActivity;
-
-    @BindView(R.id.linearLayout)
-    LinearLayout linearLayout;
+    private com.example.myapplication.databinding.ActivityTestBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
-        ButterKnife.bind(this);
-
+        binding = com.example.myapplication.databinding.ActivityTestBinding.inflate(getLayoutInflater());
+        initView();
     }
 
 
-    @OnClick({R.id.btn_add, R.id.btn_animator, R.id.btn_launch_self, R.id.btn_first_activity})
-    public void onViewClicked(View view) {
+    private void initView() {
+        binding.btnAdd.setOnClickListener(this);
+        binding.btnAnimator.setOnClickListener(this);
+        binding.btnFirstActivity.setOnClickListener(this);
+        binding.btnLaunchSelf.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_add:
                 addView();
@@ -68,7 +59,7 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void addView() {
-        LayoutTransition layoutTransition = linearLayout.getLayoutTransition();
+        LayoutTransition layoutTransition = binding.linearLayout.getLayoutTransition();
         //通过翻转动画取代默认的动画效果
         Animator animatorIn = ObjectAnimator.ofFloat(null, "rotationY", 90f, 0f)
                 .setDuration(layoutTransition.getDuration(LayoutTransition.APPEARING));
@@ -86,27 +77,27 @@ public class TestActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                linearLayout.removeView(button);
+                binding.linearLayout.removeView(button);
             }
         });
 
-        linearLayout.addView(button, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        binding.linearLayout.addView(button, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     }
 
     private void performAnimation() {
-        if (linearLayout.getVisibility() == View.VISIBLE) {
+        if (binding.linearLayout.getVisibility() == View.VISIBLE) {
 //            Animation animationOut = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
 //            Animation animationOut = AnimationUtils.makeOutAnimation(this, true);
             Animation animationOut = AnimationUtils.loadAnimation(this, R.anim.slide_out_child_bottom);
-            linearLayout.setAnimation(animationOut);
+            binding.linearLayout.setAnimation(animationOut);
             animationOut.start();
-            linearLayout.setVisibility(View.INVISIBLE);
+            binding. linearLayout.setVisibility(View.INVISIBLE);
         } else {
 //            Animation animationIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
 //            Animation animationIn = AnimationUtils.makeInAnimation(this, true);
             Animation animationIn = AnimationUtils.makeInChildBottomAnimation(this);
-            linearLayout.startAnimation(animationIn);
-            linearLayout.setVisibility(View.VISIBLE);
+            binding. linearLayout.startAnimation(animationIn);
+            binding. linearLayout.setVisibility(View.VISIBLE);
         }
     }
 

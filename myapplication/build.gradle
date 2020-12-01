@@ -40,8 +40,6 @@ dependencies {
     implementation 'com.android.volley:volley:1.0.0'
     implementation 'androidx.fragment:fragment:1.2.4'
     testImplementation 'junit:junit:4.12'
-    implementation 'com.jakewharton:butterknife:10.0.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
     implementation 'org.xutils:xutils:3.5.0'
     // Android 支持 Rxjava

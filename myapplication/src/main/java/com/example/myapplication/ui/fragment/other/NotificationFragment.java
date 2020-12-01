@@ -50,7 +50,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import butterknife.OnClick;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -382,9 +381,6 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    @OnClick({R.id.btn_create_notification_channel,R.id.btn_delete_notification_channel, R.id.btn_send, R.id.btn_sendBigViewNotification, R.id.btn_sendcollapse,
-            R.id.btn_sendhang, R.id.btn_bigTextStyle, R.id.btn_InboxStyle,
-            R.id.btn_cancel, R.id.btn_image, R.id.btn_take_photo, R.id.btn_take_photo_uri})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_create_notification_channel:

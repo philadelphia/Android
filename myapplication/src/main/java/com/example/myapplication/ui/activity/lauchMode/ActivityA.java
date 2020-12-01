@@ -5,15 +5,14 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.util.Log;
-import android.widget.Button;
+import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.example.myapplication.R;
+import com.example.myapplication.databinding.ActivityLayoutABinding;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * @author zhangtao
@@ -21,14 +20,13 @@ import butterknife.OnClick;
  **/
 public class ActivityA extends Activity {
     private static final String TAG = "ActivityA";
-    @BindView(R.id.btn)
-    Button btn;
+    private ActivityLayoutABinding binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_a);
-        ButterKnife.bind(this);
+        binding = ActivityLayoutABinding.inflate(getLayoutInflater());
         Log.i(TAG, "onCreate: this hashCode == " + hashCode());
         Log.i(TAG, "onCreate: current TaskID == " + getTaskId());
     }
@@ -44,7 +42,7 @@ public class ActivityA extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.i(TAG, "onSaveInstanceState: ");
-        ActivityManager activityManager = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 //        if (activityManager != null){
 //            ActivityManager.AppTask appTask = activityManager.getAppTasks().get(0);
 //            ActivityManager.RecentTaskInfo taskInfo = appTask.getTaskInfo();
@@ -52,12 +50,14 @@ public class ActivityA extends Activity {
 
     }
 
-
-    @OnClick(R.id.btn)
-    public void onViewClicked() {
-        Intent intent = new Intent(this, ActivityB.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        binding.btn.setOnClickListener((View view) -> {
+            Intent intent = new Intent(this, ActivityB.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
     }
+
 }

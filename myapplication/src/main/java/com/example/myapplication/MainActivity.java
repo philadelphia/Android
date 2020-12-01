@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -22,6 +20,7 @@ import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.ui.AndroidBaseFragment;
 import com.example.myapplication.ui.CustomViewFragment;
 import com.example.myapplication.ui.DatabaseFragment;
@@ -30,32 +29,24 @@ import com.example.myapplication.ui.MaterialDesginFragment;
 import com.example.myapplication.ui.OtherFragment;
 import com.example.myapplication.ui.SendFragment;
 import com.example.myapplication.ui.ShareFragment;
-import com.example.myapplication.ui.activity.FirstActivity;
-import com.example.myapplication.ui.fragment.widget.AndroidBaseViewFragment;
+import com.example.myapplication.ui.fragment.widget.AndroidWidgetFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FragmentManager fragmentManager;
-    private Toolbar toolbar;
-    private FloatingActionButton fab;
-    private TabLayout mTabLayout;
-    private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
-    private NavigationView navigationView;
-    private ShareActionProvider mShareActionProvider;
-    private Menu menu;
     private static final String TAG = "MainActivity";
     private Toast toast;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e(TAG, "onCreate: ");
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         initView();
 
@@ -63,13 +54,10 @@ public class MainActivity extends AppCompatActivity
         AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
         ManagerFragment managerFragment = new ManagerFragment();
         OtherFragment otherFragment = new OtherFragment();
-        AndroidBaseViewFragment androidBaseViewFragment = new AndroidBaseViewFragment();
+        AndroidWidgetFragment androidBaseViewFragment = new AndroidWidgetFragment();
 //        DatabaseFragment databaseFragment = new DatabaseFragment();
         CustomViewFragment customViewFragment = new CustomViewFragment();
-
         fragmentManager.beginTransaction().replace(R.id.container, androidBaseViewFragment).commit();
-
-
     }
 
 
@@ -96,28 +84,21 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.main.toolbar);
         fragmentManager = getSupportFragmentManager();
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        binding.main.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 onFloatingActionButtonClick();
             }
         });
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, binding.drawerLayout, binding.main.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        binding.drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-        mTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
-        mTabLayout.setVisibility(View.INVISIBLE);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        binding.main.slidingTabs.setVisibility(View.GONE);
+        binding.navView.setNavigationItemSelectedListener(this);
         toast = Toast.makeText(this, "toast", Toast.LENGTH_SHORT);
 
     }
@@ -252,20 +233,18 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         item.setCheckable(true);
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_camera:
                 AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, androidBaseFragment).commit();
-
                 break;
+
             case R.id.nav_BaseView:
-                AndroidBaseViewFragment androidBaseViewFragment = new AndroidBaseViewFragment();
+                AndroidWidgetFragment androidBaseViewFragment = new AndroidWidgetFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, androidBaseViewFragment).commit();
                 break;
 
@@ -305,26 +284,25 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             default:
-                break;
         }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        toolbar.setTitle(item.getTitle());
+        binding.main.toolbar.setTitle(item.getTitle());
         return true;
     }
 
     public TabLayout getmTabLayout() {
-        return mTabLayout;
+        return binding.main.slidingTabs;
     }
 
     public Toolbar getToolbar() {
-        return toolbar;
+        return binding.main.toolbar;
     }
 
     public FloatingActionButton getFloatingActionBar() {
-        return fab;
+        return binding.main.fab;
     }
 
 

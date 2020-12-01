@@ -7,103 +7,46 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.RecyclerViewAdapter;
 import com.example.myapplication.base.BaseFragment;
+import com.example.myapplication.databinding.FragmentAndroidBaseViewBinding;
 import com.example.myapplication.ui.activity.DialogActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * @author Tao.ZT.Zhang
  */
 
-public class AndroidBaseViewFragment extends BaseFragment {
+public class AndroidWidgetFragment extends BaseFragment implements View.OnClickListener {
     private static final String TAG = "AndroidBaseViewFragment";
-    @BindView(R.id.edt1)
-    EditText edt1;
-    @BindView(R.id.edt2)
-    EditText edt2;
-    @BindView(R.id.btn_showKeyBoard)
-    Button btnShowKeyBoard;
-    @BindView(R.id.btn_showDialog)
-    Button btnShowDialog;
-    @BindView(R.id.btn_showDialogFragment)
-    Button btnShowDialogFragment;
-    @BindView(R.id.btn_showDialogActivity)
-    Button btnShowDialogActivity;
-    @BindView(R.id.btn_popupWindow)
-    Button btnPopupWindow;
-    @BindView(R.id.btn_share)
-    Button btnShare;
-    @BindView(R.id.btn_setAlpha)
-    Button btnSetAlpha;
-    //    @BindView(R.id.tv_cancel)
-//    Button btnCancel;
-    @BindView(R.id.bt_switch)
-    Switch btnSwitch;
-    @BindView(R.id.img_beauty)
-    ImageView imgBeauty;
-    @BindView(R.id.img_beauty1)
-    ImageView imgBeauty1;
-    @BindView(R.id.img_beauty2)
-    ImageView imgBeauty2;
-    @BindView(R.id.img_beauty3)
-    ImageView imgBeauty3;
-    @BindView(R.id.img_beauty5)
-    ImageView imgBeauty5;
-    @BindView(R.id.img_beauty6)
-    ImageView imgBeauty6;
-    @BindView(R.id.img_beauty7)
-    ImageView imgBeauty7;
-    @BindView(R.id.img_beauty8)
-    ImageView imgBeauty8;
-    @BindView(R.id.btn_showBottomSheet)
-    Button btnShowBottomSheet;
-    @BindView(R.id.btn_showBottomSheetDialog)
-    Button btnShowBottomSheetDialog;
-    @BindView(R.id.btn_showBottomSheetDialogFragment)
-    Button btnShowBottomSheetDialogFragment;
-    Unbinder unbinder;
     private PopupWindow popupWindow;
-    private TextView tvExit, tvSet, tvCancel;
-    private View rootView;
-    TextView tv1;
-    TextView tv2;
-
-    private ImageView img;
-
-
-    private long mExitTime = 0;
-    private View view;
     private PopupWindow customPopupWindow;
+    private FragmentAndroidBaseViewBinding binding;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentAndroidBaseViewBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -125,14 +68,22 @@ public class AndroidBaseViewFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        btnSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(mActivity, "unChecked", Toast.LENGTH_SHORT).show();
-                }
+        binding.btnShowKeyBoard.setOnClickListener(this);
+        binding.btnShowDialog.setOnClickListener(this);
+        binding.btnShowDialogFragment.setOnClickListener(this);
+        binding.btnShowBottomSheet.setOnClickListener(this);
+        binding.btnShowBottomSheetDialog.setOnClickListener(this);
+        binding.btnShowBottomSheetDialogFragment.setOnClickListener(this);
+        binding.btnShowDialogActivity.setOnClickListener(this);
+        binding.btnPopupWindow.setOnClickListener(this);
+        binding.btnShare.setOnClickListener(this);
+        binding.btnSetAlpha.setOnClickListener(this);
+
+        binding.btSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(mActivity, "unChecked", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -145,28 +96,23 @@ public class AndroidBaseViewFragment extends BaseFragment {
 
 
     private void setAlpha() {
-        img.setAlpha(Float.parseFloat(tv1.getText().toString()));
-        img.setScaleType(ImageView.ScaleType.CENTER);
+//        img.setAlpha(Float.parseFloat(tv1.getText().toString()));
+//        binding.img.setScaleType(ImageView.ScaleType.CENTER);
     }
 
     private void showPopUpWindow() {
-
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.popupwindow_layout, null);//PopupWindow对象
-
+//        PopupwindowLayoutBinding binding = PopupwindowLayoutBinding.inflate(getLayoutInflater(), null, false);
 // 初始化popupWindow的一种方法
 //        popupWindow=new PopupWindow(getContext());//初始化PopupWindow对象
-//        popupWindow.setContentView(view);//设置PopupWindow布局文件
+//        popupWindow.setContentView(binding.getRoot());//设置PopupWindow布局文件
 //        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);//设置PopupWindow宽
 //        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);//设置PopupWindow高
 
 // 初始化popupWindow的一种方法
-        popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_android_base_view, null);//父布局
-        popupWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
+        popupWindow = new PopupWindow(binding.getRoot(), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        FragmentAndroidBaseViewBinding binding = FragmentAndroidBaseViewBinding.inflate(getLayoutInflater(), null, false);
+        popupWindow.showAtLocation(binding.getRoot(), Gravity.BOTTOM, 0, 0);
         popupWindow.setOutsideTouchable(true);
-        tvSet = (TextView) view.findViewById(R.id.tv_set);
-        tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
-        tvExit = (TextView) view.findViewById(R.id.tv_exit);//在view对象中通过findViewById找到TextView控件
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -181,7 +127,7 @@ public class AndroidBaseViewFragment extends BaseFragment {
             FrameLayout frameLayout = new FrameLayout(getContext());
             frameLayout.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
             frameLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent3));
-            customPopupWindow = new PopupWindow(frameLayout,-1,-2);
+            customPopupWindow = new PopupWindow(frameLayout, -1, -2);
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 512);
             frameLayout.addView(createRecyclerview(), layoutParams);
             customPopupWindow.setContentView(frameLayout);
@@ -189,7 +135,7 @@ public class AndroidBaseViewFragment extends BaseFragment {
             frameLayout.setOnClickListener(new View.OnClickListener() {
                                                @Override
                                                public void onClick(View v) {
-                                                   if (customPopupWindow.isShowing()){
+                                                   if (customPopupWindow.isShowing()) {
                                                        customPopupWindow.dismiss();
                                                    }
                                                }
@@ -198,12 +144,12 @@ public class AndroidBaseViewFragment extends BaseFragment {
         }
         if (Build.VERSION.SDK_INT >= 24) {
             Rect visibleFrame = new Rect();
-            edt1.getGlobalVisibleRect(visibleFrame);
-            int height = edt1.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
+            binding.edt1.getGlobalVisibleRect(visibleFrame);
+            int height = binding.edt1.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
             customPopupWindow.setHeight(height);
-            customPopupWindow.showAsDropDown(edt1, 0, 0);
+            customPopupWindow.showAsDropDown(binding.edt1, 0, 0);
         } else {
-            customPopupWindow.showAsDropDown(edt1, 0, 0);
+            customPopupWindow.showAsDropDown(binding.edt1, 0, 0);
         }
     }
 
@@ -225,7 +171,7 @@ public class AndroidBaseViewFragment extends BaseFragment {
         if (popupWindow == null) {
             showPopUpWindow();
         } else {
-            popupWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);//设置PopupWindow的弹出位置。
+//            popupWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);//设置PopupWindow的弹出位置。
         }
     }
 
@@ -240,8 +186,8 @@ public class AndroidBaseViewFragment extends BaseFragment {
         super.onDestroyView();
     }
 
-    @OnClick({R.id.btn_showKeyBoard, R.id.btn_showDialog, R.id.btn_showDialogFragment, R.id.btn_showBottomSheet, R.id.btn_showBottomSheetDialog, R.id.btn_showBottomSheetDialogFragment, R.id.btn_showDialogActivity, R.id.btn_popupWindow, R.id.btn_share, R.id.btn_setAlpha})
-    public void onViewClicked(View view) {
+    @Override
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_showKeyBoard:
                 showCustomPopupWindow();
