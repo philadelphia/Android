@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.databinding.ActivityTestBinding;
+import com.example.myapplication.service.LocationService;
 import com.example.myapplication.ui.activity.FirstActivity;
 
 /**
@@ -22,13 +24,16 @@ import com.example.myapplication.ui.activity.FirstActivity;
  */
 public class TestActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "TestActivity";
-    private com.example.myapplication.databinding.ActivityTestBinding binding;
+    private ActivityTestBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = com.example.myapplication.databinding.ActivityTestBinding.inflate(getLayoutInflater());
+        binding = ActivityTestBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         initView();
+        Log.e(TAG, "onCreate: " + getLifecycle().getCurrentState().name());
     }
 
 
@@ -37,6 +42,9 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         binding.btnAnimator.setOnClickListener(this);
         binding.btnFirstActivity.setOnClickListener(this);
         binding.btnLaunchSelf.setOnClickListener(this);
+        binding.btnStartService.setOnClickListener(this);
+        binding.btnStopService.setOnClickListener(this);
+        getLifecycle().addObserver(binding.chronometer);
     }
 
     @Override
@@ -53,6 +61,12 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_first_activity:
                 launchFirstActivity();
+                break;
+            case R.id.btn_start_service:
+                startService(new Intent(this, LocationService.class));
+                break;
+            case R.id.btn_stop_service:
+                stopService(new Intent(this, LocationService.class));
                 break;
             default:
         }
@@ -91,13 +105,13 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             Animation animationOut = AnimationUtils.loadAnimation(this, R.anim.slide_out_child_bottom);
             binding.linearLayout.setAnimation(animationOut);
             animationOut.start();
-            binding. linearLayout.setVisibility(View.INVISIBLE);
+            binding.linearLayout.setVisibility(View.INVISIBLE);
         } else {
 //            Animation animationIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
 //            Animation animationIn = AnimationUtils.makeInAnimation(this, true);
             Animation animationIn = AnimationUtils.makeInChildBottomAnimation(this);
-            binding. linearLayout.startAnimation(animationIn);
-            binding. linearLayout.setVisibility(View.VISIBLE);
+            binding.linearLayout.startAnimation(animationIn);
+            binding.linearLayout.setVisibility(View.VISIBLE);
         }
     }
 
@@ -119,38 +133,38 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e(TAG, "onPause: ");
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
-        Log.e(TAG, "onStop: ");
+        Log.e(TAG, "onStop: " + getLifecycle().getCurrentState().name());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.e(TAG, "onDestroy: ");
+        Log.e(TAG, "onDestroy: " + getLifecycle().getCurrentState().name());
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.e(TAG, "onRestart: ");
+        Log.e(TAG, "onRestart: " + getLifecycle().getCurrentState().name());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.e(TAG, "onStart: ");
+        Log.e(TAG, "onStart: " + getLifecycle().getCurrentState().name());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e(TAG, "onResume: ");
+        Log.e(TAG, "onResume: " + getLifecycle().getCurrentState().name());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause: " + getLifecycle().getCurrentState().name());
     }
 }

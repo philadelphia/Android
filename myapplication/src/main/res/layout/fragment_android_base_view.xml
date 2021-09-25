@@ -3,12 +3,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <LinearLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:focusable="false"
-        android:focusableInTouchMode="true">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
 
         <EditText
@@ -127,56 +127,81 @@
             android:scaleType="center"
             android:src="@mipmap/ic_beauty" />
 
-        <ImageView
-            android:id="@+id/img_beauty1"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_beauty" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/img_beauty1"-->
+        <!--            android:layout_width="300dp"-->
+        <!--            android:layout_height="300dp"-->
+        <!--            android:scaleType="centerCrop"-->
+        <!--            android:src="@mipmap/ic_beauty" />-->
 
-        <ImageView
-            android:id="@+id/img_beauty2"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/ic_beauty" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/img_beauty2"-->
+        <!--            android:layout_width="300dp"-->
+        <!--            android:layout_height="300dp"-->
+        <!--            android:scaleType="centerInside"-->
+        <!--            android:src="@mipmap/ic_beauty" />-->
 
-        <ImageView
-            android:id="@+id/img_beauty3"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/ic_beauty" />
-
-
-        <ImageView
-            android:id="@+id/img_beauty5"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:scaleType="fitStart"
-            android:src="@mipmap/ic_beauty" />
-
-        <ImageView
-            android:id="@+id/img_beauty6"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:scaleType="fitEnd"
-            android:src="@mipmap/ic_beauty" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/img_beauty3"-->
+        <!--            android:layout_width="300dp"-->
+        <!--            android:layout_height="300dp"-->
+        <!--            android:scaleType="fitCenter"-->
+        <!--            android:src="@mipmap/ic_beauty" />-->
 
 
-        <ImageView
-            android:id="@+id/img_beauty7"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:scaleType="fitXY"
-            android:src="@mipmap/ic_beauty" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/img_beauty5"-->
+        <!--            android:layout_width="300dp"-->
+        <!--            android:layout_height="300dp"-->
+        <!--            android:scaleType="fitStart"-->
+        <!--            android:src="@mipmap/ic_beauty" />-->
 
-        <ImageView
-            android:id="@+id/img_beauty8"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:scaleType="matrix"
-            android:src="@mipmap/ic_beauty" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/img_beauty6"-->
+        <!--            android:layout_width="300dp"-->
+        <!--            android:layout_height="300dp"-->
+        <!--            android:scaleType="fitEnd"-->
+        <!--            android:src="@mipmap/ic_beauty" />-->
+
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/img_beauty7"-->
+        <!--            android:layout_width="300dp"-->
+        <!--            android:layout_height="300dp"-->
+        <!--            android:scaleType="fitXY"-->
+        <!--            android:src="@mipmap/ic_beauty" />-->
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/img_beauty8"-->
+        <!--            android:layout_width="300dp"-->
+        <!--            android:layout_height="300dp"-->
+        <!--            android:scaleType="matrix"-->
+        <!--            android:src="@mipmap/ic_beauty" />-->
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="edit text1" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="edit text2" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="edit text3" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="edit text4" />
 
     </LinearLayout>
+
 </ScrollView>

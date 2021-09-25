@@ -12,7 +12,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -51,6 +53,22 @@ public class AndroidWidgetFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.content.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect rect = new Rect();
+                binding.getRoot().getWindowVisibleDisplayFrame(rect);
+                if (rect.bottom < 1920){
+                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.content.getLayoutParams();
+                    layoutParams.bottomMargin = 120;
+                    binding.content.setLayoutParams(layoutParams);
+                }else {
+                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.content.getLayoutParams();
+                    layoutParams.bottomMargin = 0;
+                    binding.content.setLayoutParams(layoutParams);
+                }
+            }
+        });
     }
 
 
@@ -71,21 +89,21 @@ public class AndroidWidgetFragment extends BaseFragment implements View.OnClickL
         binding.btnShowKeyBoard.setOnClickListener(this);
         binding.btnShowDialog.setOnClickListener(this);
         binding.btnShowDialogFragment.setOnClickListener(this);
-        binding.btnShowBottomSheet.setOnClickListener(this);
-        binding.btnShowBottomSheetDialog.setOnClickListener(this);
-        binding.btnShowBottomSheetDialogFragment.setOnClickListener(this);
-        binding.btnShowDialogActivity.setOnClickListener(this);
-        binding.btnPopupWindow.setOnClickListener(this);
-        binding.btnShare.setOnClickListener(this);
-        binding.btnSetAlpha.setOnClickListener(this);
-
-        binding.btSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(mActivity, "unChecked", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        binding.btnShowBottomSheet.setOnClickListener(this);
+//        binding.btnShowBottomSheetDialog.setOnClickListener(this);
+//        binding.btnShowBottomSheetDialogFragment.setOnClickListener(this);
+//        binding.btnShowDialogActivity.setOnClickListener(this);
+//        binding.btnPopupWindow.setOnClickListener(this);
+//        binding.btnShare.setOnClickListener(this);
+//        binding.btnSetAlpha.setOnClickListener(this);
+//
+//        binding.btSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            if (isChecked) {
+//                Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(mActivity, "unChecked", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override
@@ -198,28 +216,28 @@ public class AndroidWidgetFragment extends BaseFragment implements View.OnClickL
             case R.id.btn_showDialogFragment:
                 showDialogFragment();
                 break;
-            case R.id.btn_showDialogActivity:
-                break;
-            case R.id.btn_showBottomSheet:
-                break;
-            case R.id.btn_showBottomSheetDialog:
-                showBottomSheetDialog();
-                break;
-            case R.id.btn_showBottomSheetDialogFragment:
-
-                break;
-            case R.id.btn_popupWindow:
-                showPopUpWindow();
-                break;
-            case R.id.btn_share:
-                break;
-
-            case R.id.tv_exit:
-                getActivity().finish();
-                break;
-            case R.id.btn_setAlpha:
-                setAlpha();
-                break;
+//            case R.id.btn_showDialogActivity:
+//                break;
+//            case R.id.btn_showBottomSheet:
+//                break;
+//            case R.id.btn_showBottomSheetDialog:
+//                showBottomSheetDialog();
+//                break;
+//            case R.id.btn_showBottomSheetDialogFragment:
+//
+//                break;
+//            case R.id.btn_popupWindow:
+//                showPopUpWindow();
+//                break;
+//            case R.id.btn_share:
+//                break;
+//
+//            case R.id.tv_exit:
+//                getActivity().finish();
+//                break;
+//            case R.id.btn_setAlpha:
+//                setAlpha();
+//                break;
 
 //            case R.id.tv_cancel:
 //                popupWindow.dismiss();//关闭PopupWindow

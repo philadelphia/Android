@@ -39,6 +39,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.1'
     implementation 'com.android.volley:volley:1.0.0'
     implementation 'androidx.fragment:fragment:1.2.4'
+    implementation 'androidx.lifecycle:lifecycle-service:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-process:2.2.0'
     testImplementation 'junit:junit:4.12'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
     implementation 'org.xutils:xutils:3.5.0'
@@ -63,6 +65,13 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     //动态权限申请框架
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+
+    implementation 'com.facebook.android:facebook-core:[8,9)'
+    implementation 'com.facebook.android:facebook-login:[8,9)'
+    implementation 'com.facebook.android:facebook-share:[8,9)'
+    implementation 'com.facebook.android:facebook-messenger:[8,9)'
+    implementation 'com.facebook.android:facebook-applinks:[8,9)'
+
 
     task A{
         println "task A"

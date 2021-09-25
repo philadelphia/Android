@@ -4,12 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.example.myapplication.observer.CustomChronometer
+        android:id="@+id/chronometer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/btn_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="add view" />
-
 
 
     <Button
@@ -23,9 +27,9 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:animateLayoutChanges="true"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"/>
+        android:orientation="vertical" />
 
     <Button
         android:id="@+id/btn_first_activity"
@@ -38,5 +42,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="launch self" />
+
+    <Button
+        android:id="@+id/btn_start_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开始" />
+
+    <Button
+        android:id="@+id/btn_stop_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="结束" />
 
 </LinearLayout>

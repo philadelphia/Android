@@ -2,13 +2,17 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -100,6 +104,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.main.slidingTabs.setVisibility(View.GONE);
         binding.navView.setNavigationItemSelectedListener(this);
         toast = Toast.makeText(this, "toast", Toast.LENGTH_SHORT);
+
+        binding.main.contentMain.container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect rect = new Rect();
+                binding.getRoot().getWindowVisibleDisplayFrame(rect);
+                if (rect.bottom < 1920) {
+                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.main.contentMain.container.getLayoutParams();
+                    layoutParams.bottomMargin = 120;
+                    binding.main.contentMain.container.setLayoutParams(layoutParams);
+                } else {
+                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.main.contentMain.container.getLayoutParams();
+                    layoutParams.bottomMargin = 0;
+                    binding.main.contentMain.container.setLayoutParams(layoutParams);
+                }
+            }
+        });
 
     }
 
