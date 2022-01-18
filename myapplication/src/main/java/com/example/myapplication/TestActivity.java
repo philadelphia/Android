@@ -6,14 +6,13 @@ import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.databinding.ActivityTestBinding;
 import com.example.myapplication.service.LocationService;
@@ -22,29 +21,28 @@ import com.example.myapplication.ui.activity.FirstActivity;
 /**
  * 此页面是为了验证ViewGroup布局变化时的动画效果
  */
-public class TestActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "TestActivity";
-    private ActivityTestBinding binding;
-
-
+public class TestActivity extends BaseActivity<ActivityTestBinding> implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityTestBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
         initView();
         Log.e(TAG, "onCreate: " + getLifecycle().getCurrentState().name());
     }
 
+    @Override
+    protected ActivityTestBinding initBinding() {
+        return ActivityTestBinding.inflate(getLayoutInflater());
+    }
+
 
     private void initView() {
-        binding.btnAdd.setOnClickListener(this);
-        binding.btnAnimator.setOnClickListener(this);
-        binding.btnFirstActivity.setOnClickListener(this);
-        binding.btnLaunchSelf.setOnClickListener(this);
-        binding.btnStartService.setOnClickListener(this);
-        binding.btnStopService.setOnClickListener(this);
-        getLifecycle().addObserver(binding.chronometer);
+        mBinding.btnAdd.setOnClickListener(this);
+        mBinding.btnAnimator.setOnClickListener(this);
+        mBinding.btnFirstActivity.setOnClickListener(this);
+        mBinding.btnLaunchSelf.setOnClickListener(this);
+        mBinding.btnStartService.setOnClickListener(this);
+        mBinding.btnStopService.setOnClickListener(this);
+        getLifecycle().addObserver(mBinding.chronometer);
     }
 
     @Override
@@ -73,7 +71,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void addView() {
-        LayoutTransition layoutTransition = binding.linearLayout.getLayoutTransition();
+        LayoutTransition layoutTransition = mBinding.linearLayout.getLayoutTransition();
         //通过翻转动画取代默认的动画效果
         Animator animatorIn = ObjectAnimator.ofFloat(null, "rotationY", 90f, 0f)
                 .setDuration(layoutTransition.getDuration(LayoutTransition.APPEARING));
@@ -91,27 +89,27 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.linearLayout.removeView(button);
+                mBinding.linearLayout.removeView(button);
             }
         });
 
-        binding.linearLayout.addView(button, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        mBinding.linearLayout.addView(button, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     }
 
     private void performAnimation() {
-        if (binding.linearLayout.getVisibility() == View.VISIBLE) {
+        if (mBinding.linearLayout.getVisibility() == View.VISIBLE) {
 //            Animation animationOut = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
 //            Animation animationOut = AnimationUtils.makeOutAnimation(this, true);
             Animation animationOut = AnimationUtils.loadAnimation(this, R.anim.slide_out_child_bottom);
-            binding.linearLayout.setAnimation(animationOut);
+            mBinding.linearLayout.setAnimation(animationOut);
             animationOut.start();
-            binding.linearLayout.setVisibility(View.INVISIBLE);
+            mBinding.linearLayout.setVisibility(View.INVISIBLE);
         } else {
 //            Animation animationIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
 //            Animation animationIn = AnimationUtils.makeInAnimation(this, true);
             Animation animationIn = AnimationUtils.makeInChildBottomAnimation(this);
-            binding.linearLayout.startAnimation(animationIn);
-            binding.linearLayout.setVisibility(View.VISIBLE);
+            mBinding.linearLayout.startAnimation(animationIn);
+            mBinding.linearLayout.setVisibility(View.VISIBLE);
         }
     }
 
@@ -159,6 +157,14 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+//        displayMetrics.density
+        Log.e(TAG, "onResume:widthPixels ==  " + displayMetrics.widthPixels);
+        Log.e(TAG, "onResume:heightPixels ==  " + displayMetrics.heightPixels);
+        Log.e(TAG, "onResume:xdpi ==  " + displayMetrics.xdpi + "ydpi == " + displayMetrics.ydpi);
+        Log.e(TAG, "onResume:density ==  " + displayMetrics.density);
+        Log.e(TAG, "onResume:densityDpi ==  " + displayMetrics.densityDpi);
+        Log.e(TAG, "onResume:scaledDensity ==  " + displayMetrics.scaledDensity);
         Log.e(TAG, "onResume: " + getLifecycle().getCurrentState().name());
     }
 

@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //
 //        fab.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
-        Intent intent = new Intent(this, SplashActivity.class);
+        Intent intent = new Intent(this, TestActivity.class);
         startActivity(intent);
 
 //        try {

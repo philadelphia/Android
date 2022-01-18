@@ -1,16 +1,12 @@
 package com.example.myapplication;
 
-import android.annotation.TargetApi;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.RadioGroup;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.databinding.ActivityKeyboardBinding;
 
@@ -19,32 +15,34 @@ import com.example.myapplication.databinding.ActivityKeyboardBinding;
  * @Date 9/20/21 11:20 PM
  * @Desc
  */
-public class KeyBoardActivity extends AppCompatActivity {
-    private ActivityKeyboardBinding binding;
+public class KeyBoardActivity extends BaseActivity<ActivityKeyboardBinding> {
     private static final String TAG = "KeyBoardActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityKeyboardBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
         initView();
     }
 
+    @Override
+    protected ActivityKeyboardBinding initBinding() {
+        return ActivityKeyboardBinding.inflate(getLayoutInflater());
+    }
+
     private void initView() {
-        binding.radioScroll.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        mBinding.radioScroll.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.unScrollable) {
-                    binding.llContent.setVisibility(View.VISIBLE);
-                    binding.scrollView.setVisibility(View.GONE);
+                    mBinding.llContent.setVisibility(View.VISIBLE);
+                    mBinding.scrollView.setVisibility(View.GONE);
                 } else {
-                    binding.llContent.setVisibility(View.GONE);
-                    binding.scrollView.setVisibility(View.VISIBLE);
+                    mBinding.llContent.setVisibility(View.GONE);
+                    mBinding.scrollView.setVisibility(View.VISIBLE);
                 }
             }
         });
-        binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        mBinding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.adjustNothing) {
@@ -61,22 +59,22 @@ public class KeyBoardActivity extends AppCompatActivity {
 
         Rect rect = new Rect();
         getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
-        Log.e(TAG, "状态栏信息 initView: "+ rect.toString() );
-        binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        Log.e(TAG, "状态栏信息 initView: " + rect.toString());
+        mBinding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 Rect rect = new Rect();
                 //获取root在窗体的可视区域
-                binding.getRoot().getWindowVisibleDisplayFrame(rect);
-                Log.e(TAG, "onGlobalLayout: " + rect.toString() );
-                int height = binding.getRoot().getHeight();
-                Log.e(TAG, " Root 高度: " + height );
-                Log.e(TAG, " status bar 高度: " + rect.top );
-                Log.e(TAG, " 窗口 bottom 坐标 : " + rect.bottom );
+                mBinding.getRoot().getWindowVisibleDisplayFrame(rect);
+                Log.e(TAG, "onGlobalLayout: " + rect.toString());
+                int height = mBinding.getRoot().getHeight();
+                Log.e(TAG, " Root 高度: " + height);
+                Log.e(TAG, " status bar 高度: " + rect.top);
+                Log.e(TAG, " 窗口 bottom 坐标 : " + rect.bottom);
             }
         });
 
-//        binding.getRoot().getViewTreeObserver().addOnWindowFocusChangeListener(new View.OnWindowFocusChangeListener() {
+//        mBinding.getRoot().getViewTreeObserver().addOnWindowFocusChangeListener(new View.OnWindowFocusChangeListener() {
 //
 //        });
     }
@@ -86,6 +84,6 @@ public class KeyBoardActivity extends AppCompatActivity {
         super.onWindowFocusChanged(hasFocus);
         Rect rect = new Rect();
         getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
-        Log.e(TAG, "状态栏信息 initView: "+ rect.toString() );
+        Log.e(TAG, "状态栏信息 initView: " + rect.toString());
     }
 }

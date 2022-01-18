@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import androidx.annotation.Nullable;
@@ -19,10 +20,13 @@ import java.lang.reflect.Type;
  */
 public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActivity {
     protected T mBinding;
+    protected static String TAG;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TAG = this.getClass().getSimpleName();
+        Log.d(TAG, "onCreate: ");
 //        mBinding = initBinding();
         mBinding = initBindingByReflection();
         if (mBinding == null) {
