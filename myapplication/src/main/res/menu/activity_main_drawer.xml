@@ -41,6 +41,11 @@
                 android:id="@+id/nav_CustomView"
                 android:icon="@mipmap/ic_stars_white_36dp"
                 android:title="自定义View" />
+
+            <item
+                android:id="@+id/nav_RecyclerView"
+                android:icon="@mipmap/ic_stars_white_36dp"
+                android:title="RecyclerView" />
         </menu>
     </item>
 

@@ -70,7 +70,7 @@ public class ManagerFragment extends Fragment {
 
 
     public void initView(View view) {
-        mTablayout = ((MainActivity) getActivity()).getmTabLayout();
+        mTablayout = ((MainActivity) getActivity()).getTabLayout();
         toolbar = ((MainActivity) getActivity()).getToolbar();
         mTablayout.setVisibility(View.VISIBLE);
         mTablayout.setTabMode(TabLayout.MODE_FIXED);

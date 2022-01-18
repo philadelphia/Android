@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -22,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
@@ -111,10 +111,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Rect rect = new Rect();
                 binding.getRoot().getWindowVisibleDisplayFrame(rect);
                 if (rect.bottom < 1920) {
+                    binding.main.contentMain.btnTest.setVisibility(View.GONE);
                     ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.main.contentMain.container.getLayoutParams();
-                    layoutParams.bottomMargin = 120;
-                    binding.main.contentMain.container.setLayoutParams(layoutParams);
+//                    layoutParams.bottomMargin = 120;
+//                    binding.main.contentMain.container.setLayoutParams(layoutParams);
                 } else {
+                    binding.main.contentMain.btnTest.setVisibility(View.VISIBLE);
                     ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.main.contentMain.container.getLayoutParams();
                     layoutParams.bottomMargin = 0;
                     binding.main.contentMain.container.setLayoutParams(layoutParams);
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //
 //        fab.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
-        Intent intent = new Intent(this, TestActivity.class);
+        Intent intent = new Intent(this, SplashActivity.class);
         startActivity(intent);
 
 //        try {
@@ -260,48 +262,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_camera:
-                AndroidBaseFragment androidBaseFragment = new AndroidBaseFragment();
-                fragmentManager.beginTransaction().replace(R.id.container, androidBaseFragment).commit();
+                switchFragment(new AndroidBaseFragment());
                 break;
 
             case R.id.nav_BaseView:
-                AndroidWidgetFragment androidBaseViewFragment = new AndroidWidgetFragment();
-                fragmentManager.beginTransaction().replace(R.id.container, androidBaseViewFragment).commit();
+                switchFragment(new AndroidWidgetFragment());
                 break;
 
             case R.id.nav_database:
                 Log.e(TAG, "onNavigationItemSelected: database");
-                DatabaseFragment databaseFragment = new DatabaseFragment();
-                fragmentManager.beginTransaction().replace(R.id.container, databaseFragment).commit();
+                switchFragment(new DatabaseFragment());
                 break;
 
             case R.id.nav_other:
-                OtherFragment otherFragment = new OtherFragment();
-                fragmentManager.beginTransaction().replace(R.id.container, otherFragment).commit();
+                switchFragment(new OtherFragment());
                 break;
 
             case R.id.nav_Manager:
-                ManagerFragment managerFragment = new ManagerFragment();
-                fragmentManager.beginTransaction().replace(R.id.container, managerFragment).commit();
+                switchFragment(new ManagerFragment());
                 break;
 
             case R.id.nav_CustomView:
-                CustomViewFragment customViewFragment = new CustomViewFragment();
-                fragmentManager.beginTransaction().replace(R.id.container, customViewFragment).commit();
+                switchFragment(new CustomViewFragment());
+                break;
+            case R.id.nav_RecyclerView:
+                startActivity(new Intent(this, RecyclerViewActivity.class));
                 break;
 
             case R.id.nav_materialDesign:
-                MaterialDesginFragment materialDesgin = new MaterialDesginFragment();
-                fragmentManager.beginTransaction().replace(R.id.container, materialDesgin).commit();
+                switchFragment(new MaterialDesginFragment());
                 break;
 
             case R.id.nav_share:
-                ShareFragment shareFragment = new ShareFragment();
-                fragmentManager.beginTransaction().replace(R.id.container, shareFragment).commit();
+                switchFragment(new ShareFragment());
                 break;
+
             case R.id.nav_send:
-                SendFragment sendFragment = new SendFragment();
-                fragmentManager.beginTransaction().replace(R.id.container, sendFragment).commit();
+                switchFragment(new SendFragment());
                 break;
 
             default:
@@ -314,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public TabLayout getmTabLayout() {
+    public TabLayout getTabLayout() {
         return binding.main.slidingTabs;
     }
 
@@ -373,5 +370,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
         Log.e(TAG, "onResume: ");
+    }
+
+    private void switchFragment(Fragment fragment) {
+        if (fragment == null) {
+            return;
+        }
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 }

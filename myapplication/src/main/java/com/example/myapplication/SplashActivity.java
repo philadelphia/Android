@@ -5,26 +5,27 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myapplication.databinding.ActivitySplashBinding;
 
 
-public class SplashActivity extends AppCompatActivity implements View.OnClickListener {
-    private ActivitySplashBinding binding;
+public class SplashActivity extends BaseActivity<ActivitySplashBinding> implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySplashBinding.inflate(getLayoutInflater());
         countDownTimer.start();
+    }
+
+    @Override
+    protected ActivitySplashBinding initBinding() {
+        return ActivitySplashBinding.inflate(getLayoutInflater());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        binding.imgBackGround.setOnClickListener(this);
-        binding.btnTimter.setOnClickListener(this);
+        mBinding.imgBackGround.setOnClickListener(this);
+        mBinding.btnTimter.setOnClickListener(this);
     }
 
     @Override
@@ -41,12 +42,12 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     private CountDownTimer countDownTimer = new CountDownTimer(3200, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
-            binding.btnTimter.setText("跳过(" + millisUntilFinished / 1000 + "s)");
+            mBinding.btnTimter.setText("跳过(" + millisUntilFinished / 1000 + "s)");
         }
 
         @Override
         public void onFinish() {
-            binding.btnTimter.setText("跳过( 0 s)");
+            mBinding.btnTimter.setText("跳过( 0 s)");
             goToLogInOrMainActivity();
         }
     };

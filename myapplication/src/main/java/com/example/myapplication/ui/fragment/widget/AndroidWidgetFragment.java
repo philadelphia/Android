@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -75,7 +74,7 @@ public class AndroidWidgetFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ((MainActivity) getActivity()).getmTabLayout().setVisibility(View.GONE);
+        ((MainActivity) getActivity()).getTabLayout().setVisibility(View.GONE);
     }
 
     @Override

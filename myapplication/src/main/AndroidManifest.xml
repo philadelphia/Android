@@ -81,6 +81,11 @@
             android:label="Activity B"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".RecyclerViewActivity"
+            android:label="RecyclerViewActivity"
+            android:theme="@style/AppTheme" />
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="E2EGBPHrsreBGIN0l649lqSRbE8tbGae" />

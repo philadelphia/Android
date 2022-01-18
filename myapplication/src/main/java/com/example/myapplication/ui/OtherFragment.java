@@ -50,7 +50,7 @@ public class OtherFragment extends Fragment {
     }
 
     public void initView(View view) {
-        mTablayout = ((MainActivity) getActivity()).getmTabLayout();
+        mTablayout = ((MainActivity) getActivity()).getTabLayout();
         mTablayout.setVisibility(View.VISIBLE);
         fragmentEntityList.clear();
         fragmentEntityList.add(new FragmentEntity("Window", new NotificationFragment()));

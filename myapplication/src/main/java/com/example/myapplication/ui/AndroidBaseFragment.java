@@ -52,7 +52,7 @@ public class AndroidBaseFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        ((MainActivity) getActivity()).getmTabLayout().setVisibility(View.GONE);
+        ((MainActivity) getActivity()).getTabLayout().setVisibility(View.GONE);
         binding.tabLayout.setTabMode(TabLayout.MODE_FIXED);
         fragmentEntityList.clear();
         fragmentEntityList.add(new FragmentEntity("Activity", new ActivityFragment()));

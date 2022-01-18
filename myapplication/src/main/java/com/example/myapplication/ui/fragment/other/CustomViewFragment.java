@@ -47,7 +47,7 @@ public class CustomViewFragment extends Fragment {
 
     public void initView(View view) {
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        mTablayout = ((MainActivity) getActivity()).getmTabLayout();
+        mTablayout = ((MainActivity) getActivity()).getTabLayout();
         toolbar = ((MainActivity) getActivity()).getToolbar();
         mTablayout.setVisibility(View.VISIBLE);
         mTablayout.setTabMode (TabLayout.MODE_FIXED);

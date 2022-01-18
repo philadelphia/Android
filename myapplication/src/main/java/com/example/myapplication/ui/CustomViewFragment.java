@@ -49,7 +49,7 @@ public class CustomViewFragment extends Fragment {
     }
 
     public void initView(View view) {
-        mTablayout = ((MainActivity) getActivity()).getmTabLayout();
+        mTablayout = ((MainActivity) getActivity()).getTabLayout();
         mTablayout.setVisibility(View.VISIBLE);
         mTablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         fragmentEntityList.clear();
