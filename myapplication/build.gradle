@@ -71,6 +71,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-share:[8,9)'
     implementation 'com.facebook.android:facebook-messenger:[8,9)'
     implementation 'com.facebook.android:facebook-applinks:[8,9)'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.21"
 
 
     task A{

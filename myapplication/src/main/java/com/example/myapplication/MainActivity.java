@@ -38,6 +38,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FragmentManager fragmentManager;
     private ActionBarDrawerToggle toggle;
@@ -377,5 +387,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
         }
         fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+    }
+
+    private void testRxjava() {
+        Observable<Integer> observable = Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                e.onNext(1);
+                e.onNext(2);
+                e.onNext(3);
+                e.onComplete();
+            }
+        });
+        Observable<String> map = observable.map(new Function<Integer, String>() {
+            @Override
+            public String apply(Integer integer) throws Exception {
+                return integer.toString();
+            }
+        });
+
+        Observable<String> stringObservable = map.subscribeOn(Schedulers.io());
+        Observable<String> stringObservable1 = stringObservable.observeOn(AndroidSchedulers.mainThread());
+        stringObservable1.subscribe(new Observer<String>() {
+
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+                Log.e(TAG, s);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 }
