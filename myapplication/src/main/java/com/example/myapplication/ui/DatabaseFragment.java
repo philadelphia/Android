@@ -28,7 +28,6 @@ public class DatabaseFragment extends Fragment {
     private FragmentPagerAdapter mPagerAdapter;
     private final List<FragmentEntity> fragmentEntityList = new ArrayList<>();
     private FragmentDatabaseBinding binding;
-    private TabLayout mTablayout;
 
 
     @Override
@@ -45,10 +44,6 @@ public class DatabaseFragment extends Fragment {
     }
 
     public void initView(View view) {
-        mTablayout = ((MainActivity) getActivity()).getTabLayout();
-        mTablayout.setVisibility(View.VISIBLE);
-        mTablayout.setTabMode(TabLayout.MODE_FIXED);
-
         fragmentEntityList.clear();
         fragmentEntityList.add(new FragmentEntity("CreateDB", new CreateDBFragment()));
     }
@@ -74,6 +69,6 @@ public class DatabaseFragment extends Fragment {
             }
         };
         binding.viewPager.setAdapter(mPagerAdapter);
-        mTablayout.setupWithViewPager(binding.viewPager);
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
     }
 }

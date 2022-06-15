@@ -4,16 +4,17 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.FileObserver;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -29,7 +30,7 @@ import com.example.myapplication.ui.AndroidBaseFragment;
 import com.example.myapplication.ui.CustomViewFragment;
 import com.example.myapplication.ui.DatabaseFragment;
 import com.example.myapplication.ui.ManagerFragment;
-import com.example.myapplication.ui.MaterialDesginFragment;
+import com.example.myapplication.ui.MaterialDesignFragment;
 import com.example.myapplication.ui.OtherFragment;
 import com.example.myapplication.ui.SendFragment;
 import com.example.myapplication.ui.ShareFragment;
@@ -38,15 +39,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
+import java.io.File;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FragmentManager fragmentManager;
@@ -71,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         AndroidWidgetFragment androidBaseViewFragment = new AndroidWidgetFragment();
 //        DatabaseFragment databaseFragment = new DatabaseFragment();
         CustomViewFragment customViewFragment = new CustomViewFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, androidBaseViewFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.container, managerFragment).commit();
     }
 
 
@@ -115,22 +109,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.navView.setNavigationItemSelectedListener(this);
         toast = Toast.makeText(this, "toast", Toast.LENGTH_SHORT);
 
-        binding.main.contentMain.container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        binding.main.container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 Rect rect = new Rect();
                 binding.getRoot().getWindowVisibleDisplayFrame(rect);
-                if (rect.bottom < 1920) {
-                    binding.main.contentMain.btnTest.setVisibility(View.GONE);
-                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.main.contentMain.container.getLayoutParams();
-//                    layoutParams.bottomMargin = 120;
+//                if (rect.bottom < 1920) {
+//                    binding.main.contentMain.btnTest.setVisibility(View.GONE);
+//                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.main.contentMain.container.getLayoutParams();
+////                    layoutParams.bottomMargin = 120;
+////                    binding.main.contentMain.container.setLayoutParams(layoutParams);
+//                } else {
+//                    binding.main.contentMain.btnTest.setVisibility(View.VISIBLE);
+//                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.main.contentMain.container.getLayoutParams();
+//                    layoutParams.bottomMargin = 0;
 //                    binding.main.contentMain.container.setLayoutParams(layoutParams);
-                } else {
-                    binding.main.contentMain.btnTest.setVisibility(View.VISIBLE);
-                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.main.contentMain.container.getLayoutParams();
-                    layoutParams.bottomMargin = 0;
-                    binding.main.contentMain.container.setLayoutParams(layoutParams);
-                }
+//                }
             }
         });
 
@@ -171,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -206,19 +200,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Searching....", Toast.LENGTH_SHORT).show();
-            }
-        });
+        searchView.setOnSearchClickListener(v -> Toast.makeText(MainActivity.this, "Searching....", Toast.LENGTH_SHORT).show());
 
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                Toast.makeText(MainActivity.this, "Closing....", Toast.LENGTH_SHORT).show();
-                return false;
-            }
+        searchView.setOnCloseListener(() -> {
+            Toast.makeText(MainActivity.this, "Closing....", Toast.LENGTH_SHORT).show();
+            return false;
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -300,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_materialDesign:
-                switchFragment(new MaterialDesginFragment());
+                switchFragment(new MaterialDesignFragment());
                 break;
 
             case R.id.nav_share:
@@ -324,6 +310,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public TabLayout getTabLayout() {
         return binding.main.slidingTabs;
     }
+
 
     public Toolbar getToolbar() {
         return binding.main.toolbar;
@@ -374,12 +361,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart() {
         super.onStart();
         Log.e(TAG, "onStart: ");
+//        testAnr();
+        binding.drawerLayout.performClick();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.e(TAG, "onResume: ");
+
+
     }
 
     private void switchFragment(Fragment fragment) {
@@ -389,47 +380,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
-    private void testRxjava() {
-        Observable<Integer> observable = Observable.create(new ObservableOnSubscribe<Integer>() {
+//    private void testRxjava() {
+//        android.database.Observable<Integer> observable = Observable.create(new ObservableOnSubscribe<Integer>() {
+//            @Override
+//            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+//                e.onNext(1);
+//                e.onNext(2);
+//                e.onNext(3);
+//                e.onComplete();
+//            }
+//        });
+//        android.database.Observable<String> map = observable.map(new Function<Integer, String>() {
+//            @Override
+//            public String apply(Integer integer) throws Exception {
+//                return integer.toString();
+//            }
+//        });
+//
+//        android.database.Observable<String> stringObservable = map.subscribeOn(Schedulers.io());
+//        android.database.Observable<String> stringObservable1 = stringObservable.observeOn(AndroidSchedulers.mainThread());
+//        stringObservable1.subscribe(new Observer<String>() {
+//
+//
+//            @Override
+//            public void onSubscribe(@NonNull Disposable d) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(String s) {
+//                Log.e(TAG, s);
+//            }
+//
+//            @Override
+//            public void onError(Throwable t) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//        });
+//    }
+
+    private void  testAnr(){
+        File file = new File("/data/anr");
+        FileObserver fileObserver = new FileObserver("/data/anr") {
             @Override
-            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
-                e.onNext(1);
-                e.onNext(2);
-                e.onNext(3);
-                e.onComplete();
+            public void onEvent(int event, @Nullable String path) {
+                Log.e(TAG, "onEvent: +" + path);
             }
-        });
-        Observable<String> map = observable.map(new Function<Integer, String>() {
-            @Override
-            public String apply(Integer integer) throws Exception {
-                return integer.toString();
-            }
-        });
-
-        Observable<String> stringObservable = map.subscribeOn(Schedulers.io());
-        Observable<String> stringObservable1 = stringObservable.observeOn(AndroidSchedulers.mainThread());
-        stringObservable1.subscribe(new Observer<String>() {
-
-
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(String s) {
-                Log.e(TAG, s);
-            }
-
-            @Override
-            public void onError(Throwable t) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+        };
+        fileObserver.startWatching();
     }
 }

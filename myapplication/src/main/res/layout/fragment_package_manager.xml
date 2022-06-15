@@ -1,6 +1,6 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.manager.PackageManagerFragment">
@@ -8,8 +8,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -19,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:layout_behavior="com.example.myapplication.behavior.MyBehavior"
-        android:src="@android:drawable/ic_dialog_map" />
+        android:src="@android:drawable/ic_dialog_map"
+        app:layout_behavior="com.example.myapplication.behavior.MyBehavior" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

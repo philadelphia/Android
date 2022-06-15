@@ -29,6 +29,13 @@ public class PowerFragment extends Fragment {
     private PowerConnectionReceiver receiver;
     private FragmentPowerBinding binding;
     private IntentFilter ifilter;
+    private Context context;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -113,12 +120,12 @@ public class PowerFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().registerReceiver(receiver, intentFilter);
+        context.registerReceiver(receiver, intentFilter);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        getActivity().unregisterReceiver(receiver);
+        context.unregisterReceiver(receiver);
     }
 }

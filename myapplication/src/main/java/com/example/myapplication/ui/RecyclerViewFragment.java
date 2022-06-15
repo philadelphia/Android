@@ -27,7 +27,6 @@ import java.util.List;
  */
 public class RecyclerViewFragment extends Fragment {
     private static final String TAG = "CustomViewFragment";
-    private TabLayout mTablayout;
 
     private FragmentPagerAdapter mPagerAdapter;
     private final List<FragmentEntity> fragmentEntityList = new ArrayList<>();
@@ -49,9 +48,6 @@ public class RecyclerViewFragment extends Fragment {
     }
 
     public void initView(View view) {
-        mTablayout = ((MainActivity) getActivity()).getTabLayout();
-        mTablayout.setVisibility(View.VISIBLE);
-        mTablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         fragmentEntityList.clear();
         fragmentEntityList.add(new FragmentEntity("Color", new ColorFragment()));
         fragmentEntityList.add(new FragmentEntity("Circle", new CircleFragment()));
@@ -81,7 +77,7 @@ public class RecyclerViewFragment extends Fragment {
             }
         };
         binding.viewPager.setAdapter(mPagerAdapter);
-        mTablayout.setupWithViewPager(binding.viewPager);
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
     }
 
 

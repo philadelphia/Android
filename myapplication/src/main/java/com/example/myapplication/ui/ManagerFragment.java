@@ -10,17 +10,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.myapplication.MainActivity;
+import com.example.myapplication.databinding.FragmentManagerBinding;
 import com.example.myapplication.ui.fragment.manager.ActivityManagerFragment;
 import com.example.myapplication.ui.fragment.manager.PackageManagerFragment;
 import com.example.myapplication.ui.fragment.manager.PowerFragment;
 import com.example.myapplication.ui.fragment.manager.TestFragment;
 import com.example.myapplication.ui.fragment.manager.WindowManagerFragment;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +28,9 @@ import java.util.List;
  */
 public class ManagerFragment extends Fragment {
     private final String TAG = OtherFragment.class.getSimpleName();
-    private TabLayout mTablayout;
-    private Toolbar toolbar;
     private FragmentPagerAdapter mPagerAdapter;
     private final List<FragmentEntity> fragmentEntityList = new ArrayList<>();
-    private com.example.myapplication.databinding.FragmentManagerBinding binding;
+    private FragmentManagerBinding binding;
 
     @Override
     public void onAttach(Context context) {
@@ -70,10 +66,6 @@ public class ManagerFragment extends Fragment {
 
 
     public void initView(View view) {
-        mTablayout = ((MainActivity) getActivity()).getTabLayout();
-        toolbar = ((MainActivity) getActivity()).getToolbar();
-        mTablayout.setVisibility(View.VISIBLE);
-        mTablayout.setTabMode(TabLayout.MODE_FIXED);
     }
 
     private void setUpViewPagerAndTabs() {
@@ -104,7 +96,7 @@ public class ManagerFragment extends Fragment {
             }
         };
         binding.viewPager.setAdapter(mPagerAdapter);
-        mTablayout.setupWithViewPager(binding.viewPager);
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
     }
 
 }

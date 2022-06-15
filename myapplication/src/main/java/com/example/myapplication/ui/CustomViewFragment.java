@@ -11,13 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.databinding.FragmentCustomViewBinding;
 import com.example.myapplication.ui.fragment.customeview.CircleFragment;
 import com.example.myapplication.ui.fragment.customeview.ColorFragment;
 import com.example.myapplication.ui.fragment.customeview.RectFragment;
 import com.example.myapplication.ui.fragment.customeview.ShapeFragment;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +25,6 @@ import java.util.List;
  */
 public class CustomViewFragment extends Fragment {
     private static final String TAG = "CustomViewFragment";
-    private TabLayout mTablayout;
 
     private FragmentPagerAdapter mPagerAdapter;
     private final List<FragmentEntity> fragmentEntityList = new ArrayList<>();
@@ -49,9 +46,6 @@ public class CustomViewFragment extends Fragment {
     }
 
     public void initView(View view) {
-        mTablayout = ((MainActivity) getActivity()).getTabLayout();
-        mTablayout.setVisibility(View.VISIBLE);
-        mTablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         fragmentEntityList.clear();
         fragmentEntityList.add(new FragmentEntity("Color", new ColorFragment()));
         fragmentEntityList.add(new FragmentEntity("Circle", new CircleFragment()));
@@ -81,7 +75,7 @@ public class CustomViewFragment extends Fragment {
             }
         };
         binding.viewPager.setAdapter(mPagerAdapter);
-        mTablayout.setupWithViewPager(binding.viewPager);
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
     }
 
 

@@ -76,7 +76,6 @@ public class PackageManagerFragment extends Fragment implements OnStartDragListe
 
     private void initView() {
         packageManager = getContext().getPackageManager();
-        ((MainActivity) getActivity()).getFloatingActionBar().setVisibility(View.GONE);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
 //        myAdapter = new RecyclerViewItemTouchAdapter(installedPackages);

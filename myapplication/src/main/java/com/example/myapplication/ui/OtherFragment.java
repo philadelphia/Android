@@ -10,13 +10,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.databinding.FragmentOtherBinding;
 import com.example.myapplication.ui.fragment.other.AnimationFragment;
 import com.example.myapplication.ui.fragment.other.NotificationFragment;
 import com.example.myapplication.ui.fragment.other.WebViewFragment;
 import com.example.myapplication.ui.fragment.other.WindowFragment;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +22,6 @@ import java.util.List;
 
 public class OtherFragment extends Fragment {
     private final String TAG = OtherFragment.class.getSimpleName();
-    private TabLayout mTablayout;
     private FragmentPagerAdapter mPagerAdapter;
     private final List<FragmentEntity> fragmentEntityList = new ArrayList<>();
     private FragmentOtherBinding binding;
@@ -50,8 +47,6 @@ public class OtherFragment extends Fragment {
     }
 
     public void initView(View view) {
-        mTablayout = ((MainActivity) getActivity()).getTabLayout();
-        mTablayout.setVisibility(View.VISIBLE);
         fragmentEntityList.clear();
         fragmentEntityList.add(new FragmentEntity("Window", new NotificationFragment()));
         fragmentEntityList.add(new FragmentEntity("Notification", new WindowFragment()));
@@ -80,7 +75,7 @@ public class OtherFragment extends Fragment {
 
         };
         binding.viewPager.setAdapter(mPagerAdapter);
-        mTablayout.setupWithViewPager(binding.viewPager);
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
     }
 
     @Override

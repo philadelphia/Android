@@ -9,24 +9,46 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
-        android:textSize="20sp"
-        android:text="Network Now Available " />
+        android:text="Network Now Available "
+        android:textSize="20sp" />
 
 
     <Button
         android:id="@+id/btn_testBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Test Scroll By"
-        android:textSize="20sp"
-        android:gravity="center"/>
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btn_testTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Test Scroll TO"
-        android:textSize="20sp"
-        android:gravity="center"/>
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:padding="40dp"
+        android:background="@color/colorPrimary">
+
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:background="@color/colorAccent3"
+            android:clipChildren="false">
+
+            <TextView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:background="#3f000000"
+                android:text="test"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
