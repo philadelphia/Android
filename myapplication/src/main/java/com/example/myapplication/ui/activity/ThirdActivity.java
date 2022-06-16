@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.activity;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -35,6 +36,8 @@ public class ThirdActivity extends AppCompatActivity implements RevealBackGround
         Log.i(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         binding = ActivityThirdBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         packageManager = getPackageManager();
         initToolBar();
         initData();
@@ -98,8 +101,14 @@ public class ThirdActivity extends AppCompatActivity implements RevealBackGround
         binding.toolbar.setTranslationY(-binding.toolbar.getHeight());
         binding.toolbar.animate().translationY(0).setDuration(300).setStartDelay(300).setInterpolator(INTERPOLATOR).start();
         binding.appLayout.setTranslationY(-binding.appLayout.getHeight());
+
+
         binding.appLayout.animate().translationY(0).setDuration(200).setStartDelay(300).setInterpolator(INTERPOLATOR).start();
-        binding.recyclerView.setTranslationY(-binding.recyclerView.getHeight());
+        binding.recyclerView.setTranslationY(-(binding.recyclerView.getHeight() + binding.toolbar.getHeight()));
+        ObjectAnimator translationY = ObjectAnimator.ofInt(binding.recyclerView, "translationY", -(binding.recyclerView.getHeight() + binding.toolbar.getHeight()), 0);
+//        ObjectAnimator translationY = ObjectAnimator.ofInt(binding.recyclerView, "translationY", -(binding.recyclerView.getHeight() + binding.toolbar.getHeight()), 0);
+        translationY.setDuration(300).setInterpolator(INTERPOLATOR);
+        translationY.start();
         binding.recyclerView.animate().translationY(0).setDuration(300).setStartDelay(300).setInterpolator(INTERPOLATOR).start();
     }
 

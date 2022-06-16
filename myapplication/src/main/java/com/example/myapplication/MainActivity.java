@@ -34,6 +34,7 @@ import com.example.myapplication.ui.MaterialDesignFragment;
 import com.example.myapplication.ui.OtherFragment;
 import com.example.myapplication.ui.SendFragment;
 import com.example.myapplication.ui.ShareFragment;
+import com.example.myapplication.ui.activity.ThirdActivity;
 import com.example.myapplication.ui.fragment.widget.AndroidWidgetFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //
 //        fab.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
-        Intent intent = new Intent(this, TestActivity.class);
+        Intent intent = new Intent(this, ThirdActivity.class);
         startActivity(intent);
 
 //        try {

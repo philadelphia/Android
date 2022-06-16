@@ -6,12 +6,13 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.example.myapplication.R;
 
@@ -41,8 +42,7 @@ public class RevealBackGround extends View {
     private void init() {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(ContextCompat.getColor(context, R.color.colorPrimary));
-//        paint.setColor(Color.GREEN);
+        paint.setColor(ContextCompat.getColor(context, R.color.colorAccent3));
     }
 
     public void setRadius(int radius) {
@@ -82,6 +82,6 @@ public class RevealBackGround extends View {
 
     public  interface OnStateChangedListener{
         void onStateChange(int state);
-
     }
+
 }
