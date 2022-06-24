@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         AndroidWidgetFragment androidBaseViewFragment = new AndroidWidgetFragment();
 //        DatabaseFragment databaseFragment = new DatabaseFragment();
         CustomViewFragment customViewFragment = new CustomViewFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, managerFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.container, customViewFragment).commit();
     }
 
 

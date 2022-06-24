@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.myapplication.databinding.FragmentCustomViewBinding;
 import com.example.myapplication.ui.fragment.customeview.CircleFragment;
 import com.example.myapplication.ui.fragment.customeview.ColorFragment;
+import com.example.myapplication.ui.fragment.customeview.CustomViewGroupFragment;
 import com.example.myapplication.ui.fragment.customeview.RectFragment;
 import com.example.myapplication.ui.fragment.customeview.ShapeFragment;
 
@@ -47,6 +48,7 @@ public class CustomViewFragment extends Fragment {
 
     public void initView(View view) {
         fragmentEntityList.clear();
+        fragmentEntityList.add(new FragmentEntity("CustomViewGroup",  new CustomViewGroupFragment()));
         fragmentEntityList.add(new FragmentEntity("Color", new ColorFragment()));
         fragmentEntityList.add(new FragmentEntity("Circle", new CircleFragment()));
         fragmentEntityList.add(new FragmentEntity("Rect", new RectFragment()));
