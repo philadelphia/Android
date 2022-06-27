@@ -1,19 +1,20 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.example.myapplication.ui.fragment.customeview.CustomLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#1f009f00"
-        android:paddingVertical="40dp">
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="40dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="#0FFF0000"
             android:gravity="center"
             android:text="test1" />
@@ -22,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
             android:background="#3F00FF00"
             android:gravity="center"
             android:text="test2" />
@@ -30,9 +32,25 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="30dp"
+            android:layout_marginRight="30dp"
             android:background="#0F0000FF"
             android:gravity="center"
             android:text="test3" />
+
     </com.example.myapplication.ui.fragment.customeview.CustomLinearLayout>
 
-</FrameLayout>
+    <com.example.myapplication.ui.fragment.customeview.CustomLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1f9f0000">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginRight="40dp"
+            android:background="#0F0000FF"
+            android:gravity="center"
+            android:text="test4" />
+    </com.example.myapplication.ui.fragment.customeview.CustomLinearLayout>
+
+</LinearLayout>

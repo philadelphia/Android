@@ -26,7 +26,6 @@ class CustomLinearLayout(context: Context, attributes: AttributeSet?, defStyle: 
 
         var width = 0;
         var height = 0;
-        var childRealHeight = 0
         var childCount = childCount
         for (i in 0 until childCount) {
             val child = getChildAt(i)
@@ -35,13 +34,13 @@ class CustomLinearLayout(context: Context, attributes: AttributeSet?, defStyle: 
 
             val childWidth = child.measuredWidth + marginLayoutParams.leftMargin + marginLayoutParams.rightMargin
             val childHeight = child.measuredHeight + marginLayoutParams.topMargin + marginLayoutParams.bottomMargin
-            childRealHeight += child.measuredHeight
             width = Math.max(width, childWidth)
             height += childHeight
-            Log.d(TAG, "onMeasure: childRealHeight ==  $childRealHeight")
-            Log.d(TAG, "onMeasure: 第 ${i + 1}次测量的高度是 $height")
+            Log.d(TAG, "onMeasure: 第$(i+1)次测量的高度是 $height")
         }
-        height += paddingBottom + paddingTop
+
+        height += paddingTop
+        height += paddingBottom
         var finalWidth = 0
         var finalHeight = 0
         finalWidth = when (widthMeasureMode) {
@@ -72,11 +71,17 @@ class CustomLinearLayout(context: Context, attributes: AttributeSet?, defStyle: 
         top += paddingTop
 
         for (i in 0 until childCount) {
+            var left = paddingLeft
             val child: View = getChildAt(i)
             val marginLayoutParams = child.layoutParams as MarginLayoutParams
-            val left = marginLayoutParams.leftMargin
+            left += marginLayoutParams.leftMargin
             top += marginLayoutParams.topMargin
-            val right = child.measuredWidth + marginLayoutParams.leftMargin - marginLayoutParams.rightMargin
+            var right = 0
+            right = if (r > child.measuredWidth + left + marginLayoutParams.leftMargin) {
+                child.measuredWidth + left + marginLayoutParams.leftMargin - marginLayoutParams.rightMargin - paddingRight
+            } else {
+                r - marginLayoutParams.rightMargin - paddingRight
+            }
             val bottom = top + child.measuredHeight + marginLayoutParams.bottomMargin
             child.layout(left, top, right, bottom)
             top = bottom
