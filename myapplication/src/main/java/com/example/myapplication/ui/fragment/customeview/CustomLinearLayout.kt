@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import kotlin.math.max
 
 /**
 @Author zhang tao
@@ -24,9 +25,9 @@ class CustomLinearLayout(context: Context, attributes: AttributeSet?, defStyle: 
         val widthMeasureMode = MeasureSpec.getMode(widthMeasureSpec)
         val heightMeasureMode = MeasureSpec.getMode(heightMeasureSpec)
 
-        var width = 0;
-        var height = 0;
-        var childCount = childCount
+        var width = 0
+        var height = 0
+        val childCount = childCount
         for (i in 0 until childCount) {
             val child = getChildAt(i)
             measureChild(child, widthMeasureSpec, heightMeasureSpec)
@@ -34,15 +35,15 @@ class CustomLinearLayout(context: Context, attributes: AttributeSet?, defStyle: 
 
             val childWidth = child.measuredWidth + marginLayoutParams.leftMargin + marginLayoutParams.rightMargin
             val childHeight = child.measuredHeight + marginLayoutParams.topMargin + marginLayoutParams.bottomMargin
-            width = Math.max(width, childWidth)
+            width = max(width, childWidth)
             height += childHeight
             Log.d(TAG, "onMeasure: 第$(i+1)次测量的高度是 $height")
         }
 
         height += paddingTop
         height += paddingBottom
-        var finalWidth = 0
-        var finalHeight = 0
+        val finalWidth: Int
+        val finalHeight: Int
         finalWidth = when (widthMeasureMode) {
             MeasureSpec.EXACTLY ->
                 widthMeasured
