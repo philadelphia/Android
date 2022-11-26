@@ -17,6 +17,9 @@ class BootReceiver : BroadcastReceiver() {
         when (intent?.action) {
             Intent.ACTION_BOOT_COMPLETED -> Log.e(TAG, "onReceive: boot completed")
             Intent.ACTION_SHUTDOWN -> Log.e(TAG, "onReceive: shutdown ")
+            else ->{
+                Log.e(TAG, "onReceive: ${intent?.action}" )
+            }
         }
     }
 }

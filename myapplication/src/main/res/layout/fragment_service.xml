@@ -51,6 +51,27 @@
             android:layout_height="wrap_content"
             android:text="unbindService"
             android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_bindRemoteService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="bind Remote Service"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_remote_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="get remote info"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_unbindRemoteService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="unbind Remote Service"
+            android:textSize="14sp" />
     </LinearLayout>
 
 </FrameLayout>

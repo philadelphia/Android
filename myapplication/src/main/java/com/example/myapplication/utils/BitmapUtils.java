@@ -1,4 +1,4 @@
-package com.delta.ams.common.utils;
+package com.example.myapplication.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -22,8 +22,8 @@ public class BitmapUtils {
 		int w = newOpts.outWidth;
 		int h = newOpts.outHeight;
 
-		float hh = ScreenUtil.getScreenHeightWithPx(context);
-		float ww = ScreenUtil.getScreenWidthWithPx(context);
+		float hh = com.delta.ams.common.utils.ScreenUtil.getScreenHeightWithPx(context);
+		float ww = com.delta.ams.common.utils.ScreenUtil.getScreenWidthWithPx(context);
 		// 缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
 		int be = 1;// be=1表示不缩放
 		if (w > h && w > ww) {// 如果宽度大的话根据宽度固定大小缩放
