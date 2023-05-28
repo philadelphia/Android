@@ -188,7 +188,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Log.i(TAG, "onOptionsItemSelected: action_settings")
                 toast!!.show()
 
-                TaskUtils.executeDownloadTask()
+                TaskUtils.executeDownloadTask("http://baidu.com")
 
                 true
             }
@@ -344,5 +344,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     companion object {
         private const val TAG = "MainActivity"
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
     }
 }
