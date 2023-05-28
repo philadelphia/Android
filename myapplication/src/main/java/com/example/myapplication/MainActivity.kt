@@ -19,12 +19,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.core.view.MenuItemCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import com.example.myapplication.MainActivity
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.taskmanager.TaskUtils
 import com.example.myapplication.ui.*
-import com.example.myapplication.ui.activity.ThirdActivity
 import com.example.myapplication.ui.fragment.widget.AndroidWidgetFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -32,17 +31,16 @@ import com.google.android.material.tabs.TabLayout
 import java.io.File
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private var fragmentManager: FragmentManager? = null
     private var toggle: ActionBarDrawerToggle? = null
     private var toast: Toast? = null
-    private var binding: ActivityMainBinding? = null
+    private lateinit var mBinding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.e(TAG, "onCreate: ")
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
+        mBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
         initView()
-
+        DialogFragment().show(this.supportFragmentManager, "")
         //default show android Base Fragment
         val androidBaseFragment = AndroidBaseFragment()
         val managerFragment = ManagerFragment()
@@ -50,7 +48,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val androidBaseViewFragment = AndroidWidgetFragment()
         //        DatabaseFragment databaseFragment = new DatabaseFragment();
         val customViewFragment = CustomViewFragment()
-        fragmentManager!!.beginTransaction().replace(R.id.container, androidBaseFragment).commit()
+        this.supportFragmentManager.beginTransaction().replace(R.id.container, androidBaseFragment).commit()
     }
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
@@ -72,19 +70,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun initView() {
-        setSupportActionBar(binding!!.main.toolbar)
-        fragmentManager = supportFragmentManager
-        binding!!.main.fab.setOnClickListener { onFloatingActionButtonClick() }
+        setSupportActionBar(mBinding.main.toolbar)
+        mBinding.main.fab.setOnClickListener { onFloatingActionButtonClick() }
         toggle = ActionBarDrawerToggle(
-                this, binding!!.drawerLayout, binding!!.main.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        binding!!.drawerLayout.setDrawerListener(toggle)
+                this, mBinding.drawerLayout, mBinding.main.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        mBinding.drawerLayout.setDrawerListener(toggle)
         toggle!!.syncState()
-        binding!!.main.slidingTabs.visibility = View.GONE
-        binding!!.navView.setNavigationItemSelectedListener(this)
+        mBinding.main.slidingTabs.visibility = View.GONE
+        mBinding.navView.setNavigationItemSelectedListener(this)
         toast = Toast.makeText(this, "toast", Toast.LENGTH_SHORT)
-        binding!!.main.container.viewTreeObserver.addOnGlobalLayoutListener {
+        mBinding.main.container.viewTreeObserver.addOnGlobalLayoutListener {
             val rect = Rect()
-            binding!!.root.getWindowVisibleDisplayFrame(rect)
+            mBinding.root.getWindowVisibleDisplayFrame(rect)
             //                if (rect.bottom < 1920) {
 //                    binding.main.contentMain.btnTest.setVisibility(View.GONE);
 //                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.main.contentMain.container.getLayoutParams();
@@ -116,8 +113,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //        }
 //
 //        fab.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        val intent = Intent(this, ThirdActivity::class.java)
-        startActivity(intent)
+//        SYSTEM_UI_FLAG_HIDE_NAVIGATIONI_FLAG_HIDE_NAVIGATIONDE_NAVIGATIONval intent = Intent(this, ThirdActivity::class.java)
+//        startActivity(intentntent)
 
 //        try {
 //            Intent intent = new Intent(this, TestActivity.class);
@@ -128,6 +125,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //        }
 //        Intent intent = new Intent(this, FirstActivity.class);
 //        startActivity(intent);
+
     }
 
     override fun onBackPressed() {
@@ -189,6 +187,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 //              手动添加一项MenuItem.
                 Log.i(TAG, "onOptionsItemSelected: action_settings")
                 toast!!.show()
+
+                TaskUtils.executeDownloadTask()
+
                 true
             }
             R.id.action_share -> {
@@ -228,18 +229,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
-        binding!!.main.toolbar.title = item.title
+        mBinding.main.toolbar.title = item.title
         return true
     }
 
     val tabLayout: TabLayout
-        get() = binding!!.main.slidingTabs
+        get() = mBinding.main.slidingTabs
 
     val toolbar: Toolbar
-        get() = binding!!.main.toolbar
+        get() = mBinding.main.toolbar
 
     val floatingActionBar: FloatingActionButton
-        get() = binding!!.main.fab
+        get() = mBinding.main.fab
 
     fun onClick(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -273,7 +274,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onStart()
         Log.e(TAG, "onStart: ")
         //        testAnr();
-        binding!!.drawerLayout.performClick()
+        mBinding.drawerLayout.performClick()
     }
 
     override fun onResume() {
@@ -285,7 +286,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (fragment == null) {
             return
         }
-        fragmentManager!!.beginTransaction().replace(R.id.container, fragment).commit()
+        this.supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
     }
 
     //    private void testRxjava() {
