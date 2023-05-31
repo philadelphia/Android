@@ -35,7 +35,7 @@ class ActivityFragment : BaseLazyLoadFragment(), View.OnClickListener {
     }
 
     override fun initView() {
-        binding.btnLifeCircle.setOnClickListener(this)
+        binding.btnLifecycle.setOnClickListener(this)
         binding.btnJump.setOnClickListener(this)
         binding.btnStandard.setOnClickListener(this)
         binding.btnSingleTop.setOnClickListener(this)
@@ -105,7 +105,7 @@ class ActivityFragment : BaseLazyLoadFragment(), View.OnClickListener {
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.btn_life_circle -> {
+            R.id.btn_lifecycle -> {
                 val intent = Intent(this.context, TestActivity::class.java)
                 startActivity(intent)
             }

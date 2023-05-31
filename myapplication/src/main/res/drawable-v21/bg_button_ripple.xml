@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?><!--自定义background，替代foreground使用ripple效果，Android：color属性定义水波纹颜色-->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/colorRipple">
+    <item android:drawable="@drawable/bg_button_test" />
+</ripple>

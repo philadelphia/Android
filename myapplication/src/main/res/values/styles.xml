@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--自定义水波纹前景颜色-->
+<!--        <item name="colorControlHighlight">@color/colorPrimary</item>-->
     </style>
 
 

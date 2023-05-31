@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@android:color/transparent"
     android:orientation="vertical"
-    android:animateLayoutChanges="true"
     tools:context="com.example.myapplication.ui.fragment.baseComponent.ActivityFragment">
 
     <ProgressBar
@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <ScrollView
         android:id="@+id/scroll_view"
@@ -24,14 +24,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingHorizontal="30dp"
             android:paddingBottom="20dp">
 
             <Button
-                android:id="@+id/btn_life_circle"
+                android:id="@+id/btn_lifecycle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="生命周期" />
 
@@ -39,6 +39,9 @@
                 android:id="@+id/btn_jump"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/green"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="跳转" />
 
@@ -46,6 +49,8 @@
                 android:id="@+id/btn_standard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_button_ripple"
                 android:gravity="center"
                 android:text="standard" />
 
@@ -111,51 +116,51 @@
                 android:id="@+id/tv_checked"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:text="checked text view"
+                android:checked="false"
                 android:gravity="center"
-                android:textAlignment="center"
-                android:checked="false" />
+                android:text="checked text view"
+                android:textAlignment="center" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
                 android:maxLines="1"
-                android:textColorHighlight="#000000"
+                android:scrollHorizontally="true"
                 android:selectAllOnFocus="true"
-                android:textSelectHandleRight="@drawable/ic_launcher"
+                android:singleLine="true"
+                android:text="hao你好"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="hao你好" />
+                android:textColorHighlight="#000000"
+                android:textSelectHandleRight="@drawable/ic_launcher" />
 
             <TextView
                 android:id="@+id/tv_shadow"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
+                android:elevation="2dp"
                 android:gravity="center"
                 android:text="show shadow"
-                android:textSize="14sp"
-                android:elevation="2dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/bg_red"
+                android:elevation="2dp"
                 android:gravity="center"
                 android:text="show shadow"
-                android:background="@drawable/bg_red"
-                android:textSize="14sp"
-                android:elevation="2dp" />
+                android:textSize="14sp" />
 
 
             <Button
                 android:id="@+id/btn_showStatsBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="显示状态栏"
-                android:layout_marginTop="20dp" />
+                android:text="显示状态栏" />
 
             <Button
                 android:id="@+id/btn_hideStatusBar"
