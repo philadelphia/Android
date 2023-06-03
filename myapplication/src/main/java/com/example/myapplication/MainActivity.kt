@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val androidBaseViewFragment = AndroidWidgetFragment()
         //        DatabaseFragment databaseFragment = new DatabaseFragment();
         val customViewFragment = CustomViewFragment()
-        this.supportFragmentManager.beginTransaction().replace(R.id.container, androidBaseFragment).commit()
+        this.supportFragmentManager.beginTransaction().replace(R.id.container, customViewFragment).commit()
     }
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {

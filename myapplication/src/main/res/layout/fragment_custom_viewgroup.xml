@@ -53,4 +53,33 @@
             android:text="test4" />
     </com.example.myapplication.ui.fragment.customeview.CustomLinearLayout>
 
+    <!--https://blog.csdn.net/u013270444/article/details/108523400-->
+    <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="40dp"
+        android:max="100"
+        android:progress="30"
+        android:progressDrawable="@drawable/bg_progressbar_track" />
+    <!--https://blog.csdn.net/wangsen927/article/details/116792275-->
+    <!--https://blog.csdn.net/jian11058/article/details/115954632-->
+    <!--https://blog.csdn.net/coralling_css/article/details/120998284-->
+    <SeekBar
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="40dp"
+        android:background="@null"
+        android:max="100"
+        android:maxHeight="40dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:progress="30"
+        android:progressDrawable="@drawable/bg_progressbar_track"
+        android:thumb="@null" />
+
+
 </LinearLayout>
